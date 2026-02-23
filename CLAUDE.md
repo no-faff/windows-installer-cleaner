@@ -60,23 +60,8 @@ user-chosen location so they can be restored if anything breaks.
 
 ## Opus sessions
 
-Use Opus for:
-- Windows Installer API data layer (MsiEnumProducts, MsiSourceListEnumSources etc.)
-- Any complex P/Invoke interop work
-
-Opus prompt for the API data layer:
-```
-We're building Simple Windows installer cleaner — a C# / WPF (.NET 8) app that
-scans C:\Windows\Installer, queries the Windows Installer COM API to enumerate
-all registered .msi/.msp files, cross-references against files physically on
-disk, and presents orphaned files for safe move or deletion.
-
-Your job: design the data layer. Specifically how to use MsiEnumProducts(),
-MsiGetProductInfo(), MsiSourceListEnumSources(), and related P/Invoke calls to
-build a complete list of files Windows Installer considers registered. Account
-for both products and patches (.msp). The result should be a clean C# service
-class I can build the WPF UI against.
-```
+Opus is available whenever it would give better results. Sonnet will write a
+detailed prompt for Opus at the time — no pre-written prompts stored here.
 
 ---
 

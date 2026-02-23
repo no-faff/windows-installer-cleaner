@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.homedev.com.au)",
+      "Bash(gh repo view:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(dotnet build:*)",
+      "WebFetch(domain:apps.microsoft.com)",
+      "WebFetch(domain:browserpicker.z13.web.core.windows.net)",
+      "Bash(gh auth status:*)",
+      "WebFetch(domain:topalter.com)"
+    ]
+  }
+}
