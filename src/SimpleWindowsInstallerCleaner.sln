@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleWindowsInstallerCleaner", "SimpleWindowsInstallerCleaner\SimpleWindowsInstallerCleaner.csproj", "{F652CE21-5EC4-403F-A98C-F749B97E4A98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleWindowsInstallerCleaner.Tests", "SimpleWindowsInstallerCleaner.Tests\SimpleWindowsInstallerCleaner.Tests.csproj", "{CE157DFB-4C8B-4B08-85B1-329CBA771A06}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F652CE21-5EC4-403F-A98C-F749B97E4A98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F652CE21-5EC4-403F-A98C-F749B97E4A98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F652CE21-5EC4-403F-A98C-F749B97E4A98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F652CE21-5EC4-403F-A98C-F749B97E4A98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE157DFB-4C8B-4B08-85B1-329CBA771A06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE157DFB-4C8B-4B08-85B1-329CBA771A06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE157DFB-4C8B-4B08-85B1-329CBA771A06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE157DFB-4C8B-4B08-85B1-329CBA771A06}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
