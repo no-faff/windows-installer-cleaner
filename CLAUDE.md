@@ -58,10 +58,30 @@ user-chosen location so they can be restored if anything breaks.
 
 ---
 
+## Origin
+
+This project started by looking at PatchCleaner and asking: can we make a
+better version? PatchCleaner works fine — this is not fixing something broken.
+The improvements are: no VBScript dependency, open source (MIT), .NET 8,
+potentially more accurate detection via MSI API rather than WMI.
+
+The full research brief is at `docs/project-brief.md`. Read it before
+making significant design decisions. The current app (v0.1.0-alpha) has the
+right data layer but a completely wrong UI and a broken Phase 2 scan that
+takes 3+ minutes.
+
+## Known open questions (see docs/project-brief.md section 8 for full list)
+
+- Does Phase 2 (component scan, the slow part) need to exist at all?
+- Should there be a Delete button or move-only?
+- Office 2010 SP2 false positive — does our MSI API approach fix this?
+- MSI OLE Summary Information Stream — implement or skip?
+
 ## Opus sessions
 
 Opus is available whenever it would give better results. Sonnet will write a
-detailed prompt for Opus at the time — no pre-written prompts stored here.
+detailed prompt for Opus at the time. The Opus prompt template lives at
+`docs/opus-prompt.md`.
 
 ---
 
