@@ -1,3 +1,4 @@
+using System.IO;
 using System.Text;
 using SimpleWindowsInstallerCleaner.Interop;
 using SimpleWindowsInstallerCleaner.Models;
