@@ -9,4 +9,7 @@ internal static class DisplayHelpers
         >= 1_024 => $"{bytes / 1_024.0:F1} KB",
         _ => $"{bytes} B"
     };
+
+    internal static string Pluralise(int count, string singular, string plural) =>
+        count == 1 ? singular : plural;
 }

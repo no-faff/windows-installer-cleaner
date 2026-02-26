@@ -177,7 +177,7 @@ public partial class MainViewModel : ObservableObject
 
         var filePaths = _lastFilteredResult.Actionable.Select(f => f.FullPath).ToList();
         IsOperating = true;
-        OperationProgress = $"Moving {filePaths.Count} file(s)...";
+        OperationProgress = $"Moving {filePaths.Count} {DisplayHelpers.Pluralise(filePaths.Count, "file", "files")}...";
 
         try
         {
@@ -185,8 +185,8 @@ public partial class MainViewModel : ObservableObject
             var result = await _moveService.MoveFilesAsync(filePaths, MoveDestination, progress);
 
             OperationProgress = result.Errors.Count == 0
-                ? $"Moved {result.MovedCount} file(s) to {MoveDestination}."
-                : $"Moved {result.MovedCount} file(s). {result.Errors.Count} error(s).";
+                ? $"Moved {result.MovedCount} {DisplayHelpers.Pluralise(result.MovedCount, "file", "files")} to {MoveDestination}."
+                : $"Moved {result.MovedCount} {DisplayHelpers.Pluralise(result.MovedCount, "file", "files")}. {result.Errors.Count} {DisplayHelpers.Pluralise(result.Errors.Count, "error", "errors")}.";
 
             await ScanAsync();
         }
@@ -209,7 +209,7 @@ public partial class MainViewModel : ObservableObject
         var sizeDisplay = OrphanedSizeDisplay;
 
         var confirm = MessageBox.Show(
-            $"Permanently delete {count} file(s) ({sizeDisplay})?\n\nThis cannot be undone.",
+            $"Permanently delete {count} {DisplayHelpers.Pluralise(count, "file", "files")} ({sizeDisplay})?\n\nThis cannot be undone.",
             "Confirm delete",
             MessageBoxButton.YesNo,
             MessageBoxImage.Warning);
@@ -218,7 +218,7 @@ public partial class MainViewModel : ObservableObject
 
         var filePaths = _lastFilteredResult.Actionable.Select(f => f.FullPath).ToList();
         IsOperating = true;
-        OperationProgress = $"Deleting {filePaths.Count} file(s)...";
+        OperationProgress = $"Deleting {filePaths.Count} {DisplayHelpers.Pluralise(filePaths.Count, "file", "files")}...";
 
         try
         {
@@ -226,8 +226,8 @@ public partial class MainViewModel : ObservableObject
             var result = await _deleteService.DeleteFilesAsync(filePaths, progress);
 
             OperationProgress = result.Errors.Count == 0
-                ? $"Deleted {result.DeletedCount} file(s)."
-                : $"Deleted {result.DeletedCount} file(s). {result.Errors.Count} error(s).";
+                ? $"Deleted {result.DeletedCount} {DisplayHelpers.Pluralise(result.DeletedCount, "file", "files")}."
+                : $"Deleted {result.DeletedCount} {DisplayHelpers.Pluralise(result.DeletedCount, "file", "files")}. {result.Errors.Count} {DisplayHelpers.Pluralise(result.Errors.Count, "error", "errors")}.";
 
             await ScanAsync();
         }
