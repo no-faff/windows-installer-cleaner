@@ -16,7 +16,7 @@
 | 6 — Registered files master-detail | 621199f | ✓ done |
 | 7 — File Size/Comment in orphaned panel | 7305562 | ✓ done |
 | 8 — Publish profile | 8a249cb | ✓ done |
-| 9 — Update tests | | |
+| 9 — Update tests | 4bc4a9a | ✓ done |
 
 ## Author: Opus, 26 February 2026
 
