@@ -1,7 +1,7 @@
-using System.Collections.ObjectModel;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using SimpleWindowsInstallerCleaner.Models;
 using SimpleWindowsInstallerCleaner.Services;
 
 namespace SimpleWindowsInstallerCleaner.ViewModels;
@@ -10,147 +10,232 @@ public partial class MainViewModel : ObservableObject
 {
     private readonly IFileSystemScanService _scanService;
     private readonly IMoveFilesService _moveService;
+    private readonly IDeleteFilesService _deleteService;
+    private readonly IExclusionService _exclusionService;
+    private readonly ISettingsService _settingsService;
+    private readonly IPendingRebootService _rebootService;
 
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(CanMove))]
-    [NotifyPropertyChangedFor(nameof(SelectedSizeDisplay))]
-    private ObservableCollection<OrphanedFileViewModel> _files = new();
+    // Scan state
+    [ObservableProperty] private bool _isScanning;
+    [ObservableProperty] private string _scanProgress = string.Empty;
 
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(CanScan))]
-    [NotifyPropertyChangedFor(nameof(CanMove))]
-    private bool _isBusy;
+    // Summary line data
+    [ObservableProperty] private int _registeredFileCount;
+    [ObservableProperty] private string _registeredSizeDisplay = string.Empty;
+    [ObservableProperty] private int _excludedFileCount;
+    [ObservableProperty] private string _excludedSizeDisplay = string.Empty;
+    [ObservableProperty] private int _orphanedFileCount;
+    [ObservableProperty] private string _orphanedSizeDisplay = string.Empty;
 
-    [ObservableProperty]
-    private string _statusText = "Click \"Scan\" to find orphaned files.";
+    // Pending reboot
+    [ObservableProperty] private bool _hasPendingReboot;
 
-    [ObservableProperty]
-    private string _destinationFolder = string.Empty;
+    // Move destination (persisted)
+    [ObservableProperty] private string _moveDestination = string.Empty;
 
-    private CancellationTokenSource? _cts;
+    // Busy state for move/delete operations
+    [ObservableProperty] private bool _isOperating;
+    [ObservableProperty] private string _operationProgress = string.Empty;
 
-    public bool CanScan => !IsBusy;
-    public bool CanMove => !IsBusy && Files.Any(f => f.IsSelected) && !string.IsNullOrWhiteSpace(DestinationFolder);
+    // Whether scan has completed at least once
+    [ObservableProperty] private bool _hasScanned;
 
-    public string SelectedSizeDisplay
-    {
-        get
-        {
-            var bytes = Files.Where(f => f.IsSelected).Sum(f => f.File.SizeBytes);
-            return bytes switch
-            {
-                0 => "Nothing selected",
-                >= 1_073_741_824 => $"{bytes / 1_073_741_824.0:F1} GB selected",
-                >= 1_048_576 => $"{bytes / 1_048_576.0:F1} MB selected",
-                >= 1_024 => $"{bytes / 1_024.0:F1} KB selected",
-                _ => $"{bytes} B selected"
-            };
-        }
-    }
+    private ScanResult? _lastScanResult;
+    private FilteredResult? _lastFilteredResult;
+    private AppSettings _settings = new();
 
-    public MainViewModel(IFileSystemScanService scanService, IMoveFilesService moveService)
+    public MainViewModel(
+        IFileSystemScanService scanService,
+        IMoveFilesService moveService,
+        IDeleteFilesService deleteService,
+        IExclusionService exclusionService,
+        ISettingsService settingsService,
+        IPendingRebootService rebootService)
     {
         _scanService = scanService;
         _moveService = moveService;
+        _deleteService = deleteService;
+        _exclusionService = exclusionService;
+        _settingsService = settingsService;
+        _rebootService = rebootService;
+
+        _settings = settingsService.Load();
+        MoveDestination = _settings.MoveDestination;
     }
 
-    [RelayCommand(CanExecute = nameof(CanScan))]
+    partial void OnIsScanningChanged(bool value)
+    {
+        MoveAllCommand.NotifyCanExecuteChanged();
+        DeleteAllCommand.NotifyCanExecuteChanged();
+    }
+
+    partial void OnIsOperatingChanged(bool value)
+    {
+        MoveAllCommand.NotifyCanExecuteChanged();
+        DeleteAllCommand.NotifyCanExecuteChanged();
+    }
+
+    partial void OnOrphanedFileCountChanged(int value)
+    {
+        MoveAllCommand.NotifyCanExecuteChanged();
+        DeleteAllCommand.NotifyCanExecuteChanged();
+    }
+
+    partial void OnMoveDestinationChanged(string value)
+    {
+        MoveAllCommand.NotifyCanExecuteChanged();
+    }
+
+    private bool CanMove() =>
+        !IsScanning && !IsOperating && OrphanedFileCount > 0 && !string.IsNullOrWhiteSpace(MoveDestination);
+
+    private bool CanDelete() =>
+        !IsScanning && !IsOperating && OrphanedFileCount > 0;
+
+    [RelayCommand]
     private async Task ScanAsync()
     {
-        _cts?.Cancel();
-        _cts = new CancellationTokenSource();
-
-        IsBusy = true;
-        Files.Clear();
-        StatusText = "Scanning...";
+        IsScanning = true;
+        ScanProgress = "Starting scan...";
 
         try
         {
-            var progress = new Progress<string>(msg => StatusText = msg);
-            var orphans = await _scanService.FindOrphanedFilesAsync(progress, _cts.Token);
+            if (_settings.CheckPendingReboot)
+                HasPendingReboot = _rebootService.HasPendingReboot();
 
-            foreach (var orphan in orphans.OrderByDescending(f => f.SizeBytes))
-            {
-                var vm = new OrphanedFileViewModel(orphan);
-                vm.PropertyChanged += (_, _) =>
-                {
-                    OnPropertyChanged(nameof(CanMove));
-                    OnPropertyChanged(nameof(SelectedSizeDisplay));
-                };
-                Files.Add(vm);
-            }
+            var progress = new Progress<string>(msg => ScanProgress = msg);
+            _lastScanResult = await _scanService.ScanAsync(progress);
 
-            StatusText = orphans.Count == 0
-                ? "No orphaned files found."
-                : $"Found {orphans.Count} orphaned file(s). Select files to move.";
-        }
-        catch (OperationCanceledException)
-        {
-            StatusText = "Scan cancelled.";
+            _lastFilteredResult = _exclusionService.ApplyFilters(
+                _lastScanResult.OrphanedFiles, _settings.ExclusionFilters);
+
+            RegisteredFileCount = _lastScanResult.RegisteredFileCount;
+            RegisteredSizeDisplay = FormatSize(_lastScanResult.RegisteredTotalBytes);
+
+            ExcludedFileCount = _lastFilteredResult.Excluded.Count;
+            ExcludedSizeDisplay = FormatSize(_lastFilteredResult.Excluded.Sum(f => f.SizeBytes));
+
+            OrphanedFileCount = _lastFilteredResult.Actionable.Count;
+            OrphanedSizeDisplay = FormatSize(_lastFilteredResult.Actionable.Sum(f => f.SizeBytes));
+
+            HasScanned = true;
         }
         catch (Exception ex)
         {
-            StatusText = $"Scan failed: {ex.Message}";
+            ScanProgress = $"Scan failed: {ex.Message}";
         }
         finally
         {
-            IsBusy = false;
+            IsScanning = false;
         }
     }
 
     [RelayCommand]
-    private void SelectAll()
-    {
-        foreach (var f in Files) f.IsSelected = true;
-    }
-
-    [RelayCommand]
-    private void SelectNone()
-    {
-        foreach (var f in Files) f.IsSelected = false;
-    }
-
-    [RelayCommand]
-    private void ChooseDestination()
+    private void BrowseDestination()
     {
         var dialog = new Microsoft.Win32.OpenFolderDialog
         {
             Title = "Choose destination folder for moved files"
         };
         if (dialog.ShowDialog() == true)
-            DestinationFolder = dialog.FolderName;
-
-        OnPropertyChanged(nameof(CanMove));
+        {
+            MoveDestination = dialog.FolderName;
+            _settings.MoveDestination = MoveDestination;
+            _settingsService.Save(_settings);
+        }
     }
 
     [RelayCommand(CanExecute = nameof(CanMove))]
-    private async Task MoveSelectedAsync()
+    private async Task MoveAllAsync()
     {
-        var toMove = Files.Where(f => f.IsSelected).Select(f => f.File.FullPath).ToList();
+        if (_lastFilteredResult is null) return;
 
-        IsBusy = true;
-        StatusText = $"Moving {toMove.Count} file(s)...";
+        var filePaths = _lastFilteredResult.Actionable.Select(f => f.FullPath).ToList();
+        IsOperating = true;
+        OperationProgress = $"Moving {filePaths.Count} file(s)...";
 
         try
         {
-            var progress = new Progress<string>(msg => StatusText = msg);
-            var result = await _moveService.MoveFilesAsync(toMove, DestinationFolder, progress);
+            var progress = new Progress<string>(msg => OperationProgress = msg);
+            var result = await _moveService.MoveFilesAsync(filePaths, MoveDestination, progress);
 
-            // Remove successfully moved files from the list.
-            var toRemove = Files.Where(f => f.IsSelected && !result.Errors.Any(e => e.FilePath == f.File.FullPath)).ToList();
-            foreach (var f in toRemove) Files.Remove(f);
+            OperationProgress = result.Errors.Count == 0
+                ? $"Moved {result.MovedCount} file(s) to {MoveDestination}."
+                : $"Moved {result.MovedCount} file(s). {result.Errors.Count} error(s).";
 
-            StatusText = result.Errors.Count == 0
-                ? $"Moved {result.MovedCount} file(s) to {DestinationFolder}."
-                : $"Moved {result.MovedCount} file(s). {result.Errors.Count} error(s) — check that the app is running as administrator.";
+            await ScanAsync();
         }
         catch (Exception ex)
         {
-            StatusText = $"Move failed: {ex.Message}";
+            OperationProgress = $"Move failed: {ex.Message}";
         }
         finally
         {
-            IsBusy = false;
+            IsOperating = false;
         }
     }
+
+    [RelayCommand(CanExecute = nameof(CanDelete))]
+    private async Task DeleteAllAsync()
+    {
+        if (_lastFilteredResult is null) return;
+
+        var count = _lastFilteredResult.Actionable.Count;
+        var sizeDisplay = OrphanedSizeDisplay;
+
+        var confirm = MessageBox.Show(
+            $"Permanently delete {count} file(s) ({sizeDisplay})?\n\nThis cannot be undone.",
+            "Confirm delete",
+            MessageBoxButton.YesNo,
+            MessageBoxImage.Warning);
+
+        if (confirm != MessageBoxResult.Yes) return;
+
+        var filePaths = _lastFilteredResult.Actionable.Select(f => f.FullPath).ToList();
+        IsOperating = true;
+        OperationProgress = $"Deleting {filePaths.Count} file(s)...";
+
+        try
+        {
+            var progress = new Progress<string>(msg => OperationProgress = msg);
+            var result = await _deleteService.DeleteFilesAsync(filePaths, progress);
+
+            OperationProgress = result.Errors.Count == 0
+                ? $"Deleted {result.DeletedCount} file(s)."
+                : $"Deleted {result.DeletedCount} file(s). {result.Errors.Count} error(s).";
+
+            await ScanAsync();
+        }
+        catch (Exception ex)
+        {
+            OperationProgress = $"Delete failed: {ex.Message}";
+        }
+        finally
+        {
+            IsOperating = false;
+        }
+    }
+
+    [RelayCommand]
+    private void OpenOrphanedDetails()
+    {
+        // Implemented in Task 10.
+    }
+
+    [RelayCommand]
+    private void OpenSettings()
+    {
+        // Implemented in Task 11.
+    }
+
+    [RelayCommand]
+    private async Task RefreshAsync() => await ScanAsync();
+
+    internal static string FormatSize(long bytes) => bytes switch
+    {
+        >= 1_073_741_824 => $"{bytes / 1_073_741_824.0:F2} GB",
+        >= 1_048_576 => $"{bytes / 1_048_576.0:F1} MB",
+        >= 1_024 => $"{bytes / 1_024.0:F1} KB",
+        _ => $"{bytes} B"
+    };
 }
