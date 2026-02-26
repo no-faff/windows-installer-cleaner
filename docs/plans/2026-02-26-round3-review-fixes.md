@@ -10,9 +10,9 @@
 |------|--------|--------|
 | 1 — Fix patches "(none)" placeholder | 0ebaa4f | ✓ done |
 | 2 — Remove dead Visibility attribute in OrphanedFilesWindow | ae12b42 | ✓ done |
-| 3 — Proper pluralisation (remove "(s)" pattern) | | pending |
-| 4 — Unit tests for RegisteredFilesViewModel grouping | | pending |
-| 5 — Narrow bare catch blocks in MsiFileInfoService | | pending |
+| 3 — Proper pluralisation (remove "(s)" pattern) | 73fa7d5 | ✓ done |
+| 4 — Unit tests for RegisteredFilesViewModel grouping | 85efcff | ✓ done |
+| 5 — Narrow bare catch blocks in MsiFileInfoService | 307eb90 | ✓ done |
 
 ## Author: Opus, 26 February 2026
 
