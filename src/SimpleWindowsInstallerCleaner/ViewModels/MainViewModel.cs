@@ -154,7 +154,19 @@ public partial class MainViewModel : ObservableObject
         {
             MoveDestination = dialog.FolderName;
             _settings.MoveDestination = MoveDestination;
-            _settingsService.Save(_settings);
+
+            try
+            {
+                _settingsService.Save(_settings);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Could not save settings: {ex.Message}",
+                    "Settings",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+            }
         }
     }
 

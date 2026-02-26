@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SimpleWindowsInstallerCleaner.Models;
@@ -48,7 +49,20 @@ public partial class SettingsViewModel : ObservableObject
         var settings = _settingsService.Load();
         settings.ExclusionFilters = Filters.ToList();
         settings.CheckPendingReboot = CheckPendingReboot;
-        _settingsService.Save(settings);
+
+        try
+        {
+            _settingsService.Save(settings);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(
+                $"Could not save settings: {ex.Message}",
+                "Settings",
+                MessageBoxButton.OK,
+                MessageBoxImage.Warning);
+        }
+
         CloseRequested?.Invoke(true);
     }
 
