@@ -124,6 +124,10 @@ public sealed class InstallerQueryService : IInstallerQueryService
             if (error == MsiError.NoMoreItems)
                 break;
 
+            if (error == MsiError.AccessDenied)
+                throw new UnauthorizedAccessException(
+                    "Access denied enumerating installed products. Run as administrator.");
+
             if (error == MsiError.Success || error == MsiError.MoreData)
             {
                 // We don't need the SID string itself for the primary query;
@@ -132,7 +136,13 @@ public sealed class InstallerQueryService : IInstallerQueryService
                 var sid = GetEnumeratedSid(productCode.ToString(), installedContext);
                 results.Add((productCode.ToString(), sid, installedContext));
             }
-            // Silently skip products that return other errors (e.g. bad config).
+            // Skip products with other errors (e.g. bad config) but don't spin
+            // forever — if we've seen too many consecutive failures, bail out.
+            else if (results.Count == 0 && index > 10)
+            {
+                throw new InvalidOperationException(
+                    $"Windows Installer API returned error {error}. Unable to enumerate products.");
+            }
         }
 
         return results;
@@ -223,6 +233,9 @@ public sealed class InstallerQueryService : IInstallerQueryService
 
             if (error == MsiError.NoMoreItems)
                 break;
+
+            if (error == MsiError.AccessDenied)
+                break; // skip patches we can't access
 
             if (error == MsiError.Success || error == MsiError.MoreData)
             {

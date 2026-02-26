@@ -6,6 +6,7 @@ namespace SimpleWindowsInstallerCleaner.Interop;
 public static class MsiError
 {
     public const uint Success = 0;
+    public const uint AccessDenied = 5;
     public const uint MoreData = 234;
     public const uint NoMoreItems = 259;
     public const uint UnknownProduct = 1605;
