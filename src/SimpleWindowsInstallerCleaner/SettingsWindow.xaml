@@ -1,0 +1,130 @@
+<Window x:Class="SimpleWindowsInstallerCleaner.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Settings"
+        Width="450" Height="350"
+        MinWidth="350" MinHeight="280"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="CanResizeWithGrip"
+        Background="#F5F5F5">
+
+    <Window.InputBindings>
+        <KeyBinding Key="Escape" Command="{Binding CancelCommand}"/>
+    </Window.InputBindings>
+
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/> <!-- section header -->
+            <RowDefinition Height="6"/>
+            <RowDefinition Height="Auto"/> <!-- description -->
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="Auto"/> <!-- input row -->
+            <RowDefinition Height="6"/>
+            <RowDefinition Height="*"/>    <!-- filter list -->
+            <RowDefinition Height="14"/>
+            <RowDefinition Height="Auto"/> <!-- pending reboot checkbox -->
+            <RowDefinition Height="14"/>
+            <RowDefinition Height="Auto"/> <!-- save/cancel buttons -->
+        </Grid.RowDefinitions>
+
+        <!-- ── Section header ─────────────────────────────────── -->
+        <TextBlock Grid.Row="0"
+                   Text="Exclusion filters"
+                   FontSize="13"
+                   FontWeight="SemiBold"
+                   Foreground="#222"/>
+
+        <!-- ── Description ────────────────────────────────────── -->
+        <TextBlock Grid.Row="2"
+                   Text="Files matching these terms won't be moved or deleted."
+                   FontSize="12"
+                   Foreground="#666"/>
+
+        <!-- ── Input row ──────────────────────────────────────── -->
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBox Grid.Column="0"
+                     Text="{Binding NewFilter, UpdateSourceTrigger=PropertyChanged}"
+                     FontSize="13"
+                     Padding="6,5">
+                <TextBox.InputBindings>
+                    <KeyBinding Key="Return" Command="{Binding AddFilterCommand}"/>
+                </TextBox.InputBindings>
+            </TextBox>
+
+            <Button Grid.Column="2"
+                    Content="Add"
+                    Command="{Binding AddFilterCommand}"
+                    Padding="14,5"
+                    FontSize="13"/>
+        </Grid>
+
+        <!-- ── Filter list ────────────────────────────────────── -->
+        <Border Grid.Row="6"
+                BorderBrush="#D0D0D0"
+                BorderThickness="1"
+                Background="White">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding Filters}"
+                              Padding="8,6">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0,2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0"
+                                           Text="{Binding}"
+                                           FontSize="12"
+                                           Foreground="#222"
+                                           VerticalAlignment="Center"/>
+
+                                <Button Grid.Column="1"
+                                        Content="×"
+                                        Command="{Binding DataContext.RemoveFilterCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                        CommandParameter="{Binding}"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        FontSize="14"
+                                        Foreground="#999"
+                                        Padding="6,2"
+                                        Cursor="Hand"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Border>
+
+        <!-- ── Pending reboot checkbox ────────────────────────── -->
+        <CheckBox Grid.Row="8"
+                  IsChecked="{Binding CheckPendingReboot}"
+                  Content="Check for pending reboots before scanning"
+                  FontSize="12"
+                  Foreground="#333"/>
+
+        <!-- ── Save / Cancel buttons ──────────────────────────── -->
+        <StackPanel Grid.Row="10"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+            <Button Content="Save"
+                    Command="{Binding SaveCommand}"
+                    IsDefault="True"
+                    Padding="20,7"
+                    FontSize="13"
+                    Margin="0,0,8,0"/>
+            <Button Content="Cancel"
+                    Command="{Binding CancelCommand}"
+                    Padding="20,7"
+                    FontSize="13"/>
+        </StackPanel>
+
+    </Grid>
+</Window>

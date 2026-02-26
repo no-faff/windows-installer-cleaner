@@ -235,7 +235,28 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private void OpenSettings()
     {
-        // Implemented in Task 11.
+        var viewModel = new SettingsViewModel(_settings, _settingsService);
+        var window = new SettingsWindow(viewModel)
+        {
+            Owner = Application.Current.MainWindow
+        };
+
+        if (window.ShowDialog() == true)
+        {
+            _settings = _settingsService.Load();
+            MoveDestination = _settings.MoveDestination;
+
+            if (_lastScanResult is not null)
+            {
+                _lastFilteredResult = _exclusionService.ApplyFilters(
+                    _lastScanResult.OrphanedFiles, _settings.ExclusionFilters);
+
+                ExcludedFileCount = _lastFilteredResult.Excluded.Count;
+                ExcludedSizeDisplay = FormatSize(_lastFilteredResult.Excluded.Sum(f => f.SizeBytes));
+                OrphanedFileCount = _lastFilteredResult.Actionable.Count;
+                OrphanedSizeDisplay = FormatSize(_lastFilteredResult.Actionable.Sum(f => f.SizeBytes));
+            }
+        }
     }
 
     [RelayCommand]
