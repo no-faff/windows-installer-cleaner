@@ -103,7 +103,6 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private async Task ScanAsync()
     {
-        IsScanning = true;
         ScanProgress = "Starting scan...";
 
         try
@@ -112,7 +111,10 @@ public partial class MainViewModel : ObservableObject
                 HasPendingReboot = _rebootService.HasPendingReboot();
 
             var progress = new Progress<string>(msg => ScanProgress = msg);
-            _lastScanResult = await _scanService.ScanAsync(progress);
+            var scanTask = _scanService.ScanAsync(progress);
+            if (await Task.WhenAny(scanTask, Task.Delay(200)) != scanTask)
+                IsScanning = true;
+            _lastScanResult = await scanTask;
 
             _lastFilteredResult = _exclusionService.ApplyFilters(
                 _lastScanResult.OrphanedFiles, _settings.ExclusionFilters, _msiInfoService);
