@@ -21,9 +21,7 @@ public interface IInstallerQueryService
     /// Cancellation token to abort the scan early.
     /// </param>
     /// <returns>
-    /// A read-only list of all registered packages. Packages claimed only via
-    /// component registration for Adobe products will have
-    /// <see cref="RegisteredPackage.IsAdobeWarning"/> set to <c>true</c>.
+    /// A read-only list of all registered packages.
     /// </returns>
     Task<IReadOnlyList<RegisteredPackage>> GetRegisteredPackagesAsync(
         IProgress<string>? progress = null,
