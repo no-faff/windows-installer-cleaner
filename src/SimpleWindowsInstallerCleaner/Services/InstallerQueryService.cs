@@ -24,6 +24,12 @@ public sealed class InstallerQueryService : IInstallerQueryService
     /// </summary>
     private const int GuidBufferLength = 39;
 
+    /// <summary>
+    /// SIDs are typically ~45 chars (e.g. S-1-5-21-xxx-xxx-xxx-xxxx).
+    /// Pre-allocating 256 avoids re-enumerating just to get the SID.
+    /// </summary>
+    private const int SidBufferLength = 256;
+
     /// <inheritdoc />
     public Task<IReadOnlyList<RegisteredPackage>> GetRegisteredPackagesAsync(
         IProgress<string>? progress = null,
@@ -102,6 +108,7 @@ public sealed class InstallerQueryService : IInstallerQueryService
     {
         var results = new List<(string, string?, MsiInstallContext)>();
         var productCode = new StringBuilder(GuidBufferLength);
+        var sidBuffer = new StringBuilder(SidBufferLength);
 
         for (uint index = 0; ; index++)
         {
@@ -109,7 +116,9 @@ public sealed class InstallerQueryService : IInstallerQueryService
 
             productCode.Clear();
             productCode.EnsureCapacity(GuidBufferLength);
-            uint sidLen = 0;
+            sidBuffer.Clear();
+            sidBuffer.EnsureCapacity(SidBufferLength);
+            uint sidLen = (uint)(SidBufferLength - 1);
 
             var error = MsiNativeMethods.MsiEnumProductsEx(
                 szProductCode: null,
@@ -118,7 +127,7 @@ public sealed class InstallerQueryService : IInstallerQueryService
                 dwIndex: index,
                 szInstalledProductCode: productCode,
                 pdwInstalledContext: out var installedContext,
-                szSid: null,
+                szSid: sidBuffer,
                 pcchSid: ref sidLen);
 
             if (error == MsiError.NoMoreItems)
@@ -130,10 +139,9 @@ public sealed class InstallerQueryService : IInstallerQueryService
 
             if (error == MsiError.Success || error == MsiError.MoreData)
             {
-                // We don't need the SID string itself for the primary query;
-                // for per-machine products the SID is empty. For per-user
-                // products we re-query the SID properly.
-                var sid = GetEnumeratedSid(productCode.ToString(), installedContext);
+                var sid = (installedContext != MsiInstallContext.Machine && sidLen > 0)
+                    ? sidBuffer.ToString()
+                    : null;
                 results.Add((productCode.ToString(), sid, installedContext));
             }
             // Skip products with other errors (e.g. bad config) but don't spin
@@ -146,50 +154,6 @@ public sealed class InstallerQueryService : IInstallerQueryService
         }
 
         return results;
-    }
-
-    /// <summary>
-    /// For per-user products, retrieves the user SID that owns the installation.
-    /// For per-machine products, returns <c>null</c>.
-    /// </summary>
-    private static string? GetEnumeratedSid(string productCode, MsiInstallContext context)
-    {
-        if (context == MsiInstallContext.Machine)
-            return null;
-
-        // Re-enumerate to get the SID. We call MsiEnumProductsEx with this
-        // specific product code to get its SID.
-        var pc = new StringBuilder(GuidBufferLength);
-        uint sidLen = 0;
-
-        // First call: get required SID buffer size.
-        MsiNativeMethods.MsiEnumProductsEx(
-            szProductCode: productCode,
-            szUserSid: AllUsersSid,
-            dwContext: context,
-            dwIndex: 0,
-            szInstalledProductCode: pc,
-            pdwInstalledContext: out _,
-            szSid: null,
-            pcchSid: ref sidLen);
-
-        if (sidLen == 0)
-            return null;
-
-        sidLen++; // space for null terminator
-        var sidBuffer = new StringBuilder((int)sidLen);
-
-        var error = MsiNativeMethods.MsiEnumProductsEx(
-            szProductCode: productCode,
-            szUserSid: AllUsersSid,
-            dwContext: context,
-            dwIndex: 0,
-            szInstalledProductCode: pc,
-            pdwInstalledContext: out _,
-            szSid: sidBuffer,
-            pcchSid: ref sidLen);
-
-        return error == MsiError.Success ? sidBuffer.ToString() : null;
     }
 
     // ==================================================================
