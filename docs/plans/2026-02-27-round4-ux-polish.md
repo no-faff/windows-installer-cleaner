@@ -8,14 +8,14 @@
 
 | Task | Commit | Status |
 |------|--------|--------|
-| 1 — Fix About dialog text | | pending |
-| 2 — Auto-select first item in detail windows | | pending |
-| 3 — Explain why files are excluded | | pending |
-| 4 — Hide "excluded by filters" row when count is 0 | | pending |
-| 5 — Hide scanning overlay once scan completes | | pending |
-| 6 — Show scan duration | | pending |
-| 7 — Require admin elevation via manifest | | pending |
-| 8 — Add version number to title bar | | pending |
+| 1 — Fix About dialog text | a55ef87 | ✓ done |
+| 2 — Auto-select first item in detail windows | 6544db5 | ✓ done |
+| 3 — Explain why files are excluded | d3886a6 | ⚠ partial — Opus to redesign (see note below) |
+| 4 — Hide "excluded by filters" row when count is 0 | d1ec986 | ✓ done |
+| 5 — Hide scanning overlay once scan completes | d76076b | ✓ done |
+| 6 — Show scan duration | 8fc7d71 | ✓ done |
+| 7 — Require admin elevation via manifest | n/a | ✓ done (already in place) |
+| 8 — Add version number to title bar | ca8ad9e | ✓ done |
 
 ## Author: Opus, 27 February 2026
 
@@ -254,6 +254,17 @@ _lastScanResult = await scanTask;
 **Verify:** `dotnet build src/SimpleWindowsInstallerCleaner`
 
 **Commit:** `feat: show version in main window title bar`
+
+---
+
+## Task 3 note — for Opus review
+
+Tooltip approach was wrong. User feedback:
+- Exclusion filters in Settings are already shown as interactive pills with an × to remove them
+- There's no space constraint — explanatory text can go anywhere visible
+- Hiding explanation behind a tooltip is the wrong pattern
+- Sonnet added the subtitle text in OrphanedFilesWindow.xaml (committed in d3886a6) but the main window tooltip was ineffective
+- Opus should redesign: consider inline static text near the excluded row, or an explanation in the Settings dialog near the filter pills
 
 ---
 
