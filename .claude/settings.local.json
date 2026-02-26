@@ -9,7 +9,15 @@
       "WebFetch(domain:apps.microsoft.com)",
       "WebFetch(domain:browserpicker.z13.web.core.windows.net)",
       "Bash(gh auth status:*)",
-      "WebFetch(domain:topalter.com)"
+      "WebFetch(domain:topalter.com)",
+      "Bash(cd /c/windows-installer-cleaner/src/SimpleWindowsInstallerCleaner && dotnet restore && dotnet build 2>&1)",
+      "Bash(cd /c/windows-installer-cleaner && dotnet new xunit -n SimpleWindowsInstallerCleaner.Tests -o src/SimpleWindowsInstallerCleaner.Tests --framework net8.0 2>&1)",
+      "Bash(cd /c/windows-installer-cleaner/src && dotnet new sln -n SimpleWindowsInstallerCleaner 2>&1 && dotnet sln add SimpleWindowsInstallerCleaner/SimpleWindowsInstallerCleaner.csproj 2>&1 && dotnet sln add SimpleWindowsInstallerCleaner.Tests/SimpleWindowsInstallerCleaner.Tests.csproj 2>&1)",
+      "Bash(cd /c/windows-installer-cleaner && dotnet test src/SimpleWindowsInstallerCleaner.Tests 2>&1)",
+      "Bash(tail:*)",
+      "Bash(git:*)",
+      "WebFetch(domain:sourceforge.net)",
+      "WebFetch(domain:web.archive.org)"
     ]
   }
 }
