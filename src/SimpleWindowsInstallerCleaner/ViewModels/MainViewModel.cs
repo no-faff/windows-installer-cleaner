@@ -111,7 +111,7 @@ public partial class MainViewModel : ObservableObject
             _lastScanResult = await _scanService.ScanAsync(progress);
 
             _lastFilteredResult = _exclusionService.ApplyFilters(
-                _lastScanResult.OrphanedFiles, _settings.ExclusionFilters);
+                _lastScanResult.OrphanedFiles, _settings.ExclusionFilters, _msiInfoService);
 
             RegisteredFileCount = _lastScanResult.RegisteredPackages.Count;
             RegisteredSizeDisplay = DisplayHelpers.FormatSize(_lastScanResult.RegisteredTotalBytes);
@@ -292,7 +292,7 @@ public partial class MainViewModel : ObservableObject
             if (_lastScanResult is not null)
             {
                 _lastFilteredResult = _exclusionService.ApplyFilters(
-                    _lastScanResult.OrphanedFiles, _settings.ExclusionFilters);
+                    _lastScanResult.OrphanedFiles, _settings.ExclusionFilters, _msiInfoService);
 
                 ExcludedFileCount = _lastFilteredResult.Excluded.Count;
                 ExcludedSizeDisplay = DisplayHelpers.FormatSize(_lastFilteredResult.Excluded.Sum(f => f.SizeBytes));

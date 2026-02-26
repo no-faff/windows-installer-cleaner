@@ -36,7 +36,8 @@
 
         <!-- ── Description ────────────────────────────────────── -->
         <TextBlock Grid.Row="2"
-                   Text="Files matching these terms won't be moved or deleted."
+                   Text="Files whose name, author, title, subject or digital signature matches these terms won't be moved or deleted."
+                   TextWrapping="Wrap"
                    FontSize="12"
                    Foreground="#666"/>
 

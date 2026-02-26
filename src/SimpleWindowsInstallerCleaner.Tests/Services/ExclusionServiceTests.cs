@@ -1,3 +1,4 @@
+using Moq;
 using SimpleWindowsInstallerCleaner.Models;
 using SimpleWindowsInstallerCleaner.Services;
 
@@ -70,5 +71,29 @@ public class ExclusionServiceTests
 
         Assert.Equal(2, result.Actionable.Count);
         Assert.Empty(result.Excluded);
+    }
+
+    [Fact]
+    public void ApplyFilters_matches_on_summary_info_fields()
+    {
+        // File whose name does NOT contain "Adobe" but whose Author does
+        var file = File("9c738abc.msi");
+        var filters = new[] { "Adobe" };
+
+        var mockInfo = new Mock<IMsiFileInfoService>();
+        mockInfo
+            .Setup(s => s.GetSummaryInfo(file.FullPath))
+            .Returns(new MsiSummaryInfo(
+                Title: string.Empty,
+                Subject: string.Empty,
+                Author: "Adobe Systems Incorporated",
+                Comments: string.Empty,
+                DigitalSignature: string.Empty));
+
+        var result = _svc.ApplyFilters(new[] { file }, filters, mockInfo.Object);
+
+        Assert.Single(result.Excluded);
+        Assert.Equal("9c738abc.msi", result.Excluded[0].FileName);
+        Assert.Empty(result.Actionable);
     }
 }
