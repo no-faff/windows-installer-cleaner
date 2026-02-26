@@ -119,7 +119,8 @@
                 </DockPanel>
 
                 <!-- Excluded by filters -->
-                <DockPanel Margin="0,0,0,7">
+                <DockPanel Margin="0,0,0,7"
+                           Visibility="{Binding HasExcludedFiles, Converter={StaticResource BoolToVis}}">
                     <Button DockPanel.Dock="Right"
                             Style="{StaticResource LinkButton}"
                             Content="details..."

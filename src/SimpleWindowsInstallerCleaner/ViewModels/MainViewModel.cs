@@ -24,8 +24,12 @@ public partial class MainViewModel : ObservableObject
     // Summary line data
     [ObservableProperty] private int _registeredFileCount;
     [ObservableProperty] private string _registeredSizeDisplay = string.Empty;
-    [ObservableProperty] private int _excludedFileCount;
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasExcludedFiles))]
+    private int _excludedFileCount;
     [ObservableProperty] private string _excludedSizeDisplay = string.Empty;
+
+    public bool HasExcludedFiles => ExcludedFileCount > 0;
     [ObservableProperty] private int _orphanedFileCount;
     [ObservableProperty] private string _orphanedSizeDisplay = string.Empty;
 
