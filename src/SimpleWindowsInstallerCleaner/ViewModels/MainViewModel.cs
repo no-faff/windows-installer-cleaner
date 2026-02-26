@@ -305,11 +305,11 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private void ShowAbout()
     {
-        MessageBox.Show(
-            "Simple Windows installer cleaner v1.0.0\n\nPart of the No faff suite\n\nMIT licence · github.com/no-faff",
-            "About",
-            MessageBoxButton.OK,
-            MessageBoxImage.Information);
+        var window = new AboutWindow
+        {
+            Owner = Application.Current.MainWindow
+        };
+        window.ShowDialog();
     }
 
     [RelayCommand]
