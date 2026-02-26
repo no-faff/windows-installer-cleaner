@@ -1,15 +1,40 @@
 using System.IO;
+using CommunityToolkit.Mvvm.ComponentModel;
 using SimpleWindowsInstallerCleaner.Models;
+using SimpleWindowsInstallerCleaner.Services;
 
 namespace SimpleWindowsInstallerCleaner.ViewModels;
 
-public sealed class RegisteredFilesViewModel
+public partial class RegisteredFilesViewModel : ObservableObject
 {
+    private readonly IMsiFileInfoService _infoService;
+    private readonly Dictionary<string, MsiSummaryInfo?> _cache = new();
+
     public IReadOnlyList<RegisteredFileRow> Packages { get; }
     public string Summary { get; }
 
-    public RegisteredFilesViewModel(IReadOnlyList<RegisteredPackage> packages, long totalBytes)
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasSelection))]
+    [NotifyPropertyChangedFor(nameof(ShowDetails))]
+    [NotifyPropertyChangedFor(nameof(ShowNoMetadata))]
+    private RegisteredFileRow? _selectedPackage;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ShowDetails))]
+    [NotifyPropertyChangedFor(nameof(ShowNoMetadata))]
+    private MsiSummaryInfo? _selectedDetails;
+
+    public bool HasSelection => SelectedPackage is not null;
+    public bool ShowDetails => SelectedPackage is not null && SelectedDetails is not null;
+    public bool ShowNoMetadata => SelectedPackage is not null && SelectedDetails is null;
+
+    public RegisteredFilesViewModel(
+        IReadOnlyList<RegisteredPackage> packages,
+        long totalBytes,
+        IMsiFileInfoService infoService)
     {
+        _infoService = infoService;
+
         Packages = packages
             .OrderBy(p => p.ProductName)
             .Select(p => new RegisteredFileRow(
@@ -20,6 +45,23 @@ public sealed class RegisteredFilesViewModel
             .ToList();
 
         Summary = $"{packages.Count} registered file(s) ({FormatSize(totalBytes)})";
+    }
+
+    partial void OnSelectedPackageChanged(RegisteredFileRow? value)
+    {
+        if (value is null)
+        {
+            SelectedDetails = null;
+            return;
+        }
+
+        if (!_cache.TryGetValue(value.FullPath, out var info))
+        {
+            info = _infoService.GetSummaryInfo(value.FullPath);
+            _cache[value.FullPath] = info;
+        }
+
+        SelectedDetails = info;
     }
 
     private static string GetSizeDisplay(string path)

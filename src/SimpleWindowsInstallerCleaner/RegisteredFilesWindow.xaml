@@ -2,66 +2,158 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Registered files"
-        Width="650" Height="450"
-        MinWidth="450" MinHeight="300"
+        Width="750" Height="450"
+        MinWidth="500" MinHeight="320"
         WindowStartupLocation="CenterOwner"
         Background="#F5F5F5">
 
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    </Window.Resources>
+
     <Grid Margin="16">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>    <!-- file list -->
+            <RowDefinition Height="*"/>    <!-- file list + details -->
             <RowDefinition Height="10"/>   <!-- spacer -->
             <RowDefinition Height="Auto"/> <!-- summary line -->
             <RowDefinition Height="12"/>   <!-- spacer -->
             <RowDefinition Height="Auto"/> <!-- close button -->
         </Grid.RowDefinitions>
 
-        <!-- ── File list ──────────────────────────────────────── -->
-        <Border Grid.Row="0"
-                BorderBrush="#D0D0D0"
-                BorderThickness="1"
-                Background="White">
-            <ListView ItemsSource="{Binding Packages}"
-                      BorderThickness="0"
-                      ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Product name" Width="280">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding ProductName}"
-                                               FontSize="12"
-                                               Foreground="#222"
-                                               TextTrimming="CharacterEllipsis"
-                                               ToolTip="{Binding ProductName}"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Header="File" Width="180">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding FileName}"
-                                               FontSize="12"
-                                               Foreground="#555"
-                                               TextTrimming="CharacterEllipsis"
-                                               ToolTip="{Binding FullPath}"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Header="Size" Width="90">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding SizeDisplay}"
-                                               FontSize="12"
-                                               Foreground="#555"
-                                               TextAlignment="Right"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </Border>
+        <!-- ── Main area: file list (left) + details (right) ──── -->
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="230"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left: sortable file list -->
+            <Border Grid.Column="0"
+                    BorderBrush="#D0D0D0"
+                    BorderThickness="1"
+                    Background="White">
+                <ListView ItemsSource="{Binding Packages}"
+                          SelectedItem="{Binding SelectedPackage, Mode=TwoWay}"
+                          BorderThickness="0"
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Product name" Width="230">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding ProductName}"
+                                                   FontSize="12"
+                                                   Foreground="#222"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   ToolTip="{Binding ProductName}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="File" Width="160">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding FileName}"
+                                                   FontSize="12"
+                                                   Foreground="#555"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   ToolTip="{Binding FullPath}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Size" Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding SizeDisplay}"
+                                                   FontSize="12"
+                                                   Foreground="#555"
+                                                   TextAlignment="Right"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Border>
+
+            <!-- Right: details panel -->
+            <Border Grid.Column="2"
+                    BorderBrush="#D0D0D0"
+                    BorderThickness="1"
+                    Background="White"
+                    Padding="12,10">
+                <Grid>
+
+                    <!-- Placeholder: nothing selected -->
+                    <TextBlock Text="Select a file to view details."
+                               FontSize="12"
+                               Foreground="#888"
+                               FontStyle="Italic"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               TextAlignment="Center"
+                               TextWrapping="Wrap">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding HasSelection}" Value="True">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+
+                    <!-- Placeholder: no metadata -->
+                    <TextBlock Text="No metadata available."
+                               FontSize="12"
+                               Foreground="#AAA"
+                               FontStyle="Italic"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               TextAlignment="Center"
+                               Visibility="{Binding ShowNoMetadata, Converter={StaticResource BoolToVis}}"/>
+
+                    <!-- Details grid -->
+                    <Grid Visibility="{Binding ShowDetails, Converter={StaticResource BoolToVis}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="8"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="6"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="6"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="6"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="6"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Author" FontSize="11" Foreground="#888"/>
+                        <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding SelectedDetails.Author}" FontSize="12" Foreground="#222" TextWrapping="Wrap"/>
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Title" FontSize="11" Foreground="#888"/>
+                        <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding SelectedDetails.Title}" FontSize="12" Foreground="#222" TextWrapping="Wrap"/>
+
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="Subject" FontSize="11" Foreground="#888"/>
+                        <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding SelectedDetails.Subject}" FontSize="12" Foreground="#222" TextWrapping="Wrap"/>
+
+                        <TextBlock Grid.Row="6" Grid.Column="0" Text="Comments" FontSize="11" Foreground="#888"/>
+                        <TextBlock Grid.Row="6" Grid.Column="2" Text="{Binding SelectedDetails.Comments}" FontSize="12" Foreground="#222" TextWrapping="Wrap"/>
+
+                        <TextBlock Grid.Row="8" Grid.Column="0" Text="Signature" FontSize="11" Foreground="#888"/>
+                        <TextBlock Grid.Row="8" Grid.Column="2" Text="{Binding SelectedDetails.DigitalSignature}" FontSize="12" Foreground="#222" TextWrapping="Wrap"/>
+                    </Grid>
+
+                </Grid>
+            </Border>
+
+        </Grid>
 
         <!-- ── Summary line ────────────────────────────────────── -->
         <TextBlock Grid.Row="2"

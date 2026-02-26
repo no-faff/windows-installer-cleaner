@@ -14,6 +14,7 @@ public partial class MainViewModel : ObservableObject
     private readonly IExclusionService _exclusionService;
     private readonly ISettingsService _settingsService;
     private readonly IPendingRebootService _rebootService;
+    private readonly IMsiFileInfoService _msiInfoService;
 
     // Scan state
     [ObservableProperty] private bool _isScanning;
@@ -50,7 +51,8 @@ public partial class MainViewModel : ObservableObject
         IDeleteFilesService deleteService,
         IExclusionService exclusionService,
         ISettingsService settingsService,
-        IPendingRebootService rebootService)
+        IPendingRebootService rebootService,
+        IMsiFileInfoService msiInfoService)
     {
         _scanService = scanService;
         _moveService = moveService;
@@ -58,6 +60,7 @@ public partial class MainViewModel : ObservableObject
         _exclusionService = exclusionService;
         _settingsService = settingsService;
         _rebootService = rebootService;
+        _msiInfoService = msiInfoService;
 
         _settings = settingsService.Load();
         MoveDestination = _settings.MoveDestination;
@@ -223,7 +226,8 @@ public partial class MainViewModel : ObservableObject
 
         var viewModel = new OrphanedFilesViewModel(
             _lastFilteredResult.Actionable,
-            _lastFilteredResult.Excluded);
+            _lastFilteredResult.Excluded,
+            _msiInfoService);
 
         var window = new OrphanedFilesWindow(viewModel)
         {
@@ -239,7 +243,8 @@ public partial class MainViewModel : ObservableObject
 
         var viewModel = new RegisteredFilesViewModel(
             _lastScanResult.RegisteredPackages,
-            _lastScanResult.RegisteredTotalBytes);
+            _lastScanResult.RegisteredTotalBytes,
+            _msiInfoService);
 
         var window = new RegisteredFilesWindow(viewModel)
         {
