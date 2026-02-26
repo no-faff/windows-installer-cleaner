@@ -90,6 +90,12 @@
                                            FontStyle="Italic"/>
                             </Border>
 
+                            <TextBlock Text="These files match your exclusion filters and won't be moved or deleted."
+                                       FontSize="11"
+                                       Foreground="#AAA"
+                                       Margin="10,0,10,4"
+                                       TextWrapping="Wrap"/>
+
                             <ListBox x:Name="ExcludedList"
                                      ItemsSource="{Binding ExcludedFiles}"
                                      SelectedItem="{Binding SelectedFile, Mode=TwoWay}"

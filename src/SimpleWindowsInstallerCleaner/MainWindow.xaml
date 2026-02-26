@@ -119,7 +119,14 @@
                 </DockPanel>
 
                 <!-- Excluded by filters -->
-                <DockPanel Margin="0,0,0,7">
+                <DockPanel Margin="0,0,0,7"
+                           ToolTip="Excluded files match your exclusion filters (e.g. Adobe). Edit filters in Settings.">
+                    <Button DockPanel.Dock="Right"
+                            Style="{StaticResource LinkButton}"
+                            Content="details..."
+                            Command="{Binding OpenOrphanedDetailsCommand}"
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"/>
                     <TextBlock DockPanel.Dock="Right"
                                Text="{Binding ExcludedSizeDisplay}"
                                Foreground="#666" FontSize="13"
