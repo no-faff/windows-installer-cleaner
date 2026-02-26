@@ -119,8 +119,7 @@
                 </DockPanel>
 
                 <!-- Excluded by filters -->
-                <DockPanel Margin="0,0,0,7"
-                           ToolTip="Excluded files match your exclusion filters (e.g. Adobe). Edit filters in Settings.">
+                <DockPanel Margin="0,0,0,7">
                     <Button DockPanel.Dock="Right"
                             Style="{StaticResource LinkButton}"
                             Content="details..."
@@ -132,7 +131,8 @@
                                Foreground="#666" FontSize="13"
                                VerticalAlignment="Center" MinWidth="80"
                                TextAlignment="Right"/>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center"
+                                ToolTip="Excluded files match your exclusion filters (e.g. Adobe). Edit filters in Settings.">
                         <TextBlock Text="●" Foreground="#666" Margin="0,0,7,0" FontSize="13"/>
                         <TextBlock Text="{Binding ExcludedFileCount}"
                                    Foreground="#333" FontWeight="SemiBold" FontSize="13"/>
@@ -231,7 +231,7 @@
                 BorderBrush="#D0D0D0"
                 BorderThickness="0,1,0,0"
                 Padding="12,5">
-            <DockPanel>
+            <DockPanel LastChildFill="False">
                 <Button DockPanel.Dock="Left"
                         Style="{StaticResource LinkButton}"
                         Content="⚙ Settings"
