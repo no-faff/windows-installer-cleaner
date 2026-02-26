@@ -1,4 +1,5 @@
 using System.IO;
+using SimpleWindowsInstallerCleaner.Helpers;
 using SimpleWindowsInstallerCleaner.Models;
 
 namespace SimpleWindowsInstallerCleaner.Services;
@@ -72,7 +73,7 @@ public sealed class FileSystemScanService : IFileSystemScanService
                 IsPatch: ext.Equals(".msp", StringComparison.OrdinalIgnoreCase)));
         }
 
-        progress?.Report($"Found {orphans.Count} orphaned file(s).");
+        progress?.Report($"Found {orphans.Count} orphaned {DisplayHelpers.Pluralise(orphans.Count, "file", "files")}.");
         return new ScanResult(orphans.AsReadOnly(), registered, registeredBytes);
     }
 
