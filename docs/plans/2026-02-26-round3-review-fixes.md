@@ -8,8 +8,8 @@
 
 | Task | Commit | Status |
 |------|--------|--------|
-| 1 — Fix patches "(none)" placeholder | | pending |
-| 2 — Remove dead Visibility attribute in OrphanedFilesWindow | | pending |
+| 1 — Fix patches "(none)" placeholder | 0ebaa4f | ✓ done |
+| 2 — Remove dead Visibility attribute in OrphanedFilesWindow | ae12b42 | ✓ done |
 | 3 — Proper pluralisation (remove "(s)" pattern) | | pending |
 | 4 — Unit tests for RegisteredFilesViewModel grouping | | pending |
 | 5 — Narrow bare catch blocks in MsiFileInfoService | | pending |
