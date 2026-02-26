@@ -38,8 +38,10 @@
                     <StackPanel>
 
                         <!-- Orphaned files (actionable) -->
-                        <ListBox ItemsSource="{Binding ActionableFiles}"
+                        <ListBox x:Name="ActionableList"
+                                 ItemsSource="{Binding ActionableFiles}"
                                  SelectedItem="{Binding SelectedFile, Mode=TwoWay}"
+                                 GotFocus="ActionableList_GotFocus"
                                  Background="Transparent"
                                  BorderThickness="0"
                                  Padding="10,8,10,4"
@@ -88,8 +90,10 @@
                                            FontStyle="Italic"/>
                             </Border>
 
-                            <ListBox ItemsSource="{Binding ExcludedFiles}"
+                            <ListBox x:Name="ExcludedList"
+                                     ItemsSource="{Binding ExcludedFiles}"
                                      SelectedItem="{Binding SelectedFile, Mode=TwoWay}"
+                                     GotFocus="ExcludedList_GotFocus"
                                      Background="Transparent"
                                      BorderThickness="0"
                                      Padding="10,2,10,8"
