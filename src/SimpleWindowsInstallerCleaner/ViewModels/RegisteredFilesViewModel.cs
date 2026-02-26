@@ -1,5 +1,6 @@
 using System.IO;
 using CommunityToolkit.Mvvm.ComponentModel;
+using SimpleWindowsInstallerCleaner.Helpers;
 using SimpleWindowsInstallerCleaner.Models;
 using SimpleWindowsInstallerCleaner.Services;
 
@@ -44,7 +45,7 @@ public partial class RegisteredFilesViewModel : ObservableObject
                 SizeDisplay: GetSizeDisplay(p.LocalPackagePath)))
             .ToList();
 
-        Summary = $"{packages.Count} registered file(s) ({FormatSize(totalBytes)})";
+        Summary = $"{packages.Count} registered file(s) ({DisplayHelpers.FormatSize(totalBytes)})";
     }
 
     partial void OnSelectedPackageChanged(RegisteredFileRow? value)
@@ -66,17 +67,9 @@ public partial class RegisteredFilesViewModel : ObservableObject
 
     private static string GetSizeDisplay(string path)
     {
-        try { return FormatSize(new FileInfo(path).Length); }
+        try { return DisplayHelpers.FormatSize(new FileInfo(path).Length); }
         catch { return string.Empty; }
     }
-
-    private static string FormatSize(long bytes) => bytes switch
-    {
-        >= 1_073_741_824 => $"{bytes / 1_073_741_824.0:F2} GB",
-        >= 1_048_576 => $"{bytes / 1_048_576.0:F1} MB",
-        >= 1_024 => $"{bytes / 1_024.0:F1} KB",
-        _ => $"{bytes} B"
-    };
 }
 
 public sealed record RegisteredFileRow(

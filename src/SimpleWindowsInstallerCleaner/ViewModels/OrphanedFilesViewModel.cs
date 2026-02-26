@@ -1,4 +1,5 @@
 using CommunityToolkit.Mvvm.ComponentModel;
+using SimpleWindowsInstallerCleaner.Helpers;
 using SimpleWindowsInstallerCleaner.Models;
 using SimpleWindowsInstallerCleaner.Services;
 
@@ -39,8 +40,8 @@ public partial class OrphanedFilesViewModel : ObservableObject
         ActionableFiles = actionableFiles.OrderByDescending(f => f.SizeBytes).ToList();
         ExcludedFiles = excludedFiles.OrderByDescending(f => f.SizeBytes).ToList();
 
-        var orphanedSize = FormatSize(actionableFiles.Sum(f => f.SizeBytes));
-        var excludedSize = FormatSize(excludedFiles.Sum(f => f.SizeBytes));
+        var orphanedSize = DisplayHelpers.FormatSize(actionableFiles.Sum(f => f.SizeBytes));
+        var excludedSize = DisplayHelpers.FormatSize(excludedFiles.Sum(f => f.SizeBytes));
 
         Summary = excludedFiles.Count > 0
             ? $"{actionableFiles.Count} orphaned ({orphanedSize}) · {excludedFiles.Count} excluded ({excludedSize})"
@@ -64,11 +65,4 @@ public partial class OrphanedFilesViewModel : ObservableObject
         SelectedDetails = info;
     }
 
-    private static string FormatSize(long bytes) => bytes switch
-    {
-        >= 1_073_741_824 => $"{bytes / 1_073_741_824.0:F1} GB",
-        >= 1_048_576 => $"{bytes / 1_048_576.0:F1} MB",
-        >= 1_024 => $"{bytes / 1_024.0:F1} KB",
-        _ => $"{bytes} B"
-    };
 }

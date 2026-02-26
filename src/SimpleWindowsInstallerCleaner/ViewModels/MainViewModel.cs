@@ -1,6 +1,7 @@
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using SimpleWindowsInstallerCleaner.Helpers;
 using SimpleWindowsInstallerCleaner.Models;
 using SimpleWindowsInstallerCleaner.Services;
 
@@ -113,13 +114,13 @@ public partial class MainViewModel : ObservableObject
                 _lastScanResult.OrphanedFiles, _settings.ExclusionFilters);
 
             RegisteredFileCount = _lastScanResult.RegisteredPackages.Count;
-            RegisteredSizeDisplay = FormatSize(_lastScanResult.RegisteredTotalBytes);
+            RegisteredSizeDisplay = DisplayHelpers.FormatSize(_lastScanResult.RegisteredTotalBytes);
 
             ExcludedFileCount = _lastFilteredResult.Excluded.Count;
-            ExcludedSizeDisplay = FormatSize(_lastFilteredResult.Excluded.Sum(f => f.SizeBytes));
+            ExcludedSizeDisplay = DisplayHelpers.FormatSize(_lastFilteredResult.Excluded.Sum(f => f.SizeBytes));
 
             OrphanedFileCount = _lastFilteredResult.Actionable.Count;
-            OrphanedSizeDisplay = FormatSize(_lastFilteredResult.Actionable.Sum(f => f.SizeBytes));
+            OrphanedSizeDisplay = DisplayHelpers.FormatSize(_lastFilteredResult.Actionable.Sum(f => f.SizeBytes));
 
             HasScanned = true;
         }
@@ -282,9 +283,9 @@ public partial class MainViewModel : ObservableObject
                     _lastScanResult.OrphanedFiles, _settings.ExclusionFilters);
 
                 ExcludedFileCount = _lastFilteredResult.Excluded.Count;
-                ExcludedSizeDisplay = FormatSize(_lastFilteredResult.Excluded.Sum(f => f.SizeBytes));
+                ExcludedSizeDisplay = DisplayHelpers.FormatSize(_lastFilteredResult.Excluded.Sum(f => f.SizeBytes));
                 OrphanedFileCount = _lastFilteredResult.Actionable.Count;
-                OrphanedSizeDisplay = FormatSize(_lastFilteredResult.Actionable.Sum(f => f.SizeBytes));
+                OrphanedSizeDisplay = DisplayHelpers.FormatSize(_lastFilteredResult.Actionable.Sum(f => f.SizeBytes));
             }
         }
     }
@@ -312,11 +313,4 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private async Task RefreshAsync() => await ScanAsync();
 
-    internal static string FormatSize(long bytes) => bytes switch
-    {
-        >= 1_073_741_824 => $"{bytes / 1_073_741_824.0:F2} GB",
-        >= 1_048_576 => $"{bytes / 1_048_576.0:F1} MB",
-        >= 1_024 => $"{bytes / 1_024.0:F1} KB",
-        _ => $"{bytes} B"
-    };
 }
