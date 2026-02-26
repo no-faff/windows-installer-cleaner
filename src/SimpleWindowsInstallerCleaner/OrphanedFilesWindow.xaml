@@ -192,6 +192,8 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="6"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="6"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
                         <TextBlock Grid.Row="0" Grid.Column="0" Text="Author" FontSize="11" Foreground="#888"/>
@@ -203,11 +205,14 @@
                         <TextBlock Grid.Row="4" Grid.Column="0" Text="Subject" FontSize="11" Foreground="#888"/>
                         <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding SelectedDetails.Subject}" FontSize="12" Foreground="#222" TextWrapping="Wrap"/>
 
-                        <TextBlock Grid.Row="6" Grid.Column="0" Text="Comments" FontSize="11" Foreground="#888"/>
-                        <TextBlock Grid.Row="6" Grid.Column="2" Text="{Binding SelectedDetails.Comments}" FontSize="12" Foreground="#222" TextWrapping="Wrap"/>
+                        <TextBlock Grid.Row="6" Grid.Column="0" Text="Signature" FontSize="11" Foreground="#888"/>
+                        <TextBlock Grid.Row="6" Grid.Column="2" Text="{Binding SelectedDetails.DigitalSignature}" FontSize="12" Foreground="#222" TextWrapping="Wrap"/>
 
-                        <TextBlock Grid.Row="8" Grid.Column="0" Text="Signature" FontSize="11" Foreground="#888"/>
-                        <TextBlock Grid.Row="8" Grid.Column="2" Text="{Binding SelectedDetails.DigitalSignature}" FontSize="12" Foreground="#222" TextWrapping="Wrap"/>
+                        <TextBlock Grid.Row="8" Grid.Column="0" Text="Size" FontSize="11" Foreground="#888"/>
+                        <TextBlock Grid.Row="8" Grid.Column="2" Text="{Binding SelectedFile.SizeDisplay}" FontSize="12" Foreground="#222"/>
+
+                        <TextBlock Grid.Row="10" Grid.Column="0" Text="Comment" FontSize="11" Foreground="#888"/>
+                        <TextBlock Grid.Row="10" Grid.Column="2" Text="{Binding SelectedDetails.Comments}" FontSize="12" Foreground="#222" TextWrapping="Wrap"/>
                     </Grid>
 
                 </Grid>
