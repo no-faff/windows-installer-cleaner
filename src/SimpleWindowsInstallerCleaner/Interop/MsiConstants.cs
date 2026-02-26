@@ -63,3 +63,23 @@ public static class MsiInstallProperty
     /// <summary>Publisher / manufacturer of the installed product.</summary>
     public const string Publisher = "Publisher";
 }
+
+/// <summary>
+/// Property IDs for MsiSummaryInfoGetProperty.
+/// </summary>
+public static class MsiSummaryProperty
+{
+    public const uint Title    = 2;  // PID_TITLE
+    public const uint Subject  = 3;  // PID_SUBJECT
+    public const uint Author   = 4;  // PID_AUTHOR
+    public const uint Comments = 6;  // PID_COMMENTS
+}
+
+/// <summary>
+/// VARTYPE values returned by MsiSummaryInfoGetProperty in puiDataType.
+/// </summary>
+public static class VtType
+{
+    public const uint Empty  = 0;
+    public const uint String = 30; // VT_LPSTR
+}

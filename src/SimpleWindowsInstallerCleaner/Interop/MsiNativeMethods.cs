@@ -148,4 +148,34 @@ internal static partial class MsiNativeMethods
         StringBuilder? szValue,
         ref uint pcchValue);
 
+    /// <summary>
+    /// Opens the summary information stream of an MSI/MSP file.
+    /// Pass hDatabase = IntPtr.Zero and szDatabasePath = file path to open from a file.
+    /// </summary>
+    [DllImport(MsiLib, EntryPoint = "MsiGetSummaryInformationW", CharSet = CharSet.Unicode)]
+    public static extern uint MsiGetSummaryInformation(
+        IntPtr hDatabase,
+        string? szDatabasePath,
+        uint uiUpdateCount,
+        out IntPtr phSummaryInfo);
+
+    /// <summary>
+    /// Retrieves a property from the summary information stream.
+    /// </summary>
+    [DllImport(MsiLib, EntryPoint = "MsiSummaryInfoGetPropertyW", CharSet = CharSet.Unicode)]
+    public static extern uint MsiSummaryInfoGetProperty(
+        IntPtr hSummaryInfo,
+        uint uiProperty,
+        out uint puiDataType,
+        out int piValue,
+        IntPtr pftValue,
+        StringBuilder? szValueBuf,
+        ref uint pcchValueBuf);
+
+    /// <summary>
+    /// Closes an MSI handle (summary info, database, etc).
+    /// </summary>
+    [DllImport(MsiLib, EntryPoint = "MsiCloseHandle")]
+    public static extern uint MsiCloseHandle(IntPtr hAny);
+
 }
