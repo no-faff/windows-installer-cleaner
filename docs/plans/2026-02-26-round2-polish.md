@@ -6,7 +6,17 @@
 
 ## Progress (updated by executor)
 
-_(Executor: update this section with commit hashes as tasks are completed.)_
+| Task | Commit | Status |
+|------|--------|--------|
+| 1 — Extract FormatSize helper | 4b7683d | ✓ done |
+| 2 — Fix dual-ListBox selection | 4bae2cb | ✓ done |
+| 3 — Settings save exception handling | 2df6470 | ✓ done |
+| 4 — Dead code cleanup | e045b62 | ✓ done |
+| 5 — Exclusion filters on MSI metadata | e6015f3 | ✓ done |
+| 6 — Registered files master-detail | 621199f | ✓ done |
+| 7 — File Size/Comment in orphaned panel | 7305562 | ✓ done |
+| 8 — Publish profile | 8a249cb | ✓ done |
+| 9 — Update tests | | |
 
 ## Author: Opus, 26 February 2026
 
