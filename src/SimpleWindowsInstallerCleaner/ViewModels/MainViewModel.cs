@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -104,6 +105,7 @@ public partial class MainViewModel : ObservableObject
     private async Task ScanAsync()
     {
         ScanProgress = "Starting scan...";
+        var sw = Stopwatch.StartNew();
 
         try
         {
@@ -128,6 +130,8 @@ public partial class MainViewModel : ObservableObject
             OrphanedFileCount = _lastFilteredResult.Actionable.Count;
             OrphanedSizeDisplay = DisplayHelpers.FormatSize(_lastFilteredResult.Actionable.Sum(f => f.SizeBytes));
 
+            sw.Stop();
+            ScanProgress = $"Scan complete ({sw.Elapsed.TotalSeconds:F1}s)";
             HasScanned = true;
         }
         catch (UnauthorizedAccessException)
