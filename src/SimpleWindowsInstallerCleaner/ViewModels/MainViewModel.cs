@@ -219,7 +219,17 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private void OpenOrphanedDetails()
     {
-        // Implemented in Task 10.
+        if (_lastFilteredResult is null) return;
+
+        var viewModel = new OrphanedFilesViewModel(
+            _lastFilteredResult.Actionable,
+            _lastFilteredResult.Excluded);
+
+        var window = new OrphanedFilesWindow(viewModel)
+        {
+            Owner = Application.Current.MainWindow
+        };
+        window.ShowDialog();
     }
 
     [RelayCommand]

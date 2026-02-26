@@ -25,4 +25,7 @@ public record OrphanedFile(
         >= 1_024 => $"{SizeBytes / 1_024.0:F1} KB",
         _ => $"{SizeBytes} B"
     };
+
+    /// <summary>File type label: ".msp" for patches, ".msi" for installer packages.</summary>
+    public string TypeLabel => IsPatch ? ".msp" : ".msi";
 }
