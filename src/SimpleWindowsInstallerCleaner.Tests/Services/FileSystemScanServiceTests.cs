@@ -58,7 +58,7 @@ public class FileSystemScanServiceTests
     }
 
     [Fact]
-    public async Task ScanAsync_registered_file_count_is_zero_when_files_not_on_disk()
+    public async Task ScanAsync_registered_packages_contains_all_api_packages()
     {
         // Registered packages pointing to paths that don't exist on disk.
         var registered = new List<RegisteredPackage>
@@ -77,8 +77,9 @@ public class FileSystemScanServiceTests
         var svc = new FileSystemScanService(mockQuery.Object, fakeFiles);
         var result = await svc.ScanAsync();
 
-        // Files don't exist on disk in tests, so counts are 0.
-        Assert.Equal(0, result.RegisteredFileCount);
+        // All API packages are included regardless of disk presence.
+        Assert.Equal(2, result.RegisteredPackages.Count);
+        // Files don't exist on disk, so total bytes is 0.
         Assert.Equal(0, result.RegisteredTotalBytes);
         Assert.Single(result.OrphanedFiles);
     }

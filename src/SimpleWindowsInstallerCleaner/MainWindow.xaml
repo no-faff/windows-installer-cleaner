@@ -95,6 +95,12 @@
 
                 <!-- Still used -->
                 <DockPanel Margin="0,0,0,7">
+                    <Button DockPanel.Dock="Right"
+                            Style="{StaticResource LinkButton}"
+                            Content="details..."
+                            Command="{Binding OpenRegisteredDetailsCommand}"
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"/>
                     <TextBlock DockPanel.Dock="Right"
                                Text="{Binding RegisteredSizeDisplay}"
                                Foreground="#666" FontSize="13"

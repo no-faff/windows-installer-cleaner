@@ -109,7 +109,7 @@ public partial class MainViewModel : ObservableObject
             _lastFilteredResult = _exclusionService.ApplyFilters(
                 _lastScanResult.OrphanedFiles, _settings.ExclusionFilters);
 
-            RegisteredFileCount = _lastScanResult.RegisteredFileCount;
+            RegisteredFileCount = _lastScanResult.RegisteredPackages.Count;
             RegisteredSizeDisplay = FormatSize(_lastScanResult.RegisteredTotalBytes);
 
             ExcludedFileCount = _lastFilteredResult.Excluded.Count;
@@ -226,6 +226,22 @@ public partial class MainViewModel : ObservableObject
             _lastFilteredResult.Excluded);
 
         var window = new OrphanedFilesWindow(viewModel)
+        {
+            Owner = Application.Current.MainWindow
+        };
+        window.ShowDialog();
+    }
+
+    [RelayCommand]
+    private void OpenRegisteredDetails()
+    {
+        if (_lastScanResult is null) return;
+
+        var viewModel = new RegisteredFilesViewModel(
+            _lastScanResult.RegisteredPackages,
+            _lastScanResult.RegisteredTotalBytes);
+
+        var window = new RegisteredFilesWindow(viewModel)
         {
             Owner = Application.Current.MainWindow
         };

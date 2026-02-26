@@ -34,18 +34,14 @@ public sealed class FileSystemScanService : IFileSystemScanService
             registered.Select(p => p.LocalPackagePath),
             StringComparer.OrdinalIgnoreCase);
 
-        // Count and size registered files that exist on disk.
-        int registeredCount = 0;
+        // Size registered files that exist on disk.
         long registeredBytes = 0;
         foreach (var pkg in registered)
         {
             try
             {
                 if (File.Exists(pkg.LocalPackagePath))
-                {
-                    registeredCount++;
                     registeredBytes += new FileInfo(pkg.LocalPackagePath).Length;
-                }
             }
             catch { /* skip inaccessible */ }
         }
@@ -77,7 +73,7 @@ public sealed class FileSystemScanService : IFileSystemScanService
         }
 
         progress?.Report($"Found {orphans.Count} orphaned file(s).");
-        return new ScanResult(orphans.AsReadOnly(), registeredCount, registeredBytes);
+        return new ScanResult(orphans.AsReadOnly(), registered, registeredBytes);
     }
 
     private static IEnumerable<string> GetInstallerFiles()
