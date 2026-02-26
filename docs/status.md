@@ -23,26 +23,31 @@ Key services: `FileSystemScanService`, `MoveFilesService`, `DeleteFilesService`,
 Three windows: `MainWindow` (scan + actions), `RegisteredFilesWindow` (products/patches/details),
 `OrphanedFilesWindow` (file list + metadata details).
 
+## Bugs found during first real-world test (27 Feb)
+
+- **Infinite loop without admin** (FIXED, 0d2751c): `MsiEnumProductsEx` returns
+  `ERROR_ACCESS_DENIED` instead of `ERROR_NO_MORE_ITEMS` when not elevated,
+  causing the enumeration loop to spin forever. Now throws
+  `UnauthorizedAccessException` which the existing handler catches cleanly.
+
 ## What's next
 
-The code is structurally sound. Remaining work is UX and release preparation:
+The code is structurally sound. Remaining work is UX, real-world testing and
+release preparation:
 
-1. **Real-world testing** — run the app on a real machine, click everything, find
-   what feels wrong. No substitute for actual usage.
+1. **Continue real-world testing** — compare results against PatchCleaner.
+   Does ours find the same orphans? Is scan speed acceptable?
 
-2. **Error states** — what happens when C:\Windows\Installer is inaccessible?
-   Move destination full? File locked? Admin rights missing?
+2. **Error states** — move destination full, file locked, disk read errors.
 
-3. **Admin elevation** — clear prompting, graceful failure without elevation.
+3. **Progress feedback** — PatchCleaner scans in ~2 seconds. Ours should be
+   comparable. If not, profile and optimise the MSI API calls.
 
-4. **Progress feedback** — long scans need visible progress. UI responsiveness
-   during scanning.
+4. **Accessibility** — keyboard navigation, screen reader support, high contrast.
 
-5. **Accessibility** — keyboard navigation, screen reader support, high contrast.
+5. **Branding** — app icon, version info, about dialog, GitHub link.
 
-6. **Branding** — app icon, version info, about dialog, GitHub link.
-
-7. **Distribution** — single-exe publish, installer vs portable, auto-update.
+6. **Distribution** — single-exe publish, installer vs portable, auto-update.
 
 ## How to run
 
