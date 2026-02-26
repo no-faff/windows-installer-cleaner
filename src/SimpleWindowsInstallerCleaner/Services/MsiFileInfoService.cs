@@ -26,7 +26,7 @@ public sealed class MsiFileInfoService : IMsiFileInfoService
 
             return new MsiSummaryInfo(title, subject, author, comments, sig);
         }
-        catch
+        catch (Exception)
         {
             return null;
         }
@@ -82,7 +82,7 @@ public sealed class MsiFileInfoService : IMsiFileInfoService
             }
             return subject;
         }
-        catch
+        catch (Exception)
         {
             return string.Empty;
         }
