@@ -8,6 +8,10 @@
         WindowStartupLocation="CenterScreen"
         Background="#F5F5F5">
 
+    <Window.InputBindings>
+        <KeyBinding Key="F5" Command="{Binding ScanCommand}"/>
+    </Window.InputBindings>
+
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
 
@@ -231,6 +235,18 @@
                         Content="↺ Refresh"
                         Command="{Binding RefreshCommand}"
                         Margin="12,0,0,0"/>
+
+                <Button DockPanel.Dock="Left"
+                        Style="{StaticResource LinkButton}"
+                        Content="ℹ About"
+                        Command="{Binding ShowAboutCommand}"
+                        Margin="12,0,0,0"/>
+
+                <Button DockPanel.Dock="Right"
+                        Style="{StaticResource LinkButton}"
+                        Content="♥ Donate"
+                        Command="{Binding DonateCommand}"
+                        Margin="0,0,12,0"/>
 
                 <TextBlock DockPanel.Dock="Right"
                            Text="no-faff.github.io"

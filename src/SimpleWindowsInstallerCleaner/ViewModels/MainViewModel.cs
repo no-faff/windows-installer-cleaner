@@ -123,6 +123,15 @@ public partial class MainViewModel : ObservableObject
 
             HasScanned = true;
         }
+        catch (UnauthorizedAccessException)
+        {
+            MessageBox.Show(
+                "This app requires administrator privileges.\n\nPlease right-click and choose 'Run as administrator'.",
+                "Administrator rights required",
+                MessageBoxButton.OK,
+                MessageBoxImage.Warning);
+            ScanProgress = "Access denied — run as administrator.";
+        }
         catch (Exception ex)
         {
             ScanProgress = $"Scan failed: {ex.Message}";
@@ -278,6 +287,26 @@ public partial class MainViewModel : ObservableObject
                 OrphanedSizeDisplay = FormatSize(_lastFilteredResult.Actionable.Sum(f => f.SizeBytes));
             }
         }
+    }
+
+    [RelayCommand]
+    private void ShowAbout()
+    {
+        MessageBox.Show(
+            "Simple Windows installer cleaner v1.0.0\n\nPart of the No faff suite\n\nMIT licence · github.com/no-faff",
+            "About",
+            MessageBoxButton.OK,
+            MessageBoxImage.Information);
+    }
+
+    [RelayCommand]
+    private void Donate()
+    {
+        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+        {
+            FileName = "https://github.com/no-faff/windows-installer-cleaner",
+            UseShellExecute = true
+        });
     }
 
     [RelayCommand]

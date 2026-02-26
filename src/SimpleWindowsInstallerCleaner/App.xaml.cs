@@ -10,6 +10,8 @@ public partial class App : Application
     {
         base.OnStartup(e);
 
+        try
+        {
         var settingsService = new SettingsService();
         var queryService = new InstallerQueryService();
         var scanService = new FileSystemScanService(queryService);
@@ -28,5 +30,15 @@ public partial class App : Application
 
         // Auto-scan on startup.
         _ = viewModel.ScanCommand.ExecuteAsync(null);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(
+                $"Failed to start: {ex.Message}",
+                "Startup error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+            Shutdown();
+        }
     }
 }
