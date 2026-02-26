@@ -46,6 +46,9 @@ public partial class OrphanedFilesViewModel : ObservableObject
         Summary = excludedFiles.Count > 0
             ? $"{actionableFiles.Count} orphaned ({orphanedSize}) · {excludedFiles.Count} excluded ({excludedSize})"
             : $"{actionableFiles.Count} orphaned ({orphanedSize})";
+
+        if (ActionableFiles.Count > 0)
+            SelectedFile = ActionableFiles[0];
     }
 
     partial void OnSelectedFileChanged(OrphanedFile? value)

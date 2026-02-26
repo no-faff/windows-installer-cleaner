@@ -89,6 +89,9 @@ public partial class RegisteredFilesViewModel : ObservableObject
 
         Products = products;
         Summary = $"{packages.Count} registered {DisplayHelpers.Pluralise(packages.Count, "file", "files")} ({DisplayHelpers.FormatSize(totalBytes)})";
+
+        if (Products.Count > 0)
+            SelectedProduct = Products[0];
     }
 
     partial void OnSelectedProductChanged(ProductRow? value)
