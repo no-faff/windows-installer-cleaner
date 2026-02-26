@@ -32,6 +32,7 @@ public partial class RegisteredFilesViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(ShowDetails))]
     [NotifyPropertyChangedFor(nameof(ShowNoMetadata))]
     [NotifyPropertyChangedFor(nameof(SelectedPatches))]
+    [NotifyPropertyChangedFor(nameof(HasPatches))]
     private ProductRow? _selectedProduct;
 
     [ObservableProperty]
@@ -40,6 +41,7 @@ public partial class RegisteredFilesViewModel : ObservableObject
     private MsiSummaryInfo? _selectedDetails;
 
     public bool HasSelection => SelectedProduct is not null;
+    public bool HasPatches => SelectedProduct is not null && SelectedProduct.Patches.Count > 0;
     public bool ShowDetails => SelectedProduct is not null && SelectedDetails is not null;
     public bool ShowNoMetadata => SelectedProduct is not null && SelectedDetails is null;
     public IReadOnlyList<PatchRow> SelectedPatches => SelectedProduct?.Patches ?? Array.Empty<PatchRow>();
