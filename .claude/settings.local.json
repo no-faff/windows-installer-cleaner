@@ -17,7 +17,8 @@
       "Bash(tail:*)",
       "Bash(git:*)",
       "WebFetch(domain:sourceforge.net)",
-      "WebFetch(domain:web.archive.org)"
+      "WebFetch(domain:web.archive.org)",
+      "Bash(dotnet test:*)"
     ]
   }
 }

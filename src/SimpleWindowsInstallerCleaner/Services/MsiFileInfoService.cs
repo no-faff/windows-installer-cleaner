@@ -5,11 +5,6 @@ using SimpleWindowsInstallerCleaner.Models;
 
 namespace SimpleWindowsInstallerCleaner.Services;
 
-public interface IMsiFileInfoService
-{
-    MsiSummaryInfo? GetSummaryInfo(string filePath);
-}
-
 public sealed class MsiFileInfoService : IMsiFileInfoService
 {
     public MsiSummaryInfo? GetSummaryInfo(string filePath)

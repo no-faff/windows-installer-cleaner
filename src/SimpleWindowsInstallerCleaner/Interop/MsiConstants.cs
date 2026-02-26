@@ -59,9 +59,6 @@ public static class MsiInstallProperty
 
     /// <summary>Display name of the installed product.</summary>
     public const string ProductName = "ProductName";
-
-    /// <summary>Publisher / manufacturer of the installed product.</summary>
-    public const string Publisher = "Publisher";
 }
 
 /// <summary>
