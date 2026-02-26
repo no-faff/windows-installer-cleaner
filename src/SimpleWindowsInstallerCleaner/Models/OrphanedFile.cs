@@ -12,12 +12,7 @@ public record OrphanedFile(
     /// <summary>File size in bytes.</summary>
     long SizeBytes,
     /// <summary>True for .msp patch files; false for .msi.</summary>
-    bool IsPatch,
-    /// <summary>
-    /// True if this file was found only in the component registration scan
-    /// and appears to be Adobe-related. Shown with a caution indicator.
-    /// </summary>
-    bool IsAdobeWarning)
+    bool IsPatch)
 {
     /// <summary>File name without directory.</summary>
     public string FileName => Path.GetFileName(FullPath);

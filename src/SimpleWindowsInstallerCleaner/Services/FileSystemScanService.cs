@@ -59,8 +59,7 @@ public sealed class FileSystemScanService : IFileSystemScanService
             orphans.Add(new OrphanedFile(
                 FullPath: filePath,
                 SizeBytes: size,
-                IsPatch: ext.Equals(".msp", StringComparison.OrdinalIgnoreCase),
-                IsAdobeWarning: false));
+                IsPatch: ext.Equals(".msp", StringComparison.OrdinalIgnoreCase)));
         }
 
         progress?.Report($"Found {orphans.Count} orphaned file(s).");

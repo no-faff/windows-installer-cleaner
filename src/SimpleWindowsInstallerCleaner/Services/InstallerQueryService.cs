@@ -1,4 +1,3 @@
-using System.IO;
 using System.Text;
 using SimpleWindowsInstallerCleaner.Interop;
 using SimpleWindowsInstallerCleaner.Models;
@@ -24,14 +23,6 @@ public sealed class InstallerQueryService : IInstallerQueryService
     /// null terminator. We allocate 39 to be safe.
     /// </summary>
     private const int GuidBufferLength = 39;
-
-    /// <summary>
-    /// The folder prefix we look for when deciding whether a component path
-    /// is inside the Windows Installer cache.
-    /// </summary>
-    private static readonly string InstallerFolderPrefix =
-        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), "Installer")
-        + Path.DirectorySeparatorChar;
 
     /// <inheritdoc />
     public Task<IReadOnlyList<RegisteredPackage>> GetRegisteredPackagesAsync(
@@ -74,7 +65,7 @@ public sealed class InstallerQueryService : IInstallerQueryService
             if (!string.IsNullOrEmpty(localPackage))
             {
                 progress?.Report(productName.Length > 0 ? productName : productCode);
-                claimed.TryAdd(localPackage, new RegisteredPackage(localPackage, productName, productCode, IsAdobeWarning: false));
+                claimed.TryAdd(localPackage, new RegisteredPackage(localPackage, productName, productCode));
             }
 
             // Enumerate patches for this product
@@ -88,35 +79,9 @@ public sealed class InstallerQueryService : IInstallerQueryService
 
                 if (!string.IsNullOrEmpty(patchPath))
                 {
-                    claimed.TryAdd(patchPath, new RegisteredPackage(patchPath, productName, productCode, IsAdobeWarning: false));
+                    claimed.TryAdd(patchPath, new RegisteredPackage(patchPath, productName, productCode));
                 }
             }
-        }
-
-        // ------------------------------------------------------------------
-        // Phase 2: component-registered packages (Adobe workaround)
-        //
-        // Some vendors (notably Adobe) register cached packages via
-        // component records rather than INSTALLPROPERTY_LOCALPACKAGE.
-        // We enumerate all components and check whether their installed
-        // path points into %windir%\Installer.
-        // ------------------------------------------------------------------
-        progress?.Report("Scanning component registrations...");
-
-        var componentPaths = EnumerateComponentPathsInInstallerFolder(ct);
-
-        foreach (var (componentPath, productCode, userSid, context) in componentPaths)
-        {
-            ct.ThrowIfCancellationRequested();
-
-            // If the primary enumeration already claimed this file, skip it.
-            if (claimed.ContainsKey(componentPath))
-                continue;
-
-            var productName = GetProductProperty(productCode, userSid, context, MsiInstallProperty.ProductName);
-            var isAdobe = productName.Contains("Adobe", StringComparison.OrdinalIgnoreCase);
-
-            claimed.TryAdd(componentPath, new RegisteredPackage(componentPath, productName, productCode, IsAdobeWarning: isAdobe));
         }
 
         progress?.Report($"Scan complete. {claimed.Count} registered package(s) found.");
@@ -268,194 +233,6 @@ public sealed class InstallerQueryService : IInstallerQueryService
         }
 
         return results;
-    }
-
-    // ==================================================================
-    //  Component path enumeration (Adobe workaround)
-    // ==================================================================
-
-    /// <summary>
-    /// Enumerates all components across all users, retrieves each component's
-    /// installed path, and returns only those whose path falls inside
-    /// <c>%windir%\Installer\</c>.
-    /// </summary>
-    private static List<(string Path, string ProductCode, string? UserSid, MsiInstallContext Context)>
-        EnumerateComponentPathsInInstallerFolder(CancellationToken ct)
-    {
-        var results = new List<(string, string, string?, MsiInstallContext)>();
-        var componentCode = new StringBuilder(GuidBufferLength);
-
-        // We also need to know which product owns the component so we can
-        // retrieve its name. MsiEnumComponentsEx does not give us that
-        // directly; we must call MsiGetComponentPathEx to discover it.
-
-        for (uint index = 0; ; index++)
-        {
-            ct.ThrowIfCancellationRequested();
-
-            componentCode.Clear();
-            componentCode.EnsureCapacity(GuidBufferLength);
-            uint sidLen = 0;
-
-            var error = MsiNativeMethods.MsiEnumComponentsEx(
-                szUserSid: AllUsersSid,
-                dwContext: MsiInstallContext.All,
-                dwIndex: index,
-                szInstalledComponentCode: componentCode,
-                pdwInstalledContext: out var compContext,
-                szSid: null,
-                pcchSid: ref sidLen);
-
-            if (error == MsiError.NoMoreItems)
-                break;
-
-            if (error != MsiError.Success && error != MsiError.MoreData)
-                continue;
-
-            // Retrieve the component path using the double-call pattern.
-            var code = componentCode.ToString();
-            var compSid = compContext == MsiInstallContext.Machine ? null : GetComponentSid(code, compContext);
-            var path = GetComponentPath(code, compSid, compContext);
-
-            if (string.IsNullOrEmpty(path))
-                continue;
-
-            if (!path.StartsWith(InstallerFolderPrefix, StringComparison.OrdinalIgnoreCase))
-                continue;
-
-            // We need the owning product code. Look it up by re-enumerating
-            // products that provide this component.
-            var owningProduct = FindOwningProduct(code, compSid, compContext);
-
-            results.Add((path, owningProduct ?? string.Empty, compSid, compContext));
-        }
-
-        return results;
-    }
-
-    /// <summary>
-    /// Gets the SID for a per-user component by re-enumerating with the
-    /// specific component's context.
-    /// </summary>
-    private static string? GetComponentSid(string componentCode, MsiInstallContext context)
-    {
-        var cc = new StringBuilder(GuidBufferLength);
-        uint sidLen = 0;
-
-        MsiNativeMethods.MsiEnumComponentsEx(
-            szUserSid: AllUsersSid,
-            dwContext: context,
-            dwIndex: 0,
-            szInstalledComponentCode: cc,
-            pdwInstalledContext: out _,
-            szSid: null,
-            pcchSid: ref sidLen);
-
-        if (sidLen == 0)
-            return null;
-
-        sidLen++;
-        var sidBuffer = new StringBuilder((int)sidLen);
-
-        var error = MsiNativeMethods.MsiEnumComponentsEx(
-            szUserSid: AllUsersSid,
-            dwContext: context,
-            dwIndex: 0,
-            szInstalledComponentCode: cc,
-            pdwInstalledContext: out _,
-            szSid: sidBuffer,
-            pcchSid: ref sidLen);
-
-        return error == MsiError.Success ? sidBuffer.ToString() : null;
-    }
-
-    /// <summary>
-    /// Retrieves the installed path for a component using the double-call
-    /// buffer pattern.
-    /// </summary>
-    private static string? GetComponentPath(
-        string componentCode,
-        string? userSid,
-        MsiInstallContext context)
-    {
-        uint bufferLen = 0;
-
-        // First call: get required buffer size.
-        var state = MsiNativeMethods.MsiGetComponentPathEx(
-            szProductCode: null,
-            szComponentCode: componentCode,
-            szUserSid: userSid,
-            dwContext: context,
-            lpOutPathBuffer: null,
-            pcchOutPathBuffer: ref bufferLen);
-
-        // state >= 1 means a valid path exists (INSTALLSTATE_LOCAL = 3,
-        // INSTALLSTATE_SOURCE = 1). We accept either.
-        if (state < MsiNativeMethods.InstallStateSource || bufferLen == 0)
-            return null;
-
-        bufferLen++; // space for null terminator
-        var buffer = new StringBuilder((int)bufferLen);
-
-        state = MsiNativeMethods.MsiGetComponentPathEx(
-            szProductCode: null,
-            szComponentCode: componentCode,
-            szUserSid: userSid,
-            dwContext: context,
-            lpOutPathBuffer: buffer,
-            pcchOutPathBuffer: ref bufferLen);
-
-        return state >= MsiNativeMethods.InstallStateSource ? buffer.ToString() : null;
-    }
-
-    /// <summary>
-    /// Finds the product code that owns a given component by iterating
-    /// through all products and checking if they provide this component.
-    /// </summary>
-    private static string? FindOwningProduct(
-        string componentCode,
-        string? userSid,
-        MsiInstallContext context)
-    {
-        var productCode = new StringBuilder(GuidBufferLength);
-
-        for (uint index = 0; ; index++)
-        {
-            productCode.Clear();
-            productCode.EnsureCapacity(GuidBufferLength);
-            uint sidLen = 0;
-
-            var error = MsiNativeMethods.MsiEnumProductsEx(
-                szProductCode: null,
-                szUserSid: userSid ?? AllUsersSid,
-                dwContext: context,
-                dwIndex: index,
-                szInstalledProductCode: productCode,
-                pdwInstalledContext: out _,
-                szSid: null,
-                pcchSid: ref sidLen);
-
-            if (error == MsiError.NoMoreItems)
-                break;
-
-            if (error != MsiError.Success && error != MsiError.MoreData)
-                continue;
-
-            // Check if this product provides the component.
-            uint pathLen = 0;
-            var state = MsiNativeMethods.MsiGetComponentPathEx(
-                szProductCode: productCode.ToString(),
-                szComponentCode: componentCode,
-                szUserSid: userSid,
-                dwContext: context,
-                lpOutPathBuffer: null,
-                pcchOutPathBuffer: ref pathLen);
-
-            if (state >= MsiNativeMethods.InstallStateSource)
-                return productCode.ToString();
-        }
-
-        return null;
     }
 
     // ==================================================================

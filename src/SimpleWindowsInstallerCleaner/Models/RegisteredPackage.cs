@@ -14,13 +14,7 @@ namespace SimpleWindowsInstallerCleaner.Models;
 /// <param name="ProductCode">
 /// Product code GUID string (e.g. <c>{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c>).
 /// </param>
-/// <param name="IsAdobeWarning">
-/// <c>true</c> if this package was claimed only via component registration
-/// and the owning product name contains "Adobe". These files may appear
-/// orphaned under simpler enumeration but are likely still needed.
-/// </param>
 public record RegisteredPackage(
     string LocalPackagePath,
     string ProductName,
-    string ProductCode,
-    bool IsAdobeWarning);
+    string ProductCode);

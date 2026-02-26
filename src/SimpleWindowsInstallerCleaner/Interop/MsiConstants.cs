@@ -63,15 +63,3 @@ public static class MsiInstallProperty
     /// <summary>Publisher / manufacturer of the installed product.</summary>
     public const string Publisher = "Publisher";
 }
-
-/// <summary>
-/// Component registration source for MsiGetComponentPath.
-/// </summary>
-public static class MsiComponentClient
-{
-    /// <summary>
-    /// Pass as the product code to MsiGetComponentPathEx to query any
-    /// product that provides the component.
-    /// </summary>
-    public const string AnyProduct = null!;
-}
