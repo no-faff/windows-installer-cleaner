@@ -6,14 +6,12 @@ namespace SimpleWindowsInstallerCleaner.Tests.Services;
 
 public class FileSystemScanServiceTests
 {
-    // Helper: builds a RegisteredPackage with only the path set.
     private static RegisteredPackage Registered(string path) =>
         new(path, "Test Product", "{00000000-0000-0000-0000-000000000001}");
 
     [Fact]
-    public async Task FindOrphanedFilesAsync_returns_files_not_in_registered_set()
+    public async Task ScanAsync_returns_files_not_in_registered_set()
     {
-        // Arrange
         var registered = new List<RegisteredPackage>
         {
             Registered(@"C:\Windows\Installer\aaa.msi"),
@@ -24,7 +22,6 @@ public class FileSystemScanServiceTests
             .Setup(s => s.GetRegisteredPackagesAsync(It.IsAny<IProgress<string>?>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(registered.AsReadOnly());
 
-        // Fake filesystem: two files, one registered, one orphaned.
         var fakeFiles = new[]
         {
             @"C:\Windows\Installer\aaa.msi",   // registered — should NOT appear
@@ -33,16 +30,14 @@ public class FileSystemScanServiceTests
 
         var svc = new FileSystemScanService(mockQuery.Object, fakeFiles);
 
-        // Act
-        var orphans = await svc.FindOrphanedFilesAsync();
+        var result = await svc.ScanAsync();
 
-        // Assert
-        Assert.Single(orphans);
-        Assert.Equal(@"C:\Windows\Installer\bbb.msi", orphans[0].FullPath);
+        Assert.Single(result.OrphanedFiles);
+        Assert.Equal(@"C:\Windows\Installer\bbb.msi", result.OrphanedFiles[0].FullPath);
     }
 
     [Fact]
-    public async Task FindOrphanedFilesAsync_path_comparison_is_case_insensitive()
+    public async Task ScanAsync_path_comparison_is_case_insensitive()
     {
         var registered = new List<RegisteredPackage>
         {
@@ -57,8 +52,34 @@ public class FileSystemScanServiceTests
         var fakeFiles = new[] { @"C:\Windows\Installer\aaa.msi" };
 
         var svc = new FileSystemScanService(mockQuery.Object, fakeFiles);
-        var orphans = await svc.FindOrphanedFilesAsync();
+        var result = await svc.ScanAsync();
 
-        Assert.Empty(orphans);
+        Assert.Empty(result.OrphanedFiles);
+    }
+
+    [Fact]
+    public async Task ScanAsync_registered_file_count_is_zero_when_files_not_on_disk()
+    {
+        // Registered packages pointing to paths that don't exist on disk.
+        var registered = new List<RegisteredPackage>
+        {
+            Registered(@"C:\Windows\Installer\aaa.msi"),
+            Registered(@"C:\Windows\Installer\bbb.msi"),
+        };
+
+        var mockQuery = new Mock<IInstallerQueryService>();
+        mockQuery
+            .Setup(s => s.GetRegisteredPackagesAsync(It.IsAny<IProgress<string>?>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(registered.AsReadOnly());
+
+        var fakeFiles = new[] { @"C:\Windows\Installer\ccc.msi" }; // orphan
+
+        var svc = new FileSystemScanService(mockQuery.Object, fakeFiles);
+        var result = await svc.ScanAsync();
+
+        // Files don't exist on disk in tests, so counts are 0.
+        Assert.Equal(0, result.RegisteredFileCount);
+        Assert.Equal(0, result.RegisteredTotalBytes);
+        Assert.Single(result.OrphanedFiles);
     }
 }

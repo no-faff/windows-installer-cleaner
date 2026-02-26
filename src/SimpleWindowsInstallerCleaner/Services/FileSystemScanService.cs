@@ -22,7 +22,7 @@ public sealed class FileSystemScanService : IFileSystemScanService
         _overrideFiles = overrideFiles;
     }
 
-    public async Task<IReadOnlyList<OrphanedFile>> FindOrphanedFilesAsync(
+    public async Task<ScanResult> ScanAsync(
         IProgress<string>? progress = null,
         CancellationToken cancellationToken = default)
     {
@@ -34,11 +34,25 @@ public sealed class FileSystemScanService : IFileSystemScanService
             registered.Select(p => p.LocalPackagePath),
             StringComparer.OrdinalIgnoreCase);
 
+        // Count and size registered files that exist on disk.
+        int registeredCount = 0;
+        long registeredBytes = 0;
+        foreach (var pkg in registered)
+        {
+            try
+            {
+                if (File.Exists(pkg.LocalPackagePath))
+                {
+                    registeredCount++;
+                    registeredBytes += new FileInfo(pkg.LocalPackagePath).Length;
+                }
+            }
+            catch { /* skip inaccessible */ }
+        }
+
         progress?.Report("Scanning installer cache folder...");
 
-        var diskFiles = _overrideFiles
-            ?? GetInstallerFiles();
-
+        var diskFiles = _overrideFiles ?? GetInstallerFiles();
         var orphans = new List<OrphanedFile>();
 
         foreach (var filePath in diskFiles)
@@ -63,7 +77,7 @@ public sealed class FileSystemScanService : IFileSystemScanService
         }
 
         progress?.Report($"Found {orphans.Count} orphaned file(s).");
-        return orphans.AsReadOnly();
+        return new ScanResult(orphans.AsReadOnly(), registeredCount, registeredBytes);
     }
 
     private static IEnumerable<string> GetInstallerFiles()
