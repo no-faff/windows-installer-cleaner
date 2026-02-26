@@ -255,10 +255,6 @@
                         Command="{Binding DonateCommand}"
                         Margin="0,0,12,0"/>
 
-                <TextBlock DockPanel.Dock="Right"
-                           Text="no-faff.github.io"
-                           Foreground="#888" FontSize="11"
-                           VerticalAlignment="Center"/>
             </DockPanel>
         </Border>
 
