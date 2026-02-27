@@ -34,7 +34,7 @@
 
         <TextBlock Grid.Row="4"
                    x:Name="StepText"
-                   Text="Starting up..."
+                   Text="Step 1/5: Checking system status..."
                    Foreground="#AAAAAA"
                    FontSize="12"/>
 

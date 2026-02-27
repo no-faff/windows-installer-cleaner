@@ -339,7 +339,7 @@ public partial class MainViewModel : ObservableObject
         });
     }
 
-    public async Task ScanWithProgressAsync(IProgress<string> progress)
+    public async Task ScanWithProgressAsync(IProgress<string>? progress)
     {
         var sw = Stopwatch.StartNew();
 
