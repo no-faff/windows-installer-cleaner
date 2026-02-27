@@ -339,6 +339,32 @@ public partial class MainViewModel : ObservableObject
         });
     }
 
+    public async Task ScanWithProgressAsync(IProgress<string> progress)
+    {
+        var sw = Stopwatch.StartNew();
+
+        if (_settings.CheckPendingReboot)
+            HasPendingReboot = _rebootService.HasPendingReboot();
+
+        _lastScanResult = await _scanService.ScanAsync(progress);
+
+        _lastFilteredResult = _exclusionService.ApplyFilters(
+            _lastScanResult.OrphanedFiles, _settings.ExclusionFilters, _msiInfoService);
+
+        RegisteredFileCount = _lastScanResult.RegisteredPackages.Count;
+        RegisteredSizeDisplay = DisplayHelpers.FormatSize(_lastScanResult.RegisteredTotalBytes);
+
+        ExcludedFileCount = _lastFilteredResult.Excluded.Count;
+        ExcludedSizeDisplay = DisplayHelpers.FormatSize(_lastFilteredResult.Excluded.Sum(f => f.SizeBytes));
+
+        OrphanedFileCount = _lastFilteredResult.Actionable.Count;
+        OrphanedSizeDisplay = DisplayHelpers.FormatSize(_lastFilteredResult.Actionable.Sum(f => f.SizeBytes));
+
+        sw.Stop();
+        ScanProgress = $"Scan complete ({sw.Elapsed.TotalSeconds:F1}s)";
+        HasScanned = true;
+    }
+
     [RelayCommand]
     private async Task RefreshAsync() => await ScanAsync();
 
