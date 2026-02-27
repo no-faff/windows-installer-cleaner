@@ -2,7 +2,7 @@
 
 ## What's done
 
-Six rounds of development and review are complete:
+Seven rounds of development and review are complete:
 
 - **Round 1** (16 tasks): Full UI redesign — scanning, orphan detection, move/delete,
   settings, exclusion filters, registered files window, orphaned files window
@@ -21,6 +21,12 @@ Six rounds of development and review are complete:
 - **Round 6** (4 tasks): All splash steps visible with uniform 400ms delays,
   Adobe exclusion filter explanation in settings window, shared scan logic
   extracted to `RunScanCoreAsync`, status.md updated
+- **Round 7** (11 tasks): Full UI redesign — light/dark theme resource dictionaries
+  with design token system, Windows system theme detection (ThemeService reads
+  `AppsUseLightTheme` registry key), custom window chrome with hand-built title bar
+  on all windows, rounded-corner card layouts, accent-blue splash screen with
+  determinate progress bar, structured move/delete progress overlay with file count
+  and percentage. Zero hardcoded colours outside theme dictionaries.
 
 **22 tests passing, 0 warnings.**
 
@@ -29,14 +35,21 @@ Six rounds of development and review are complete:
 MVVM with CommunityToolkit.Mvvm. No DI container — manual composition in App.xaml.cs.
 
 Key services: `FileSystemScanService`, `MoveFilesService`, `DeleteFilesService`,
-`ExclusionService`, `SettingsService`, `PendingRebootService`, `MsiFileInfoService`.
+`ExclusionService`, `SettingsService`, `PendingRebootService`, `MsiFileInfoService`,
+`ThemeService` (static, called once at startup).
 
-Three windows: `MainWindow` (scan + actions), `RegisteredFilesWindow` (products/patches/details),
-`OrphanedFilesWindow` (file list + metadata details).
+Six windows: `MainWindow` (scan + actions), `RegisteredFilesWindow` (products/patches/details),
+`OrphanedFilesWindow` (file list + metadata details), `SettingsWindow`, `AboutWindow`,
+`SplashWindow`.
 
-Startup: splash screen shown → `ScanWithProgressAsync` runs → main window shown,
-splash closed. Splash drives its own step transitions explicitly (not from service
-progress messages). Refresh uses `ScanAsync` relay command.
+Theming: `Themes/Light.xaml` and `Themes/Dark.xaml` resource dictionaries loaded at
+startup based on Windows system setting. `DynamicResource` for brushes, `StaticResource`
+for typography/spacing/styles. Custom title bar via `Controls/TitleBar.xaml` UserControl
+with `WindowChrome`.
+
+Startup: theme applied → splash screen shown → `ScanWithProgressAsync` runs → main
+window shown, splash closed. Splash drives its own step transitions explicitly (not
+from service progress messages). Refresh uses `ScanAsync` relay command.
 
 ## Bugs found and fixed
 
@@ -55,16 +68,7 @@ progress messages). Refresh uses `ScanAsync` relay command.
 
 ## What's next
 
-Round 7 is the UI redesign:
-
-- **System theme** — follow Windows light/dark setting
-- **Design feel** — clean cards, rounded corners, generous padding, soft shadows
-- **Custom window chrome** — the single biggest signal of quality
-- **Splash screen** — the "whizz-bang moment," confident and purposeful
-- **Move/delete operations** — proper progress dialog with percentage and file count
-- **Simplicity is absolutely key** — beautiful does not mean complicated
-
-Remaining practical work after Round 7:
+Remaining practical work:
 
 1. **Real-world testing** — compare results against PatchCleaner
 2. **Error states** — move destination full, file locked, disk read errors
