@@ -887,6 +887,29 @@ then steps 3–5 blaze through.
 
 ---
 
+## Mid-round review notes (from Opus, after tasks 1–5)
+
+**Approved.** No critical issues. Faithful execution. Notes for tasks 6–11:
+
+1. **Maximise/restore icon toggle (fix in task 6 or 7).** The TitleBar control's
+   maximise button always shows `\uE922` (maximise). When the window is maximised,
+   it should show `\uE923` (restore). This doesn't affect the main window
+   (`ShowMaximise="False"`) but matters for orphaned/registered files windows.
+   Fix: listen to the parent window's `StateChanged` event in `TitleBar.xaml.cs`
+   and swap the `Content` of `MaximiseButton` between `\uE922` and `\uE923`.
+
+2. **Splash progress bar hardcoded colours (fix in task 11).** The splash has
+   `Background="#4D8FCC"` and `Foreground="White"` hardcoded on the progress bar.
+   Either add a `SplashProgressTrack` token to both theme dictionaries or replace
+   `Foreground="White"` with `{DynamicResource SplashText}`. Low priority since
+   splash colours are identical in both themes.
+
+3. **Version string.** The splash now shows "v0.1.0-α" (nice). The main window
+   title bar lost the version — it just says "Simple Windows installer cleaner".
+   This is fine (cleaner title bar) but note the inconsistency if it matters later.
+
+---
+
 ## Task 6: Orphaned files window redesign
 
 **Why:** This is the most data-dense window. It needs the redesign treatment
