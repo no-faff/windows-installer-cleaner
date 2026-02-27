@@ -11,6 +11,11 @@ public partial class OrphanedFilesWindow : Window
         DataContext = viewModel;
     }
 
+    private void Window_Loaded(object sender, RoutedEventArgs e)
+    {
+        ActionableList.Focus();
+    }
+
     private void ActionableList_GotFocus(object sender, RoutedEventArgs e)
     {
         ExcludedList.UnselectAll();

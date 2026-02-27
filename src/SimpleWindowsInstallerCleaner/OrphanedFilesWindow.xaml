@@ -5,7 +5,8 @@
         Width="750" Height="450"
         MinWidth="500" MinHeight="320"
         WindowStartupLocation="CenterOwner"
-        Background="#F5F5F5">
+        Background="#F5F5F5"
+        Loaded="Window_Loaded">
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
@@ -28,117 +29,117 @@
                 <ColumnDefinition Width="230"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Left: scrollable file list -->
+            <!-- Left: file list -->
             <Border Grid.Column="0"
                     BorderBrush="#D0D0D0"
                     BorderThickness="1"
                     Background="White">
-                <ScrollViewer VerticalScrollBarVisibility="Auto"
-                              HorizontalScrollBarVisibility="Disabled">
-                    <StackPanel>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>       <!-- actionable files -->
+                        <RowDefinition Height="Auto"/>    <!-- excluded header + description -->
+                        <RowDefinition Height="Auto" MaxHeight="150"/>  <!-- excluded files -->
+                    </Grid.RowDefinitions>
 
-                        <!-- Orphaned files (actionable) -->
-                        <ListBox x:Name="ActionableList"
-                                 ItemsSource="{Binding ActionableFiles}"
-                                 SelectedItem="{Binding SelectedFile, Mode=TwoWay}"
-                                 GotFocus="ActionableList_GotFocus"
-                                 Background="Transparent"
-                                 BorderThickness="0"
-                                 Padding="10,8,10,4"
-                                 ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                 HorizontalContentAlignment="Stretch">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid Margin="0,3">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="70"/>
-                                            <ColumnDefinition Width="36"/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0"
-                                                   Text="{Binding FileName}"
-                                                   FontSize="12"
-                                                   Foreground="#222"
-                                                   TextTrimming="CharacterEllipsis"
-                                                   ToolTip="{Binding FullPath}"/>
-                                        <TextBlock Grid.Column="1"
-                                                   Text="{Binding SizeDisplay}"
-                                                   FontSize="12"
-                                                   Foreground="#555"
-                                                   TextAlignment="Right"/>
-                                        <TextBlock Grid.Column="2"
-                                                   Text="{Binding TypeLabel}"
-                                                   FontSize="12"
-                                                   Foreground="#888"
-                                                   Margin="6,0,0,0"/>
-                                    </Grid>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
+                    <!-- Orphaned files (actionable) -->
+                    <ListBox Grid.Row="0"
+                             x:Name="ActionableList"
+                             ItemsSource="{Binding ActionableFiles}"
+                             SelectedItem="{Binding SelectedFile, Mode=TwoWay}"
+                             GotFocus="ActionableList_GotFocus"
+                             Background="Transparent"
+                             BorderThickness="0"
+                             Padding="10,8,10,4"
+                             HorizontalContentAlignment="Stretch">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,3">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="70"/>
+                                        <ColumnDefinition Width="36"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0"
+                                               Text="{Binding FileName}"
+                                               FontSize="12"
+                                               Foreground="#222"
+                                               TextTrimming="CharacterEllipsis"
+                                               ToolTip="{Binding FullPath}"/>
+                                    <TextBlock Grid.Column="1"
+                                               Text="{Binding SizeDisplay}"
+                                               FontSize="12"
+                                               Foreground="#555"
+                                               TextAlignment="Right"/>
+                                    <TextBlock Grid.Column="2"
+                                               Text="{Binding TypeLabel}"
+                                               FontSize="12"
+                                               Foreground="#888"
+                                               Margin="6,0,0,0"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
 
-                        <!-- Excluded section -->
-                        <StackPanel Visibility="{Binding HasExcludedFiles, Converter={StaticResource BoolToVis}}">
-
-                            <Border BorderBrush="#E0E0E0"
-                                    BorderThickness="0,1,0,0"
-                                    Margin="10,4,10,0"
-                                    Padding="0,6,0,2">
-                                <TextBlock Text="Excluded by filters"
-                                           FontSize="11"
-                                           Foreground="#888"
-                                           FontStyle="Italic"/>
-                            </Border>
-
-                            <TextBlock Text="These files match your exclusion filters and won't be moved or deleted."
+                    <!-- Excluded header + description -->
+                    <StackPanel Grid.Row="1"
+                                Visibility="{Binding HasExcludedFiles, Converter={StaticResource BoolToVis}}">
+                        <Border BorderBrush="#E0E0E0"
+                                BorderThickness="0,1,0,0"
+                                Margin="10,4,10,0"
+                                Padding="0,6,0,2">
+                            <TextBlock Text="Excluded by filters"
                                        FontSize="11"
-                                       Foreground="#AAA"
-                                       Margin="10,0,10,4"
-                                       TextWrapping="Wrap"/>
-
-                            <ListBox x:Name="ExcludedList"
-                                     ItemsSource="{Binding ExcludedFiles}"
-                                     SelectedItem="{Binding SelectedFile, Mode=TwoWay}"
-                                     GotFocus="ExcludedList_GotFocus"
-                                     Background="Transparent"
-                                     BorderThickness="0"
-                                     Padding="10,2,10,8"
-                                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                     HorizontalContentAlignment="Stretch">
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid Margin="0,3">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="70"/>
-                                                <ColumnDefinition Width="36"/>
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0"
-                                                       Text="{Binding FileName}"
-                                                       FontSize="12"
-                                                       Foreground="#AAA"
-                                                       TextTrimming="CharacterEllipsis"
-                                                       ToolTip="{Binding FullPath}"/>
-                                            <TextBlock Grid.Column="1"
-                                                       Text="{Binding SizeDisplay}"
-                                                       FontSize="12"
-                                                       Foreground="#BBB"
-                                                       TextAlignment="Right"/>
-                                            <TextBlock Grid.Column="2"
-                                                       Text="{Binding TypeLabel}"
-                                                       FontSize="12"
-                                                       Foreground="#BBB"
-                                                       Margin="6,0,0,0"/>
-                                        </Grid>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-
-                        </StackPanel>
-
+                                       Foreground="#888"
+                                       FontStyle="Italic"/>
+                        </Border>
+                        <TextBlock Text="These files match your exclusion filters and won't be moved or deleted."
+                                   FontSize="11"
+                                   Foreground="#AAA"
+                                   Margin="10,0,10,4"
+                                   TextWrapping="Wrap"/>
                     </StackPanel>
-                </ScrollViewer>
+
+                    <!-- Excluded files -->
+                    <ListBox Grid.Row="2"
+                             x:Name="ExcludedList"
+                             ItemsSource="{Binding ExcludedFiles}"
+                             SelectedItem="{Binding SelectedFile, Mode=TwoWay}"
+                             GotFocus="ExcludedList_GotFocus"
+                             Background="Transparent"
+                             BorderThickness="0"
+                             Padding="10,2,10,8"
+                             HorizontalContentAlignment="Stretch"
+                             Visibility="{Binding HasExcludedFiles, Converter={StaticResource BoolToVis}}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,3">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="70"/>
+                                        <ColumnDefinition Width="36"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0"
+                                               Text="{Binding FileName}"
+                                               FontSize="12"
+                                               Foreground="#AAA"
+                                               TextTrimming="CharacterEllipsis"
+                                               ToolTip="{Binding FullPath}"/>
+                                    <TextBlock Grid.Column="1"
+                                               Text="{Binding SizeDisplay}"
+                                               FontSize="12"
+                                               Foreground="#BBB"
+                                               TextAlignment="Right"/>
+                                    <TextBlock Grid.Column="2"
+                                               Text="{Binding TypeLabel}"
+                                               FontSize="12"
+                                               Foreground="#BBB"
+                                               Margin="6,0,0,0"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                </Grid>
             </Border>
 
             <!-- Right: details panel -->
