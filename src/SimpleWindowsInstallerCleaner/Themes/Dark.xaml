@@ -80,7 +80,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background"
-                                    Value="{StaticResource AccentPrimaryHover}"/>
+                                    Value="{DynamicResource AccentPrimaryHover}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity" Value="0.4"/>
@@ -115,7 +115,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background"
-                                    Value="{StaticResource SurfaceBackground}"/>
+                                    Value="{DynamicResource SurfaceBackground}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity" Value="0.4"/>
@@ -148,7 +148,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background"
-                                    Value="{StaticResource AccentDangerHover}"/>
+                                    Value="{DynamicResource AccentDangerHover}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity" Value="0.4"/>
@@ -180,7 +180,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background"
-                                    Value="{StaticResource SurfaceBackground}"/>
+                                    Value="{DynamicResource SurfaceBackground}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -239,7 +239,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background"
-                                    Value="{StaticResource TitleBarButtonHover}"/>
+                                    Value="{DynamicResource TitleBarButtonHover}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -260,9 +260,9 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="Bg" Property="Background"
-                                    Value="{StaticResource TitleBarCloseHover}"/>
+                                    Value="{DynamicResource TitleBarCloseHover}"/>
                             <Setter Property="Foreground"
-                                    Value="{StaticResource TitleBarCloseText}"/>
+                                    Value="{DynamicResource TitleBarCloseText}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

@@ -24,6 +24,10 @@ internal static class ThemeService
 
     private static bool IsSystemDarkTheme()
     {
+        // High Contrast is handled natively by WPF — don't override it
+        if (SystemParameters.HighContrast)
+            return false;
+
         try
         {
             using var key = Registry.CurrentUser.OpenSubKey(

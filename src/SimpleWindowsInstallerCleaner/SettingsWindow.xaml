@@ -137,7 +137,7 @@
                                             Background="Transparent"
                                             BorderThickness="0"
                                             FontFamily="{StaticResource AppFont}"
-                                            FontSize="14"
+                                            FontSize="{StaticResource SubheadingSize}"
                                             Foreground="{DynamicResource TextTertiary}"
                                             Padding="6,2"
                                             Cursor="Hand">

@@ -14,7 +14,7 @@
 
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="32"
-                      ResizeBorderThickness="6"
+                      ResizeBorderThickness="0"
                       GlassFrameThickness="0"
                       CornerRadius="0"/>
     </WindowChrome.WindowChrome>
@@ -353,15 +353,22 @@
                                  Height="3"
                                  Margin="0,0,0,8"
                                  Foreground="{DynamicResource AccentPrimary}"/>
-                    <TextBlock Foreground="{DynamicResource TextTertiary}"
-                               FontFamily="{StaticResource AppFont}"
-                               FontSize="{StaticResource SmallSize}"
-                               HorizontalAlignment="Center">
-                        <Run Text="{Binding OperationCurrentFile, Mode=OneWay}"/>
-                        <Run Text=" of "/>
-                        <Run Text="{Binding OperationTotalFiles, Mode=OneWay}"/>
-                        <Run Text=" files"/>
-                    </TextBlock>
+                    <DockPanel Margin="0,0,0,2">
+                        <TextBlock DockPanel.Dock="Right"
+                                   Foreground="{DynamicResource TextTertiary}"
+                                   FontFamily="{StaticResource AppFont}"
+                                   FontSize="{StaticResource SmallSize}">
+                            <Run Text="{Binding OperationProgressPercent, Mode=OneWay, StringFormat='{}{0:F0}%'}"/>
+                        </TextBlock>
+                        <TextBlock Foreground="{DynamicResource TextTertiary}"
+                                   FontFamily="{StaticResource AppFont}"
+                                   FontSize="{StaticResource SmallSize}">
+                            <Run Text="{Binding OperationCurrentFile, Mode=OneWay}"/>
+                            <Run Text=" of "/>
+                            <Run Text="{Binding OperationTotalFiles, Mode=OneWay}"/>
+                            <Run Text=" files"/>
+                        </TextBlock>
+                    </DockPanel>
                 </StackPanel>
             </Border>
         </Grid>
