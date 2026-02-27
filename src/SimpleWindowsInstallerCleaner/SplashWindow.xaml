@@ -2,46 +2,69 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Simple Windows installer cleaner"
-        Width="450" Height="180"
+        Width="480" Height="200"
         WindowStyle="None"
         AllowsTransparency="True"
-        Background="#404040"
+        Background="Transparent"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        ShowInTaskbar="False"
-        Topmost="True">
+        ShowInTaskbar="False">
 
-    <Grid Margin="24,20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>   <!-- app name -->
-            <RowDefinition Height="16"/>     <!-- spacer -->
-            <RowDefinition Height="Auto"/>   <!-- progress bar -->
-            <RowDefinition Height="8"/>      <!-- spacer -->
-            <RowDefinition Height="Auto"/>   <!-- step text -->
-            <RowDefinition Height="*"/>      <!-- spacer -->
-            <RowDefinition Height="Auto"/>   <!-- version -->
-        </Grid.RowDefinitions>
+    <!-- Outer border gives the rounded corners -->
+    <Border Background="{DynamicResource SplashBackground}"
+            CornerRadius="12">
+        <Grid Margin="28,24">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>  <!-- app name -->
+                <RowDefinition Height="20"/>    <!-- spacer -->
+                <RowDefinition Height="Auto"/>  <!-- progress bar -->
+                <RowDefinition Height="8"/>     <!-- spacer -->
+                <RowDefinition Height="Auto"/>  <!-- step text -->
+                <RowDefinition Height="*"/>     <!-- spacer -->
+                <RowDefinition Height="Auto"/>  <!-- version -->
+            </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0"
-                   Text="Simple Windows installer cleaner"
-                   Foreground="White"
-                   FontSize="16"
-                   FontWeight="SemiBold"/>
+            <!-- App name (two-line) -->
+            <StackPanel Grid.Row="0">
+                <TextBlock Text="Simple Windows"
+                           Foreground="{DynamicResource SplashText}"
+                           FontFamily="{StaticResource AppFont}"
+                           FontSize="{StaticResource HeadingSize}"
+                           FontWeight="SemiBold"
+                           LineHeight="24"/>
+                <TextBlock Text="installer cleaner"
+                           Foreground="{DynamicResource SplashText}"
+                           FontFamily="{StaticResource AppFont}"
+                           FontSize="{StaticResource HeadingSize}"
+                           FontWeight="SemiBold"
+                           LineHeight="24"/>
+            </StackPanel>
 
-        <ProgressBar Grid.Row="2"
-                     IsIndeterminate="True"
-                     Height="4"/>
+            <!-- Progress bar (determinate, white on lighter blue) -->
+            <ProgressBar Grid.Row="2"
+                         x:Name="SplashProgress"
+                         Minimum="0"
+                         Maximum="100"
+                         Value="0"
+                         Height="3"
+                         Foreground="White"
+                         Background="#4D8FCC"/>
 
-        <TextBlock Grid.Row="4"
-                   x:Name="StepText"
-                   Text="Step 1/5: Checking system status..."
-                   Foreground="#AAAAAA"
-                   FontSize="12"/>
+            <!-- Step text -->
+            <TextBlock Grid.Row="4"
+                       x:Name="StepText"
+                       Text="Step 1/5: Checking system status..."
+                       Foreground="{DynamicResource SplashTextDim}"
+                       FontFamily="{StaticResource AppFont}"
+                       FontSize="{StaticResource SmallSize}"/>
 
-        <TextBlock Grid.Row="6"
-                   Text="v0.1.0-alpha"
-                   Foreground="#666666"
-                   FontSize="10"
-                   HorizontalAlignment="Right"/>
-    </Grid>
+            <!-- Version (bottom right) -->
+            <TextBlock Grid.Row="6"
+                       Text="v0.1.0-α"
+                       Foreground="{DynamicResource SplashTextDim}"
+                       FontFamily="{StaticResource AppFont}"
+                       FontSize="{StaticResource CaptionSize}"
+                       HorizontalAlignment="Right"/>
+        </Grid>
+    </Border>
 </Window>
