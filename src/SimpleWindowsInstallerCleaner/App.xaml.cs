@@ -60,7 +60,9 @@ public partial class App : Application
             });
 
             splash.UpdateStep("Step 1/5: Checking system status...");
-            await viewModel.ScanWithProgressAsync(progress);
+            await Task.WhenAll(
+                viewModel.ScanWithProgressAsync(progress),
+                Task.Delay(2000));
 
             var window = new MainWindow(viewModel);
             Application.Current.MainWindow = window;
