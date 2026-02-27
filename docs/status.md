@@ -51,10 +51,16 @@ release preparation:
 
 ## How to run
 
+**Development (from elevated terminal):**
 ```
 dotnet run --project src/SimpleWindowsInstallerCleaner
 ```
+Note: `dotnet run` does not trigger the UAC prompt — the `dotnet.exe` process
+is the one being launched, not our exe. Run from an already-elevated terminal.
 
-Needs admin rights to scan C:\Windows\Installer properly. To run as admin,
-open an elevated terminal (right-click PowerShell → Run as administrator)
-then run the command above.
+**Production (from Explorer or non-elevated terminal):**
+```
+src/SimpleWindowsInstallerCleaner/bin/Debug/net8.0-windows/SimpleWindowsInstallerCleaner.exe
+```
+Running the compiled `.exe` directly triggers the Windows UAC elevation prompt
+automatically (the app manifest embeds `requireAdministrator`).
