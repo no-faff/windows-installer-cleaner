@@ -72,15 +72,7 @@ public sealed class MsiFileInfoService : IMsiFileInfoService
         try
         {
             var cert = X509Certificate.CreateFromSignedFile(filePath);
-            var subject = cert.Subject;
-            var cnStart = subject.IndexOf("CN=", StringComparison.OrdinalIgnoreCase);
-            if (cnStart >= 0)
-            {
-                cnStart += 3;
-                var cnEnd = subject.IndexOf(',', cnStart);
-                return cnEnd >= 0 ? subject[cnStart..cnEnd].Trim() : subject[cnStart..].Trim();
-            }
-            return subject;
+            return cert.Subject;
         }
         catch (Exception)
         {
