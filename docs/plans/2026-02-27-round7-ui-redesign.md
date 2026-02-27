@@ -35,12 +35,12 @@ feel simple, clean, almost cartoonish. Beautiful ≠ complicated.
 | 3 — Custom window chrome base | e775731 | done |
 | 4 — Main window redesign | 0d08458 | done |
 | 5 — Splash screen redesign | 90665bc | done |
-| 6 — Orphaned files window redesign | | pending |
-| 7 — Registered files window redesign | | pending |
-| 8 — Settings window redesign | | pending |
-| 9 — About window redesign | | pending |
-| 10 — Move/delete progress overlay redesign | | pending |
-| 11 — Final polish and consistency pass | | pending |
+| 6 — Orphaned files window redesign | 5314868 | done |
+| 7 — Registered files window redesign | 717a4c8 | done |
+| 8 — Settings window redesign | c54a151 | done |
+| 9 — About window redesign | 01e6a36 | done |
+| 10 — Move/delete progress overlay redesign | 3236228 | done |
+| 11 — Final polish and consistency pass | 228ad20 | done |
 
 ---
 
