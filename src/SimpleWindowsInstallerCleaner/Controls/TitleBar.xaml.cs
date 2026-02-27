@@ -41,6 +41,22 @@ public partial class TitleBar : UserControl
     public TitleBar()
     {
         InitializeComponent();
+        Loaded += TitleBar_Loaded;
+    }
+
+    private void TitleBar_Loaded(object sender, RoutedEventArgs e)
+    {
+        var window = Window.GetWindow(this);
+        if (window != null)
+            window.StateChanged += Window_StateChanged;
+    }
+
+    private void Window_StateChanged(object? sender, EventArgs e)
+    {
+        var window = sender as Window;
+        MaximiseButton.Content = window?.WindowState == WindowState.Maximized
+            ? "\uE923"   // restore
+            : "\uE922";  // maximise
     }
 
     private void MinimiseButton_Click(object sender, RoutedEventArgs e) =>
