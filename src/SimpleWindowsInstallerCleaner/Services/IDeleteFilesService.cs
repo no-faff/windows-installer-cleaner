@@ -1,10 +1,12 @@
+using SimpleWindowsInstallerCleaner.Models;
+
 namespace SimpleWindowsInstallerCleaner.Services;
 
 public interface IDeleteFilesService
 {
     Task<DeleteResult> DeleteFilesAsync(
         IEnumerable<string> filePaths,
-        IProgress<string>? progress = null,
+        IProgress<OperationProgress>? progress = null,
         CancellationToken cancellationToken = default);
 }
 

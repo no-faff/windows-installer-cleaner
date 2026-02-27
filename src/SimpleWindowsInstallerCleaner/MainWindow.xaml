@@ -328,17 +328,41 @@
         <Grid Grid.Row="0" Grid.RowSpan="2"
               Visibility="{Binding IsOperating, Converter={StaticResource BoolToVis}}">
             <Rectangle Fill="{DynamicResource ScanOverlayBackground}"/>
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <ProgressBar IsIndeterminate="True"
-                             Width="240" Height="3"
-                             Margin="0,0,0,12"
-                             Foreground="{DynamicResource AccentPrimary}"/>
-                <TextBlock Text="{Binding OperationProgress}"
-                           Foreground="{DynamicResource ScanOverlayText}"
-                           FontFamily="{StaticResource AppFont}"
-                           FontSize="{StaticResource BodySize}"
-                           HorizontalAlignment="Center"/>
-            </StackPanel>
+            <Border Background="{DynamicResource CardBackground}"
+                    BorderBrush="{DynamicResource CardBorder}"
+                    BorderThickness="1"
+                    CornerRadius="{StaticResource CardRadius}"
+                    Padding="28,22"
+                    MinWidth="260"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Effect="{DynamicResource ElevatedShadow}">
+                <StackPanel>
+                    <TextBlock Text="{Binding OperationProgress}"
+                               Foreground="{DynamicResource TextPrimary}"
+                               FontFamily="{StaticResource AppFont}"
+                               FontSize="{StaticResource BodySize}"
+                               FontWeight="SemiBold"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,14"/>
+                    <ProgressBar Value="{Binding OperationProgressPercent}"
+                                 Minimum="0"
+                                 Maximum="100"
+                                 Width="200"
+                                 Height="3"
+                                 Margin="0,0,0,8"
+                                 Foreground="{DynamicResource AccentPrimary}"/>
+                    <TextBlock Foreground="{DynamicResource TextTertiary}"
+                               FontFamily="{StaticResource AppFont}"
+                               FontSize="{StaticResource SmallSize}"
+                               HorizontalAlignment="Center">
+                        <Run Text="{Binding OperationCurrentFile, Mode=OneWay}"/>
+                        <Run Text=" of "/>
+                        <Run Text="{Binding OperationTotalFiles, Mode=OneWay}"/>
+                        <Run Text=" files"/>
+                    </TextBlock>
+                </StackPanel>
+            </Border>
         </Grid>
 
     </Grid>

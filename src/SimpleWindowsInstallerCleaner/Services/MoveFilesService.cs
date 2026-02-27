@@ -1,3 +1,5 @@
+using SimpleWindowsInstallerCleaner.Models;
+
 namespace SimpleWindowsInstallerCleaner.Services;
 
 public sealed class MoveFilesService : IMoveFilesService
@@ -5,7 +7,7 @@ public sealed class MoveFilesService : IMoveFilesService
     public Task<MoveResult> MoveFilesAsync(
         IEnumerable<string> filePaths,
         string destinationFolder,
-        IProgress<string>? progress = null,
+        IProgress<OperationProgress>? progress = null,
         CancellationToken cancellationToken = default)
     {
         return Task.Run(() =>
@@ -14,16 +16,19 @@ public sealed class MoveFilesService : IMoveFilesService
 
             int moved = 0;
             var errors = new List<MoveError>();
+            var pathList = filePaths as IReadOnlyList<string> ?? filePaths.ToList();
+            var total = pathList.Count;
 
-            foreach (var sourcePath in filePaths)
+            for (int i = 0; i < total; i++)
             {
                 cancellationToken.ThrowIfCancellationRequested();
+                var sourcePath = pathList[i];
 
                 try
                 {
                     var fileName = Path.GetFileName(sourcePath);
                     var destPath = GetUniqueDestPath(destinationFolder, fileName);
-                    progress?.Report($"Moving {fileName}...");
+                    progress?.Report(new OperationProgress(i + 1, total, fileName));
                     File.Move(sourcePath, destPath);
                     moved++;
                 }

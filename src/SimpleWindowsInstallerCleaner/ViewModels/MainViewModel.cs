@@ -49,6 +49,10 @@ public partial class MainViewModel : ObservableObject
     // Busy state for move/delete operations
     [ObservableProperty] private bool _isOperating;
     [ObservableProperty] private string _operationProgress = string.Empty;
+    [ObservableProperty] private int _operationCurrentFile;
+    [ObservableProperty] private int _operationTotalFiles;
+    [ObservableProperty] private string _operationCurrentFileName = string.Empty;
+    [ObservableProperty] private double _operationProgressPercent;
 
     // Whether scan has completed at least once
     [ObservableProperty] private bool _hasScanned;
@@ -203,7 +207,14 @@ public partial class MainViewModel : ObservableObject
 
         try
         {
-            var progress = new Progress<string>(msg => OperationProgress = msg);
+            var progress = new Progress<Models.OperationProgress>(p =>
+            {
+                OperationCurrentFile = p.CurrentFile;
+                OperationTotalFiles = p.TotalFiles;
+                OperationCurrentFileName = p.CurrentFileName;
+                OperationProgressPercent = (double)p.CurrentFile / p.TotalFiles * 100;
+                OperationProgress = $"{p.CurrentFile} of {p.TotalFiles} files";
+            });
             var result = await _moveService.MoveFilesAsync(filePaths, MoveDestination, progress);
 
             OperationProgress = result.Errors.Count == 0
@@ -219,6 +230,7 @@ public partial class MainViewModel : ObservableObject
         finally
         {
             IsOperating = false;
+            OperationProgressPercent = 0;
         }
     }
 
@@ -244,7 +256,14 @@ public partial class MainViewModel : ObservableObject
 
         try
         {
-            var progress = new Progress<string>(msg => OperationProgress = msg);
+            var progress = new Progress<Models.OperationProgress>(p =>
+            {
+                OperationCurrentFile = p.CurrentFile;
+                OperationTotalFiles = p.TotalFiles;
+                OperationCurrentFileName = p.CurrentFileName;
+                OperationProgressPercent = (double)p.CurrentFile / p.TotalFiles * 100;
+                OperationProgress = $"{p.CurrentFile} of {p.TotalFiles} files";
+            });
             var result = await _deleteService.DeleteFilesAsync(filePaths, progress);
 
             OperationProgress = result.Errors.Count == 0
@@ -260,6 +279,7 @@ public partial class MainViewModel : ObservableObject
         finally
         {
             IsOperating = false;
+            OperationProgressPercent = 0;
         }
     }
 

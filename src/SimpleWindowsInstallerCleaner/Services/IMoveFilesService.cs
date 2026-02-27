@@ -1,3 +1,5 @@
+using SimpleWindowsInstallerCleaner.Models;
+
 namespace SimpleWindowsInstallerCleaner.Services;
 
 public interface IMoveFilesService
@@ -5,7 +7,7 @@ public interface IMoveFilesService
     Task<MoveResult> MoveFilesAsync(
         IEnumerable<string> filePaths,
         string destinationFolder,
-        IProgress<string>? progress = null,
+        IProgress<OperationProgress>? progress = null,
         CancellationToken cancellationToken = default);
 }
 
