@@ -30,11 +30,11 @@ feel simple, clean, almost cartoonish. Beautiful ≠ complicated.
 
 | Task | Commit | Status |
 |------|--------|--------|
-| 1 — Design tokens and theme dictionaries | | pending |
-| 2 — Theme detection service | | pending |
-| 3 — Custom window chrome base | | pending |
-| 4 — Main window redesign | | pending |
-| 5 — Splash screen redesign | | pending |
+| 1 — Design tokens and theme dictionaries | c518763 | done |
+| 2 — Theme detection service | fd14eb4 | done |
+| 3 — Custom window chrome base | e775731 | done |
+| 4 — Main window redesign | 0d08458 | done |
+| 5 — Splash screen redesign | 90665bc | done |
 | 6 — Orphaned files window redesign | | pending |
 | 7 — Registered files window redesign | | pending |
 | 8 — Settings window redesign | | pending |
