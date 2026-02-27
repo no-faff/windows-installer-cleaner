@@ -8,10 +8,10 @@
 
 | Task | Commit | Status |
 |------|--------|--------|
-| 1 — Fix splash step timing | | pending |
-| 2 — Explain exclusion filters in settings | | pending |
-| 3 — Extract shared scan logic | | pending |
-| 4 — Update status.md for rounds 4–5 | | pending |
+| 1 — Fix splash step timing | 20d1d51, 43c03b8 | done |
+| 2 — Explain exclusion filters in settings | 5729805 | done |
+| 3 — Extract shared scan logic | 6ca0771 | done |
+| 4 — Update status.md for rounds 4–5 | fd4d740 | done |
 
 ## Author: Opus, 27 February 2026
 
