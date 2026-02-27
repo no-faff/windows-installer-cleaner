@@ -107,6 +107,28 @@ public partial class MainViewModel : ObservableObject
     private bool CanDelete() =>
         !IsScanning && !IsOperating && OrphanedFileCount > 0;
 
+    private async Task RunScanCoreAsync(IProgress<string>? progress)
+    {
+        if (_settings.CheckPendingReboot)
+            HasPendingReboot = _rebootService.HasPendingReboot();
+
+        _lastScanResult = await _scanService.ScanAsync(progress);
+
+        _lastFilteredResult = _exclusionService.ApplyFilters(
+            _lastScanResult.OrphanedFiles, _settings.ExclusionFilters, _msiInfoService);
+
+        RegisteredFileCount = _lastScanResult.RegisteredPackages.Count;
+        RegisteredSizeDisplay = DisplayHelpers.FormatSize(_lastScanResult.RegisteredTotalBytes);
+
+        ExcludedFileCount = _lastFilteredResult.Excluded.Count;
+        ExcludedSizeDisplay = DisplayHelpers.FormatSize(_lastFilteredResult.Excluded.Sum(f => f.SizeBytes));
+
+        OrphanedFileCount = _lastFilteredResult.Actionable.Count;
+        OrphanedSizeDisplay = DisplayHelpers.FormatSize(_lastFilteredResult.Actionable.Sum(f => f.SizeBytes));
+
+        HasScanned = true;
+    }
+
     [RelayCommand]
     private async Task ScanAsync()
     {
@@ -115,30 +137,14 @@ public partial class MainViewModel : ObservableObject
 
         try
         {
-            if (_settings.CheckPendingReboot)
-                HasPendingReboot = _rebootService.HasPendingReboot();
-
             var progress = new Progress<string>(msg => ScanProgress = msg);
-            var scanTask = _scanService.ScanAsync(progress);
+            var scanTask = RunScanCoreAsync(progress);
             if (await Task.WhenAny(scanTask, Task.Delay(200)) != scanTask)
                 IsScanning = true;
-            _lastScanResult = await scanTask;
-
-            _lastFilteredResult = _exclusionService.ApplyFilters(
-                _lastScanResult.OrphanedFiles, _settings.ExclusionFilters, _msiInfoService);
-
-            RegisteredFileCount = _lastScanResult.RegisteredPackages.Count;
-            RegisteredSizeDisplay = DisplayHelpers.FormatSize(_lastScanResult.RegisteredTotalBytes);
-
-            ExcludedFileCount = _lastFilteredResult.Excluded.Count;
-            ExcludedSizeDisplay = DisplayHelpers.FormatSize(_lastFilteredResult.Excluded.Sum(f => f.SizeBytes));
-
-            OrphanedFileCount = _lastFilteredResult.Actionable.Count;
-            OrphanedSizeDisplay = DisplayHelpers.FormatSize(_lastFilteredResult.Actionable.Sum(f => f.SizeBytes));
+            await scanTask;
 
             sw.Stop();
             ScanProgress = $"Scan complete ({sw.Elapsed.TotalSeconds:F1}s)";
-            HasScanned = true;
         }
         catch (UnauthorizedAccessException)
         {
@@ -342,27 +348,9 @@ public partial class MainViewModel : ObservableObject
     public async Task ScanWithProgressAsync(IProgress<string>? progress)
     {
         var sw = Stopwatch.StartNew();
-
-        if (_settings.CheckPendingReboot)
-            HasPendingReboot = _rebootService.HasPendingReboot();
-
-        _lastScanResult = await _scanService.ScanAsync(progress);
-
-        _lastFilteredResult = _exclusionService.ApplyFilters(
-            _lastScanResult.OrphanedFiles, _settings.ExclusionFilters, _msiInfoService);
-
-        RegisteredFileCount = _lastScanResult.RegisteredPackages.Count;
-        RegisteredSizeDisplay = DisplayHelpers.FormatSize(_lastScanResult.RegisteredTotalBytes);
-
-        ExcludedFileCount = _lastFilteredResult.Excluded.Count;
-        ExcludedSizeDisplay = DisplayHelpers.FormatSize(_lastFilteredResult.Excluded.Sum(f => f.SizeBytes));
-
-        OrphanedFileCount = _lastFilteredResult.Actionable.Count;
-        OrphanedSizeDisplay = DisplayHelpers.FormatSize(_lastFilteredResult.Actionable.Sum(f => f.SizeBytes));
-
+        await RunScanCoreAsync(progress);
         sw.Stop();
         ScanProgress = $"Scan complete ({sw.Elapsed.TotalSeconds:F1}s)";
-        HasScanned = true;
     }
 
     [RelayCommand]
