@@ -182,7 +182,10 @@
                                Visibility="{Binding ShowNoMetadata, Converter={StaticResource BoolToVis}}"/>
 
                     <!-- Details grid -->
-                    <Grid Visibility="{Binding ShowDetails, Converter={StaticResource BoolToVis}}">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                  HorizontalScrollBarVisibility="Disabled"
+                                  Visibility="{Binding ShowDetails, Converter={StaticResource BoolToVis}}">
+                    <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="8"/>
@@ -220,6 +223,7 @@
                         <TextBlock Grid.Row="10" Grid.Column="0" Text="Comment" FontSize="11" Foreground="#888"/>
                         <TextBlock Grid.Row="10" Grid.Column="2" Text="{Binding SelectedDetails.Comments}" FontSize="12" Foreground="#222" TextWrapping="Wrap"/>
                     </Grid>
+                    </ScrollViewer>
 
                 </Grid>
             </Border>
