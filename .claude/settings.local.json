@@ -18,7 +18,8 @@
       "Bash(git:*)",
       "WebFetch(domain:sourceforge.net)",
       "WebFetch(domain:web.archive.org)",
-      "Bash(dotnet test:*)"
+      "Bash(dotnet test:*)",
+      "WebFetch(domain:www.youtube.com)"
     ]
   }
 }
