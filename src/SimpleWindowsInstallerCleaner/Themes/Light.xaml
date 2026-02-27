@@ -25,6 +25,7 @@
     <SolidColorBrush x:Key="SplashBackground" Color="#0066CC"/>
     <SolidColorBrush x:Key="SplashText" Color="#FFFFFF"/>
     <SolidColorBrush x:Key="SplashTextDim" Color="#BBDDFF"/>
+    <SolidColorBrush x:Key="SplashProgressTrack" Color="#4D8FCC"/>
     <SolidColorBrush x:Key="TitleBarBackground" Color="#F7F7F8"/>
     <SolidColorBrush x:Key="TitleBarText" Color="#333333"/>
     <SolidColorBrush x:Key="TitleBarButtonHover" Color="#E5E5E5"/>

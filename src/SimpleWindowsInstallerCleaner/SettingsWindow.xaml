@@ -9,7 +9,8 @@
         ResizeMode="CanResizeWithGrip"
         WindowStyle="None"
         AllowsTransparency="False"
-        Background="{DynamicResource WindowBackground}">
+        Background="{DynamicResource WindowBackground}"
+        FontFamily="{StaticResource AppFont}">
 
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="32"

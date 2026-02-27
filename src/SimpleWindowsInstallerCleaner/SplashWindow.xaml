@@ -47,8 +47,8 @@
                          Maximum="100"
                          Value="0"
                          Height="3"
-                         Foreground="White"
-                         Background="#4D8FCC"/>
+                         Foreground="{DynamicResource SplashText}"
+                         Background="{DynamicResource SplashProgressTrack}"/>
 
             <!-- Step text -->
             <TextBlock Grid.Row="4"

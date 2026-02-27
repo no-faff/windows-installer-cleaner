@@ -9,6 +9,7 @@
         WindowStyle="None"
         AllowsTransparency="False"
         Background="{DynamicResource WindowBackground}"
+        FontFamily="{StaticResource AppFont}"
         Loaded="Window_Loaded">
 
     <WindowChrome.WindowChrome>
