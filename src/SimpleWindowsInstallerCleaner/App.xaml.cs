@@ -35,8 +35,8 @@ public partial class App : Application
             // Step 2: the actual scan (this is where the time is spent)
             splash.UpdateStep("Step 2/5: Enumerating installed products...");
             var scanTask = viewModel.ScanWithProgressAsync(null);
-            // Ensure step 2 shows for at least 800ms even on very fast machines
-            await Task.WhenAll(scanTask, Task.Delay(800));
+            // Ensure step 2 shows for at least 400ms even on very fast machines
+            await Task.WhenAll(scanTask, Task.Delay(400));
 
             // Steps 3–5: post-scan, blaze through visibly
             splash.UpdateStep("Step 3/5: Enumerating patches...");
