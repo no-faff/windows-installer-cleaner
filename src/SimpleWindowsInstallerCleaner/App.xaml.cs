@@ -10,6 +10,8 @@ public partial class App : Application
     {
         base.OnStartup(e);
 
+        ThemeService.ApplySystemTheme();
+
         var splash = new SplashWindow();
         splash.Show();
 
