@@ -8,12 +8,12 @@
 
 | Task | Commit | Status |
 |------|--------|--------|
-| 1 — Fix keyboard/mouse in orphaned files window | | pending |
-| 2 — Show full digital signature | | pending |
-| 3 — Make details panel scrollable | | pending |
-| 4 — Better exclusion filter explanation | | pending |
-| 5 — Splash screen with progress steps | | pending |
-| 6 — Verify UAC prompt from compiled exe | | pending |
+| 1 — Fix keyboard/mouse in orphaned files window | dfd7ef9 | ✓ done |
+| 2 — Show full digital signature | 119a91b | ✓ done |
+| 3 — Make details panel scrollable | bdeee03 | ✓ done |
+| 4 — Better exclusion filter explanation | 1f3ed5c | ✓ done |
+| 5 — Splash screen with progress steps | 99d5ccf | ✓ done |
+| 6 — Verify UAC prompt from compiled exe | e4e0cbe | ✓ done |
 
 ## Author: Opus, 27 February 2026
 
