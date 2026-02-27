@@ -2,7 +2,7 @@
 
 ## What's done
 
-Three rounds of development and review are complete:
+Six rounds of development and review are complete:
 
 - **Round 1** (16 tasks): Full UI redesign — scanning, orphan detection, move/delete,
   settings, exclusion filters, registered files window, orphaned files window
@@ -10,6 +10,17 @@ Three rounds of development and review are complete:
   layouts, metadata display, exclusion filter matching, publish profile
 - **Round 3** (5 tasks + 1 follow-up): Code review fixes — XAML trigger bugs,
   dead markup, proper pluralisation, ViewModel tests, catch block narrowing
+- **Round 4** (6 tasks): UX improvements — about dialog, auto-select first item,
+  exclusion row visibility, scan overlay suppression, scan duration display,
+  version in title bar
+- **Round 5** (6 tasks): Keyboard/mouse fixes in orphaned files window, full digital
+  signatures, scrollable detail panels, inline filter names on excluded row,
+  startup splash screen with 5-step progress, UAC verification
+- **Post-round 5 fixes**: Dialog owner lifecycle fix (969605b), splash minimum
+  display time (af6ad34)
+- **Round 6** (4 tasks): All splash steps visible with uniform 400ms delays,
+  Adobe exclusion filter explanation in settings window, shared scan logic
+  extracted to `RunScanCoreAsync`, status.md updated
 
 **22 tests passing, 0 warnings.**
 
@@ -23,31 +34,42 @@ Key services: `FileSystemScanService`, `MoveFilesService`, `DeleteFilesService`,
 Three windows: `MainWindow` (scan + actions), `RegisteredFilesWindow` (products/patches/details),
 `OrphanedFilesWindow` (file list + metadata details).
 
-## Bugs found during first real-world test (27 Feb)
+Startup: splash screen shown → `ScanWithProgressAsync` runs → main window shown,
+splash closed. Splash drives its own step transitions explicitly (not from service
+progress messages). Refresh uses `ScanAsync` relay command.
+
+## Bugs found and fixed
 
 - **Infinite loop without admin** (FIXED, 0d2751c): `MsiEnumProductsEx` returns
   `ERROR_ACCESS_DENIED` instead of `ERROR_NO_MORE_ITEMS` when not elevated,
   causing the enumeration loop to spin forever. Now throws
   `UnauthorizedAccessException` which the existing handler catches cleanly.
+- **5-minute scan hang** (FIXED, 4189b8b): `GetEnumeratedSid` made 2 extra
+  `MsiEnumProductsEx` calls per product. Fixed with pre-allocated SID buffer.
+- **Dialog owner crash** (FIXED, 969605b): WPF sets `Application.MainWindow`
+  to the first window shown (the splash). After splash closes, dialogs with
+  `Owner = Application.Current.MainWindow` crashed. Fixed by setting
+  `Application.Current.MainWindow = window` explicitly before showing main window.
+- **Splash invisible on fast machines** (FIXED, af6ad34 + round 6): Scan
+  completes in under 200ms. Fixed with explicit per-step delays (400ms each).
 
 ## What's next
 
-The code is structurally sound. Remaining work is UX, real-world testing and
-release preparation:
+Round 7 is the UI redesign:
 
-1. **Continue real-world testing** — compare results against PatchCleaner.
-   Does ours find the same orphans? Is scan speed acceptable?
+- **System theme** — follow Windows light/dark setting
+- **Design feel** — clean cards, rounded corners, generous padding, soft shadows
+- **Custom window chrome** — the single biggest signal of quality
+- **Splash screen** — the "whizz-bang moment," confident and purposeful
+- **Move/delete operations** — proper progress dialog with percentage and file count
+- **Simplicity is absolutely key** — beautiful does not mean complicated
 
-2. **Error states** — move destination full, file locked, disk read errors.
+Remaining practical work after Round 7:
 
-3. **Progress feedback** — PatchCleaner scans in ~2 seconds. Ours should be
-   comparable. If not, profile and optimise the MSI API calls.
-
-4. **Accessibility** — keyboard navigation, screen reader support, high contrast.
-
-5. **Branding** — app icon, version info, about dialog, GitHub link.
-
-6. **Distribution** — single-exe publish, installer vs portable, auto-update.
+1. **Real-world testing** — compare results against PatchCleaner
+2. **Error states** — move destination full, file locked, disk read errors
+3. **Accessibility** — keyboard navigation, screen reader support, high contrast
+4. **Distribution** — single-exe publish, installer vs portable, auto-update
 
 ## How to run
 
