@@ -63,6 +63,7 @@ public partial class App : Application
             await viewModel.ScanWithProgressAsync(progress);
 
             var window = new MainWindow(viewModel);
+            Application.Current.MainWindow = window;
             window.Show();
             splash.Close();
         }
