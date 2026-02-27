@@ -132,12 +132,15 @@
                                Foreground="#666" FontSize="13"
                                VerticalAlignment="Center" MinWidth="80"
                                TextAlignment="Right"/>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center"
-                                ToolTip="Excluded files match your exclusion filters (e.g. Adobe). Edit filters in Settings.">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <TextBlock Text="●" Foreground="#666" Margin="0,0,7,0" FontSize="13"/>
                         <TextBlock Text="{Binding ExcludedFileCount}"
                                    Foreground="#333" FontWeight="SemiBold" FontSize="13"/>
-                        <TextBlock Text=" files excluded by filters" Foreground="#666" FontSize="13"/>
+                        <TextBlock Foreground="#666" FontSize="13">
+                            <Run Text=" files excluded ("/>
+                            <Run Text="{Binding ExcludedFilterDisplay, Mode=OneWay}"/>
+                            <Run Text=")"/>
+                        </TextBlock>
                     </StackPanel>
                 </DockPanel>
 

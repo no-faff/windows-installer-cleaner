@@ -27,10 +27,16 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty] private string _registeredSizeDisplay = string.Empty;
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(HasExcludedFiles))]
+    [NotifyPropertyChangedFor(nameof(ExcludedFilterDisplay))]
     private int _excludedFileCount;
     [ObservableProperty] private string _excludedSizeDisplay = string.Empty;
 
     public bool HasExcludedFiles => ExcludedFileCount > 0;
+
+    public string ExcludedFilterDisplay =>
+        _settings.ExclusionFilters.Count > 0
+            ? string.Join(", ", _settings.ExclusionFilters)
+            : string.Empty;
     [ObservableProperty] private int _orphanedFileCount;
     [ObservableProperty] private string _orphanedSizeDisplay = string.Empty;
 
@@ -298,6 +304,7 @@ public partial class MainViewModel : ObservableObject
         {
             _settings = _settingsService.Load();
             MoveDestination = _settings.MoveDestination;
+            OnPropertyChanged(nameof(ExcludedFilterDisplay));
 
             if (_lastScanResult is not null)
             {
