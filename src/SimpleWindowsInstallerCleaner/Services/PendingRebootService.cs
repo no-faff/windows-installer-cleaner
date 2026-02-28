@@ -8,17 +8,19 @@ public sealed class PendingRebootService : IPendingRebootService
     {
         try
         {
-            using var key = Registry.LocalMachine.OpenSubKey(
-                @"SYSTEM\CurrentControlSet\Control\Session Manager");
+            // Windows Update reboot required
+            using var wuKey = Registry.LocalMachine.OpenSubKey(
+                @"SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\RebootRequired");
+            if (wuKey is not null)
+                return true;
 
-            if (key is null)
-                return false;
+            // Component Based Servicing reboot pending
+            using var cbsKey = Registry.LocalMachine.OpenSubKey(
+                @"SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\RebootPending");
+            if (cbsKey is not null)
+                return true;
 
-            var value = key.GetValue("PendingFileRenameOperations");
-            if (value is string[] ops)
-                return ops.Length > 0;
-
-            return value is not null;
+            return false;
         }
         catch
         {
