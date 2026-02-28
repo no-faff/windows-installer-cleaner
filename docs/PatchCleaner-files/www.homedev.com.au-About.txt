@@ -1,0 +1,33 @@
+ homedev
+Home
+ 
+ 
+ 
+Consulting
+ 
+About
+ 
+Contact
+History
+HomeDev is a software consultancy that was created in 2010 with the head office is on the Northern Beaches of Sydney, NSW Australia.
+
+Since this time HomeDev has been providing consultancy services to the legal industry in the role of InterAction CRM technical experts, custom software development, and SQL server experts in data warehousing, integration and SSRS report development.
+
+John Crawford
+Owner
+John Crawford is the principal of HomeDev.
+
+John has over 15 years commercial software development experience, primarily in the legal industry using the Microsoft development stack of Visual studio, sql server, c#, ASP .Net, MVC, WCF services.
+
+John has a passion for technology and software development, and his experience is not limited to Microsoft technologies having experience working in Java, JavaScript, JQuery, PHP and Android.
+
+InterAction CRM
+John consulted as a the technical lead on a Lexis Nexis InterAction implementation at an International Law firm. Please review the case study of the interaction CRM implementation
+
+Microsoft SQL Server Reporting Services
+John is an expert in SQL Server Reporting Services development, having been engaged in roles where report development in SSRS has been a major deliverable.
+
+John is able to apply software development methodologies to take a clients request from idea through requirements analysis, report specification, agile SSRS report prototyping to the final completed version of the report, optimised for PDF or Excel delivery.
+
+Microsoft Visual Studio Team Foundation Services
+John is an advocate of the agile development methodology and has extensive experience with Team Foundation Services. HomeDev can advise on how to get the best out of your Team Foundation Services environment, and advise on configuration and TFS branching and merging strategies

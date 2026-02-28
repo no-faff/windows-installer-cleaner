@@ -157,7 +157,7 @@ public partial class MainViewModel : ObservableObject
                 "Administrator rights required",
                 MessageBoxButton.OK,
                 MessageBoxImage.Warning);
-            ScanProgress = "Access denied — run as administrator.";
+            ScanProgress = "Access denied. Run as administrator.";
         }
         catch (Exception ex)
         {

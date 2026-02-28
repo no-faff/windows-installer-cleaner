@@ -1,85 +1,39 @@
 <Window x:Class="SimpleWindowsInstallerCleaner.AboutWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:controls="clr-namespace:SimpleWindowsInstallerCleaner.Controls"
         Title="About"
         Width="420" Height="220"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner"
         ShowInTaskbar="False"
-        WindowStyle="None"
-        AllowsTransparency="False"
-        Background="{DynamicResource WindowBackground}"
-        FontFamily="{StaticResource AppFont}">
+        Background="{StaticResource Base100}">
 
-    <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="32"
-                      ResizeBorderThickness="0"
-                      GlassFrameThickness="0"
-                      CornerRadius="0"/>
-    </WindowChrome.WindowChrome>
-
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/> <!-- title bar -->
-            <RowDefinition Height="*"/>    <!-- content -->
-        </Grid.RowDefinitions>
-
-        <!-- ── Custom title bar ────────────────────────────────────── -->
-        <controls:TitleBar Grid.Row="0"
-                           WindowTitle="About"
-                           ShowMinimise="False"
-                           ShowMaximise="False"/>
-
-        <!-- ── Content ───────────────────────────────────────────── -->
-        <Grid Grid.Row="1" Margin="{StaticResource WindowPadding}">
+    <Grid Margin="24">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/> <!-- app name -->
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="6"/>
-                <RowDefinition Height="Auto"/> <!-- version -->
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="4"/>
-                <RowDefinition Height="Auto"/> <!-- suite -->
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="4"/>
-                <RowDefinition Height="Auto"/> <!-- licence + link -->
-                <RowDefinition Height="*"/>    <!-- spacer -->
-                <RowDefinition Height="Auto"/> <!-- close button -->
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0"
-                       Text="Simple Windows installer cleaner"
-                       Foreground="{DynamicResource TextPrimary}"
-                       FontFamily="{StaticResource AppFont}"
-                       FontSize="{StaticResource HeadingSize}"
-                       FontWeight="SemiBold"
-                       TextWrapping="Wrap"/>
-
-            <TextBlock Grid.Row="2"
-                       Text="Version 0.1.0-alpha"
-                       Foreground="{DynamicResource TextTertiary}"
-                       FontFamily="{StaticResource AppFont}"
-                       FontSize="{StaticResource SmallSize}"/>
-
-            <TextBlock Grid.Row="4"
-                       Text="Part of the No faff suite"
-                       Foreground="{DynamicResource TextTertiary}"
-                       FontFamily="{StaticResource AppFont}"
-                       FontSize="{StaticResource SmallSize}"/>
-
-            <TextBlock Grid.Row="6"
-                       Foreground="{DynamicResource TextTertiary}"
-                       FontFamily="{StaticResource AppFont}"
-                       FontSize="{StaticResource SmallSize}">
+            <TextBlock Grid.Row="0" Text="Simple Windows installer cleaner"
+                       Foreground="#f8fafc" FontSize="20" FontWeight="SemiBold" TextWrapping="Wrap"/>
+            <TextBlock Grid.Row="2" Text="Version 0.1.0-alpha"
+                       Foreground="#cbd5e1" FontSize="12"/>
+            <TextBlock Grid.Row="4" Text="Part of the No faff suite"
+                       Foreground="#cbd5e1" FontSize="12"/>
+            <TextBlock Grid.Row="6" Foreground="#cbd5e1" FontSize="12">
                 <Run Text="MIT licence · "/>
                 <Hyperlink NavigateUri="https://github.com/no-faff/windows-installer-cleaner"
                            Click="Hyperlink_Click"
-                           Foreground="{DynamicResource AccentPrimary}">github.com/no-faff/windows-installer-cleaner</Hyperlink>
+                           Foreground="#4f46e5">github.com/no-faff/windows-installer-cleaner</Hyperlink>
             </TextBlock>
-
-            <Button Grid.Row="8"
-                    Style="{DynamicResource SecondaryButton}"
-                    Content="Close"
-                    IsCancel="True"
-                    HorizontalAlignment="Right"/>
-        </Grid>
+            <Button Grid.Row="8" Style="{StaticResource PrimaryPill}"
+                    Content="Close" IsCancel="True" HorizontalAlignment="Right"/>
     </Grid>
 </Window>

@@ -1,0 +1,56 @@
+ homedev
+Home
+ 
+ 
+ 
+Consulting
+ 
+About
+ 
+Contact
+Consulting Services
+HomeDev offers a range of consultancy services in the following areas:
+Lexis Nexis InterAction CRM Consulting
+Custom software development, c# .net, WPF or Windows forms
+Website development, asp.net MVC
+Microsoft Team Foundation Server configuration and design
+Microsoft SQL Server, including:
+SSRS - SQL Server Reporting Services
+SSIS - SQL Server Integration Services
+Case Study - InterAction
+HomeDev has been engaged as the technical consultants on a large InterAction 6.x implementation.
+During this project HomeDev was engaged as the technical architect on all aspects of the implementation of InterAction. This involved providing expertise in the following key areas
+
+Installation
+
+Environment Configuration
+A technical analysis of the server topology required to implement InterAction was performed. HomeDev created environment configuration documentation, with recommendations on the number of servers, virtual v's physical, operating system and server specifications required to support the target number of users and the functionality that the client was intending to implement
+Development / Test / Training environments
+HomeDev created multiple InterAction environments to support the implementation project and on-going testing and training requirements. As part of the creation of these environments, production installation documentation was also generated to document the go live installation and configuration for the creation of the production environment
+Environment refresh process
+A process was created for the client to allow an easy restore process to refresh development/test/training environments. This process was documented and handed over to the business to allow the non-production environments to be periodically refreshed with production data to allow ongoing development and testing of configuration changes prior to implementing in production.
+Client Software Installation
+Support was provided to the internal IT department to configure installation of the InterAction client software onto the firms desktop computers. Support was provided around installing and configuring the following software:
+Windows Desktop Client
+IMO - InterAction for Microsoft Outlook
+Login scripts to control software configuration base upon AD groups
+Firm wide roll out of the IMO client and Outlook to InterAction synchronisation
+Data Conversion
+Data was extracted from legacy systems. Data cleansing activities were developed to cleanse the data including name and title cleaning , entity de-duplication, address clean up and standardisation, email address and phone data cleansing. A data conversion routine was developed and tested, and a final 8 hour go-live data conversion performed to move the clients legacy data into InterAction.
+Data Integration
+Application Collaboration was used to provide data integration from core IT systems into IA. Common integrations include:
+HR system integration - automatically creating new users in the system
+PMS integration - integrating the core finance data from the firms Practice Management System
+Company integrations - create new companies when a client is created in the PMS
+Software Integration
+The client uses a popular document management system (DMS). A custom integration piece was developed to allow integration between InterAction and the DMS.
+Two integration were implemented. One being an ActiveX control that is integrated into the InterAction web client to provide DMS access from within the WebClient, whilst in the other direction a CM+ accessible business object was written and is called as a right click action from within the DMS client.
+HomeDev has experience with utilising the REST API, .Net API, IAObjects and Appserver methods. A WCF Service was also developed to provide a central API to allow real time integration between the firms practice management system and InterAction.
+Customisation
+Various areas of the InterAction web client have been customised, including simple style sheet and image changes, to DMS integration, implementing a Rich Text Editor and changing the display of the UI to support customisations for Modules
+Reporting
+HomeDev has an extensive knowledge of the InterAction data model. When combined with expertise in SSRS reporting advanced reporting can be performed. Some areas of reporting developed are around event management and activity analysis.
+Module Implementation
+HomeDev has had experience in implementing InterAction modules including, Opportunities and Engagements. HomeDev has also customised an InterAction module and completely changed it to allow InterAction to support completely new business process
+InterAction Upgrades
+HomeDev has experience in installing, patching and upgrading InterAction, either for minor patch updates or major point releases

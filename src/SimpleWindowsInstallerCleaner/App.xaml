@@ -1,11 +1,194 @@
 <Application x:Class="SimpleWindowsInstallerCleaner.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Themes/Light.xaml"/>
+                <ui:ThemesDictionary Theme="Dark" />
+                <ui:ControlsDictionary />
             </ResourceDictionary.MergedDictionaries>
+
+            <!-- Poppins font (bundled locally, matching Upscayl) -->
+            <FontFamily x:Key="Poppins">pack://application:,,,/Fonts/#Poppins</FontFamily>
+            <Style TargetType="Window">
+                <Setter Property="FontFamily" Value="{StaticResource Poppins}"/>
+            </Style>
+            <Style TargetType="TextBlock">
+                <Setter Property="FontFamily" Value="{StaticResource Poppins}"/>
+            </Style>
+
+            <!-- Upscayl palette (from tailwind.config.js daisyui theme) -->
+            <SolidColorBrush x:Key="Base300" Color="#020617"/>   <!-- deepest background -->
+            <SolidColorBrush x:Key="Base200" Color="#0f172a"/>   <!-- card / elevated surface -->
+            <SolidColorBrush x:Key="Base100" Color="#1e293b"/>   <!-- sidebar-level surface -->
+            <SolidColorBrush x:Key="Primary" Color="#334155"/>   <!-- standard button fill -->
+            <SolidColorBrush x:Key="Secondary" Color="#4f46e5"/> <!-- CTA / accent button -->
+            <SolidColorBrush x:Key="Accent" Color="#6d28d9"/>    <!-- selection highlight -->
+            <SolidColorBrush x:Key="Neutral" Color="#475569"/>   <!-- badges, neutral -->
+            <SolidColorBrush x:Key="Danger" Color="#991b1b"/>    <!-- destructive -->
+            <SolidColorBrush x:Key="Fg" Color="#f8fafc"/>        <!-- foreground text -->
+            <SolidColorBrush x:Key="Body" Color="#cbd5e1"/>      <!-- body text (80% base-content) -->
+            <SolidColorBrush x:Key="Muted" Color="#94a3b8"/>     <!-- muted text (50% base-content) -->
+            <SolidColorBrush x:Key="Overlay" Color="#80020617"/> <!-- 50% base-300 overlay -->
+
+            <!-- Card style: rounded like Upscayl, no shadows, just tone shift -->
+            <Style x:Key="Card" TargetType="Border">
+                <Setter Property="Background" Value="{StaticResource Base200}"/>
+                <Setter Property="CornerRadius" Value="20"/>
+                <Setter Property="Padding" Value="16"/>
+            </Style>
+
+            <Style x:Key="CardNoPad" TargetType="Border">
+                <Setter Property="Background" Value="{StaticResource Base200}"/>
+                <Setter Property="CornerRadius" Value="20"/>
+            </Style>
+
+            <!-- Pill buttons: rounded-btn 2rem (32px), h-10 (40px) -->
+
+            <!-- CTA / accent pill (Move, Save) /indigo #4f46e5 -->
+            <Style x:Key="AccentPill" TargetType="Button">
+                <Setter Property="Foreground" Value="#f8fafc"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontWeight" Value="Medium"/>
+                <Setter Property="Padding" Value="28,8"/>
+                <Setter Property="Height" Value="40"/>
+                <Setter Property="MinWidth" Value="120"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="Bg" Background="#4f46e5" CornerRadius="20"
+                                    Padding="{TemplateBinding Padding}"
+                                    Height="{TemplateBinding Height}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Bg" Property="Background" Value="#443cc7"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="Bg" Property="Background" Value="#3b34af"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="Bg" Property="Opacity" Value="0.5"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Primary pill (Browse, Add, Close) /slate #334155 -->
+            <Style x:Key="PrimaryPill" TargetType="Button">
+                <Setter Property="Foreground" Value="#f8fafc"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontWeight" Value="Medium"/>
+                <Setter Property="Padding" Value="28,8"/>
+                <Setter Property="Height" Value="40"/>
+                <Setter Property="MinWidth" Value="120"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="Bg" Background="#334155" CornerRadius="20"
+                                    Padding="{TemplateBinding Padding}"
+                                    Height="{TemplateBinding Height}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Bg" Property="Background" Value="#2b3749"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="Bg" Property="Background" Value="#232e3d"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="Bg" Property="Opacity" Value="0.5"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Ghost pill (Settings, Refresh, About) /transparent, muted text -->
+            <Style x:Key="GhostPill" TargetType="Button">
+                <Setter Property="Foreground" Value="#94a3b8"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontWeight" Value="Medium"/>
+                <Setter Property="Padding" Value="20,8"/>
+                <Setter Property="Height" Value="40"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="Bg" Background="Transparent" CornerRadius="20"
+                                    Padding="{TemplateBinding Padding}"
+                                    Height="{TemplateBinding Height}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Bg" Property="Background" Value="#1e293b"/>
+                                    <Setter Property="Foreground" Value="#f8fafc"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="Bg" Property="Background" Value="#0f172a"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="Bg" Property="Opacity" Value="0.5"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Pill TextBox /rounded input matching Upscayl's input style -->
+            <Style x:Key="PillTextBox" TargetType="TextBox">
+                <Setter Property="Background" Value="#0f172a"/>
+                <Setter Property="Foreground" Value="#f8fafc"/>
+                <Setter Property="CaretBrush" Value="#f8fafc"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Height" Value="40"/>
+                <Setter Property="Padding" Value="12,0"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="TextBox">
+                            <Border x:Name="Bg" Background="{TemplateBinding Background}"
+                                    CornerRadius="20">
+                                <ScrollViewer x:Name="PART_ContentHost"
+                                              VerticalAlignment="Center"
+                                              Margin="{TemplateBinding Padding}"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <!-- Warning tooltip (Upscayl-style, indigo background) -->
+            <Style x:Key="WarningTooltip" TargetType="ToolTip">
+                <Setter Property="Background" Value="#4f46e5"/>
+                <Setter Property="Foreground" Value="#f8fafc"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="Padding" Value="12,8"/>
+                <Setter Property="MaxWidth" Value="280"/>
+                <Setter Property="Placement" Value="Left"/>
+                <Setter Property="HasDropShadow" Value="False"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ToolTip">
+                            <Border Background="#4f46e5" CornerRadius="8"
+                                    Padding="{TemplateBinding Padding}">
+                                <TextBlock Text="{TemplateBinding Content}"
+                                           Foreground="#f8fafc" FontSize="12"
+                                           TextWrapping="Wrap"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

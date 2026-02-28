@@ -1,0 +1,80 @@
+Is there a portable version of PatchCleaner
+Yes.
+
+There is a new sourceforge project where the portable version can be downloaded.
+
+https://sourceforge.net/projects/patchcleaner/
+
+Can you create a Command Line version of PatchCleaner?
+Yes, we created a command line version of the PatchCleaner in version 1.3.0
+
+I have upgraded to the latest version of PatchCleaner and it is crashing, what should I do?
+Between version 1.3 and 1.4 there were changes made to the way PatchCleaner works.
+
+It appears that a direct upgrade leaves some files from the pervious version behind and when the new version starts it fails to start throwing an error like:
+
+FATAL PatchCleaner.App: An Unhandled Execption has occured System.IndexOutOfRangeException: Index was outside the bounds of the array.
+
+The solution to fix this is to do the following:
+
+Uninstall PatchCleaner
+Delete the folder and all its contents
+32 Bit computer - C:\Program Files\HomeDev\PatchCleaner
+ 64 bit computer - C:\Program Files (x86)\HomeDev\PatchCleaner   
+Re-install PatchCleaner it should be fixed
+Unrecoverable error, PatchCleaner uses vbScript and it appears that vbScript is not working on your computer.
+On some computers the following error message may be recieved;
+
+Unrecoverable error, PatchCleaner uses vbScript  and it appears that vbScript is not working on your computer. "Can't find script engine "VBScript". You will need to resolve this issue before running PatchCleaner
+
+As the error suggests patch cleaner uses vbScript. It is used as the base technology for asking your computer what software and patches are required by your computer, as this is the fastest way to make the required "WMI" calls. Without a working version of vbScript on your computer PatchCleaner cannot work.
+
+If you receive this error, it is because vbScript is broken on your computer. 
+
+This can be for various reasons, and google will be your friend to help resolve this. 
+
+https://www.google.com/search?num=20&newwindow=1&espv=2&q=can%27t+find+script+engine+vbScript
+
+Below is a link that people have used to help resolve the issue with vbScript on their computer:
+
+http://techlogon.com/2012/11/26/how-to-fix-the-error-cant-find-script-engine-vbscript-for-script/
+
+Until you get vbScript working on your computer you will not be able to run patch cleaner.
+
+To easlily test create a file called "test.vbs", open it in notpad and enter this code:
+
+Wscript.Echo "Yeah, vbScript is working"
+
+Save it and double click, if you get a message box showing the above text then you have fixed your vbScript issue
+
+Is PatchCleaner Malware?
+I have had some feedback that a few users are having problems where PatchCleaner is being detected as Malware.
+
+Firstly let me reassure you that there is no Malware contained within PatchCleaner. To tell you the truth I am not smart enough to add malware to my product nor do I have the time or inclination to be bothered to do something like that. The only thing that PatchCleaner does is check back to base to determine if a new version of the product has been released, and uses that to display a download link.
+
+To stop PatchCleaner from being detected as malware would require purchase of an SSL certificate and digitally signing the software.
+
+Given this is 100% free software I cannot justify the expense in doing this, so I do apologise for any extra clicks you may have to do to install PatchCleaner but I have no plans to change this. 
+
+Hundreds of thousands of happy "customers" can't be wrong, so just give it a go.
+
+As of  October 2017 - softpedia has given PatchCleaner a 100% bill of health as verified as 100% clean.
+
+
+
+Read about their review on Softpedia
+
+ 
+
+I am having trouble installing/uninstalling PatchCleaner
+Some people have encountered installaton challenges when attempting to install/uninstall PatchCleaner.
+
+The installer that you download from the website is a self extracting 7zip archive created as per my blog post (http://ntsblog.homedev.com.au/index.php/2015/05/14/self-extracting-archive-runs-setup-exe-7zip-sfx-switch/). The idea behind this is to package both a Bootstrap setup.exe, along with the actual .msi.
+
+If you run into problems installing, (or in some cases uninstalling and cannot find the .msi file), you can actually open the .exe file with 7Zip and extract the files. 
+
+Download and install a copy of 7Zip from 7Zip.org and right-click on the PatchCleaner.exe and choose extract here.
+
+You will get 2 files, a setup.exe and a PatchCleaner.msi. The setup.exe is what is called a bootstrapper and it attempts to ensure that the pre-requisites are meet. The .msi is the installer itself. 
+
+Try running the PatchCleaner.msi file directly.

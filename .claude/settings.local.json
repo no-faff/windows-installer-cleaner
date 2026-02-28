@@ -19,7 +19,12 @@
       "WebFetch(domain:sourceforge.net)",
       "WebFetch(domain:web.archive.org)",
       "Bash(dotnet test:*)",
-      "WebFetch(domain:www.youtube.com)"
+      "WebFetch(domain:www.youtube.com)",
+      "WebFetch(domain:www.nuget.org)",
+      "WebFetch(domain:wpfui.lepo.co)",
+      "Bash(gh api:*)",
+      "Bash(taskkill:*)",
+      "Bash(tasklist:*)"
     ]
   }
 }

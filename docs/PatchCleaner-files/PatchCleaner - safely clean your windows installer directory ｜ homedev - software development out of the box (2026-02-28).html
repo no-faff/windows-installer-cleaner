@@ -1,0 +1,228 @@
+<title>PatchCleaner - safely clean your windows installer directory | homedev - software development out of the box</title>
+<meta name=description content="Safely remove all orphaned patch and installer files from your windows installer directory in one easy click">
+<meta name=keywords content="Clean; Cleaner; Patch; Patches; Windows Installer Directory">
+
+ 
+ <div id=header class=no-print>
+ 
+ <div class=inner>
+ <header>
+ <h1 class=title><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAA1VBMVEUAAAAAoOABouECouEbtusCoeECouEBoeABoeACouECouEEo+IEpOIDo+EGpeMNq+UPrOYNq+UBoeADouECouECouEFpeINquUMquUBoeACouECouEGpeIGpOIAoOD///8/t+cNpeEHouH6/f5lxuw4tOfv+f3H6vj1+/2b2vOC0PCz4/VEueguseYjreQbquMUp+Ln9vze8vva8frT7vm45fao3vSg3POQ1vF6ze9YwOonruTr9/yJ0/Fyyu1QvupMvOnL6/i/5/ev4fWs4PRtyO1cwusFeaQlAAAAHnRSTlMA9NyRA6+H7ubOd2tfVicSEQfI9vW4PB0dybCJPTzndU4OAAAC2klEQVRYw6VX13biMBA1xaaXAAE22QyYHkIvIYQOSf7/k3aRFIyvJMCH+6Z7RnOmS2PoUEhYZiScJcqGI6aVKBie8DfgJ4A/kL/1dioqbks6oulbrj/7SAuflbpyPRgL0UWEYsFL95N/6CoySf39OFiv8SOuMz9ANyKgdOPhiW6G+aC4/0ge8ChpCD6RJ5joRYA8IgDxJwn12aha+o9G5UTZnPjqHw9xV/7l/LVLAjOH+xHUG8tm8iwAcv2sueh41e465PaNsyNeUU4YYoTot5jk0Aa3uII9P8VO/RPSOdBW27UWffHbWc8kYcQle0A33bQlDBARlE1tAj3g9OTUFXw+REnCB5f8BrrG6dWJiDIFivkzZILVAdAiCXVnRrH5RxI6XHAKtC1SQw7y6iKecQU/QG84/QoFLXtQaTDBlq3WuyE696FAEj654DvyS4XeopEgCQeuYAt02WkEBwnDIgHoudKyos5tzUVahkmIGsQKqrPvIk0jIhkw4X3YBb6rrM6IEcb7TRapdoUAc65g7mbDRhbu71gJ9UhClycXDMsZqkjNSIXOMbhV9AwVVKYQaYzucgEKstIo0Wmoj5l3FXABgzguMQyk+m6z8tjbGMSIZpQAFhPO24RpNJXltibAO+c7yJtYykOn3KQGFY8MlHJCNUr2BNhqGpQS0M6v0DDAfxKiyAYKWlodaIakjbwfRtoGWh5yM1W+0Xkp1rKlK41n9OIe63YLhhZUV1/yAB4W3TBcQHXBw5L2wcOxvTYK4Gk71dIAhiG+qQvkLXjedcOwx/kJ8qE0fDAOl3PwjXzM+eJkGLETFpTr5KDcmVe5AehZJoifrK+SwAGa44hRDyOYlL55vZ0Q3khN0PiQqjuu+mj2ywxnxtYZsbj60TSCpuev7v2fbdRgev7u379w3L/yIJIZz0vX/WsfImVdXDxv2V3TnldfGXnV8v1ieEKRrf85ohxb/4s6uX+B64UE5o6lnwAAAABJRU5ErkJggg==" style=vertical-align:text-top> <span id=logo>home</span><span class=blue>dev</span></h1>
+ </header>
+ </div>
+ 
+<nav id=nav class=media>
+ <ul>
+ <li style=white-space:nowrap><a href=https://www.homedev.com.au/>Home</a></li>
+ <li class=opener style=user-select:none;cursor:pointer;white-space:nowrap>
+ <a href=https://www.homedev.com.au/Products><span>Products...</span></a>
+ 
+ <ul style=user-select:none;display:none;position:absolute>
+ 
+ 
+ 
+ 
+ </ul></li>
+ <li class=opener style=user-select:none;cursor:pointer;white-space:nowrap>
+ <a href=https://www.homedev.com.au/Online><span>Online...</span></a>
+ 
+ <ul style=user-select:none;display:none;position:absolute>
+ 
+ 
+ 
+ 
+ </ul></li>
+ <li style=white-space:nowrap><a href=https://www.homedev.com.au/Consulting>Consulting</a></li>
+ <li style=white-space:nowrap><a href=https://www.homedev.com.au/About>About</a></li>
+ <li style=white-space:nowrap><a href=https://www.homedev.com.au/Contact>Contact</a></li>
+ </ul>
+</nav>
+ </div>
+ 
+ 
+ 
+<a id=anchorID href=https://www.homedev.com.au/free/mynewurl target=_blank></a>
+<div id=clickHandler></div>
+<div class="wrapper style1">
+ <div class=container>
+ <div class=row>
+ <div class=3u id=sidebar>
+ <hr class="first sf-hidden">
+ <section>
+ <header>
+ <h3><a href=#>Products</a></h3>
+ </header>
+ The following products are available from HomeDev
+ </section>
+ <hr>
+<section class=menu>
+ <h3><a href=https://www.homedev.com.au/Free>Freebies</a></h3>
+ <ul class=style2>
+ <li><a href=https://www.homedev.com.au/Free/LANTorrent>LANTorrent</a></li>
+ <li><a href=https://www.homedev.com.au/Free/MyRouterLog>MyRouter Log</a></li>
+ <li><a href=https://www.homedev.com.au/Free/PatchCleaner>PatchCleaner</a></li>
+ <li><a href=https://www.homedev.com.au/Free/VirtualHost>Virtual Host?</a></li>
+ </ul>
+ <h3><a href=https://www.homedev.com.au/InterAction>InterAction</a></h3>
+ <ul class=style2>
+ <li><a href=https://www.homedev.com.au/InterAction/InterActionKeyConverter>InterAction Key Converter</a></li>
+ <li><a href=https://www.homedev.com.au/InterAction/InterChange>InterChange</a></li>
+ </ul>
+ <h3><a href=https://www.homedev.com.au/Software>For Sale</a></h3>
+ <ul class=style2>
+ <li><a href=https://www.homedev.com.au/Software/FlashAirDownloader>FlashAirDownloader</a></li>
+ </ul>
+ <h3><a href=https://www.homedev.com.au/WordPress>Wordpress</a></h3>
+ <ul class=style2>
+ <li><a href=https://www.homedev.com.au/WordPress/JetPackPostStatsLink>Jetpack post statistic link plugin</a></li>
+ </ul>
+</section>
+ </div>
+ <div class="9u skel-cell-important" id=content>
+ <article id=main>
+ <header>
+ <h2>
+ <img src="data:image/png;base64,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" alt=Products border=0 style=vertical-align:sub> PatchCleaner
+ </h2>
+ </header>
+ <h5>
+ Clean your windows installer directory
+ </h5>
+ </article>
+ <article>
+ <div id=tabs class="ui-tabs ui-widget ui-widget-content ui-corner-all">
+ <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" role=tablist>
+ <li class="ui-state-default ui-corner-top ui-tabs-active ui-state-active" role=tab tabindex=0 aria-controls=tabs-1 aria-labelledby=ui-id-1 aria-selected=true aria-expanded=true><a href=#tabs-1 class=ui-tabs-anchor role=presentation tabindex=-1 id=ui-id-1>Details</a></li>
+ 
+ <li class="ui-state-default ui-corner-top" role=tab tabindex=-1 aria-controls=tabs-2 aria-labelledby=ui-id-2 aria-selected=false aria-expanded=false><a href=#tabs-2 class=ui-tabs-anchor role=presentation tabindex=-1 id=ui-id-2>Screen Shots</a></li>
+ 
+ 
+ <li class="ui-state-default ui-corner-top" role=tab tabindex=-1 aria-controls=tabs-3 aria-labelledby=ui-id-3 aria-selected=false aria-expanded=false><a href=#tabs-3 class=ui-tabs-anchor role=presentation tabindex=-1 id=ui-id-3>Release Notes</a></li>
+ <li class="ui-state-default ui-corner-top" role=tab tabindex=-1 aria-controls=tabs-4 aria-labelledby=ui-id-4 aria-selected=false aria-expanded=false><a href=#tabs-4 class=ui-tabs-anchor role=presentation tabindex=-1 id=ui-id-4>Downloads</a></li>
+ 
+ 
+ <li class="ui-state-default ui-corner-top" role=tab tabindex=-1 aria-controls=tabs-6 aria-labelledby=ui-id-5 aria-selected=false aria-expanded=false><a href=#tabs-6 class=ui-tabs-anchor role=presentation tabindex=-1 id=ui-id-5>FAQ</a></li>
+ 
+ </ul>
+ <div id=tabs-1 aria-labelledby=ui-id-1 class="ui-tabs-panel ui-widget-content ui-corner-bottom" role=tabpanel aria-hidden=false>
+ <article>
+ <section id=tab-content>
+ <p><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=89FUC4J9KFK5L" target=_new><img alt="Donate with PayPal button" src='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="99" height="47"><rect fill-opacity="0"/></svg>' style="background-blend-mode:normal!important;background-clip:content-box!important;background-position:50% 50%!important;background-color:rgba(0,0,0,0)!important;background-image:var(--sf-img-31)!important;background-size:100% 100%!important;background-origin:content-box!important;background-repeat:no-repeat!important"></a></p>
+<h2>Windows Installer Directory</h2>
+<p>When&nbsp;applications are installed and updated on the Windows Operating System a hidden directory "c:\Windows\Installer" is used to store the installer (.msi) files and the patch (.msp) files.</p>
+<p>Generally these files are important as during updating, patching or uninstalling software it will use the .msi/.msp files. If you blanketly delete all the files in this folder, you will find yourself needing to rebuild windows.</p>
+<p>Over time as your computer is patched and patched again, these installer files become outdated and orphaned. They are no longer required, but they can take up many gigabytes of data.</p>
+<h2>PatchCleaner</h2>
+<p>PatchCleaner identifies these redundant/orphaned files and allows you to either:</p>
+<ol>
+ <li>(Recommended) Move them to another location. If you want to play it safe, just move them to another location,&nbsp;and you can always copy them back.</li>
+ <li>Delete them.</li>
+</ol>
+<h2>How it works</h2>
+<p>HomeDev has had many queries about how PatchCleaner works and if it can be trusted to do the right thing.</p>
+<p>Its pretty simple. The windows operating system holds a list of current installers&nbsp;and patches, that can be accessed via WMI calls, (<a href=https://en.wikipedia.org/wiki/Windows_Management_Instrumentation>Windows Management Instrumentation</a> ).</p>
+<p>PatchCleaner obtains this list of the known msi/msp files and compares that against all the msi/msp files that are found in the "c:\Windows\Installer" directory. Anything that is in the folder but not on the windows provided list is considered an&nbsp;orphaned file and is tagged to be moved or deleted.</p>
+<p>HomeDev cannot warrant that PatchCleaner will not find a false positive and delete a required patch which is why we have added the filter feature to filter and recommend using the move function, that way you can always copy the patches back if required. Please see the Known Issues List at the bottom of the page</p>
+<h2>CLI - Command Line Interface</h2>
+<p>As of verison 1.3, patch cleaner implements a CLI, (Command Line Interface).</p>
+<p>The application can now be run from the command line with the following switches:</p>
+<p>&nbsp; &nbsp; &nbsp;/d &nbsp;- This will execute with the delete action.<br>
+&nbsp; &nbsp; &nbsp;/m - This will execute the move action with the default location as stored in your local app configuration.<br>
+&nbsp; &nbsp; &nbsp;/m [FilePath] - This will execute the move action, where [FilePath] is the location you wish to move the files to.</p>
+<p>The process will write the output to the console window and also logs the messages to the windows event log.</p>
+<h2>Malware</h2>
+<p>After 200,000+ downloads, I have had some feedback that a few users are having problems where PatchCleaner is being detected as Malware.</p>
+<p>Firstly let me reassure you that there is no Malware contained within PatchCleaner.</p>
+<p>To stop PatchCleaner from being detected as malware would require purchase of an SSL certificate and digitally signing the software.</p>
+<p>Given this is 100% free software I cannot justify the expense in doing this, so I do&nbsp;apologise for any extra clicks you may have to do to install PatchCleaner but I don't think this will change any time soon.</p>
+<p>If you don't believe me, then how about trusting Softpedia where we have been given a 100% clean rating.</p>
+<p><img alt src=
+<p>Check out the review here as well..</p>
+<p><a href=https://www.softpedia.com/get/Security/Secure-cleaning/PatchCleaner.shtml#status target=_blank>PatchCleaner on Softpedia</a></p>
+<h2>Known Issues</h2>
+<ol>
+ <li>Adobe Reader patches are&nbsp;detected incorrectly as orphaned files. As of verson 1.4,&nbsp;PatchCleaner now has an exclusion filter that allows you to filter out the Adobe Acrobat patch files so they can be excluded from the set of orphaned files. The exclusion filters are configurable</li>
+</ol>
+<h3>Requirements</h3>
+<ul>
+ <li>Windows 7 / 8 or 10, &nbsp;x64 or x86 (not compatible with windows XP)</li>
+ <li>.Net framework 4.5.2</li>
+ <li>Also, runs on Windows Server, Confirmed on Server 2008 R2 x64 and Server 2012 R2 64</li>
+</ul>
+<p><a href="https://download.cnet.com/PatchCleaner/3000-2094_4-76399133.html?part=dl-10218687&amp;subj=dl&amp;tag=button"><img alt="Get it from CNET Download.com!" src=
+<h2>Support</h2>
+<h3>Installation Issues</h3>
+<p>Some people have encountered some installaton challenges when attempting to install. If you hit problems then I suggest you try the following.&nbsp;</p>
+<p>The installer that you download from the website is a self extracting 7z archive created as per my blog post (<a href=http://ntsblog.homedev.com.au/index.php/2015/05/14/self-extracting-archive-runs-setup-exe-7zip-sfx-switch/>http://ntsblog.homedev.com.au/index.php/2015/05/14/self-extracting-archive-runs-setup-exe-7zip-sfx-switch/</a>).</p>
+<p>So you can actually open the .exe file with 7Zip and extract the files (setup.exe and&nbsp;PatchCleaner.msi).&nbsp;</p>
+<p>I would then try running the PatchCleaner.msi file directly.</p>
+<h2>License</h2>
+<p>Yes the product is 100% free, but if you feel inclined please support via a donation either through the $ heart icon in the app or this link below</p>
+<p><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=89FUC4J9KFK5L" target=_new><img alt="Donate with PayPal button" src='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="99" height="47"><rect fill-opacity="0"/></svg>' style="background-blend-mode:normal!important;background-clip:content-box!important;background-position:50% 50%!important;background-color:rgba(0,0,0,0)!important;background-image:var(--sf-img-31)!important;background-size:100% 100%!important;background-origin:content-box!important;background-repeat:no-repeat!important"></a></p>
+ </section>
+ </article>
+ </div>
+ <div id=tabs-2 aria-labelledby=ui-id-2 class="ui-tabs-panel ui-widget-content ui-corner-bottom" role=tabpanel aria-hidden=true style=display:none>
+ 
+ </div>
+ <div id=tabs-3 aria-labelledby=ui-id-3 class="ui-tabs-panel ui-widget-content ui-corner-bottom" role=tabpanel aria-hidden=true style=display:none>
+ 
+ </div>
+ <div id=tabs-4 aria-labelledby=ui-id-4 class="ui-tabs-panel ui-widget-content ui-corner-bottom" role=tabpanel aria-hidden=true style=display:none>
+ </div>
+ <div id=tabs-6 aria-labelledby=ui-id-5 class="ui-tabs-panel ui-widget-content ui-corner-bottom" role=tabpanel aria-hidden=true style=display:none>
+ 
+ </div>
+ <a href=#header class="backtotop table scrolly"></a>
+ </div></article>
+ </div>
+ </div>
+ </div>
+</div>
+ 
+ <div class=no-print id=footer>
+<div id=footer>
+ <div class=container>
+ <hr>
+ <div class=row>
+ <div class=12u>
+ 
+ <section class=contact>
+ <header>
+ <h3>stay in touch</h3>
+ </header>
+ <ul class=icons>
+ <li><a href=https://www.homedev.com.au/Contact class="fa fa-envelope solo"><span class=sf-hidden>Contact Us</span></a></li>
+ <li><a href=# class="fa fa-google-plus solo"><span class=sf-hidden>Google+</span></a></li>
+ <li><a href=http://ntsblog.homedev.com.au/ target=_blank class="fa fa-wordpress solo"><span class=sf-hidden>Wordpress</span></a></li>
+ <li><a href="http://au.linkedin.com/company/homedev?trk=ppro_cprof" target=_blank class="fa fa-linkedin solo"><span class=sf-hidden>Linkedin</span></a></li>
+ </ul>
+ </section>
+ 
+ <div class=copyright>
+ <ul class=menu>
+ <li>© homedev. All rights reserved.</li>
+ <li><a href=https://www.homedev.com.au/Acknowledgments>acknowledgments</a></li>
+ <li>3,317,091 views</li>
+ <li><text>v</text>2.8.0</li>
+ </ul>
+ </div>
+ </div>
+ </div>
+ </div>
+</div>
+ </div>
+ 
+ 
+ 
+<ul style=user-select:none;display:none;position:absolute;z-index:1000 class="dropotron level-0">
+ 
+ 
+ 
+ 
+ </ul><ul style=user-select:none;display:none;position:absolute;z-index:1000 class="dropotron level-0">
+ 
+ 
+ 
+ 
+ </ul></div><div id=skel-panels-defaultWrapper style=height:100%></div><div id=skel-panels-fixedWrapper style=position:relative></div><div style="background-color:rgb(255,255,255);border:1px solid rgb(204,204,204);box-shadow:rgba(0,0,0,0.2) 2px 2px 3px;position:absolute;transition:visibility linear 0.3s,opacity 0.3s linear;opacity:0;visibility:hidden;z-index:2000000000;left:0px;top:-10000px"><div style=width:100%;height:100%;position:fixed;top:0px;left:0px;z-index:2000000000;background-color:rgb(255,255,255);opacity:0.05></div><div class=g-recaptcha-bubble-arrow style="border:11px solid transparent;width:0px;height:0px;position:absolute;pointer-events:none;margin-top:-11px;z-index:2000000000"></div><div class=g-recaptcha-bubble-arrow style="border:10px solid transparent;width:0px;height:0px;position:absolute;pointer-events:none;margin-top:-10px;z-index:2000000000"></div><div style=z-index:2000000000;position:relative></div></div>

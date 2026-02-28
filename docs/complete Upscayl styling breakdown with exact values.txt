@@ -1,0 +1,351 @@
+       Here is the complete Upscayl styling breakdown with exact values.
+
+       ---
+       Stack overview
+
+       Upscayl uses Tailwind CSS 3.4 + DaisyUI 4.x as its component library, with a custom theme called "upscayl". The UI primitives      
+       (Button, Input, Dialog, Toast) are shadcn/ui components built on Radix UI + class-variance-authority. Font is Poppins (bundled     
+        locally, not from Google Fonts).
+
+       ---
+       1. Colour palette (the "upscayl" DaisyUI theme)
+
+       Defined in /tmp/upscayl-repo/tailwind.config.js under daisyui.themes:
+
+       ┌───────────┬─────────┬─────────────────────────────────────────────────────────────────────┐
+       │   Token   │   Hex   │                             Description                             │
+       ├───────────┼─────────┼─────────────────────────────────────────────────────────────────────┤
+       │ primary   │ #334155 │ Slate-700 — button backgrounds, select controls                     │
+       ├───────────┼─────────┼─────────────────────────────────────────────────────────────────────┤
+       │ secondary │ #4f46e5 │ Indigo-600 — accent buttons ("Upscayl" action button)               │
+       ├───────────┼─────────┼─────────────────────────────────────────────────────────────────────┤
+       │ accent    │ #6d28d9 │ Violet-700 — selected options, highlights                           │
+       ├───────────┼─────────┼─────────────────────────────────────────────────────────────────────┤
+       │ neutral   │ #475569 │ Slate-600 — badges, neutral elements                                │
+       ├───────────┼─────────┼─────────────────────────────────────────────────────────────────────┤
+       │ base-100  │ #1e293b │ Slate-800 — sidebar background, card surfaces                       │
+       ├───────────┼─────────┼─────────────────────────────────────────────────────────────────────┤
+       │ base-200  │ #0f172a │ Slate-900 — instruction cards, slightly darker surfaces             │
+       ├───────────┼─────────┼─────────────────────────────────────────────────────────────────────┤
+       │ base-300  │ #020617 │ Slate-950 — deepest background, main content area, scrollbar tracks │
+       └───────────┴─────────┴─────────────────────────────────────────────────────────────────────┘
+
+       The outer shell (bg-base-300) = #020617 (near-black navy). The sidebar (bg-base-100) = #1e293b (dark slate). Cards use
+       bg-base-200 = #0f172a.
+
+       DaisyUI auto-generates *-content colours (text on those backgrounds) and *-focus colours from these base values.
+
+       ---
+       2. CSS custom properties (shadcn/ui layer)
+
+       From renderer/styles/globals.css, the .dark variant (which maps to the DaisyUI dark themes):
+
+       .dark {
+         --background: 222.2 84% 4.9%;      /* HSL → ~#030711 */
+         --foreground: 210 40% 98%;          /* HSL → ~#f8fafc */
+         --card: 222.2 84% 4.9%;
+         --card-foreground: 210 40% 98%;
+         --primary: 210 40% 98%;             /* Light text on dark */
+         --primary-foreground: 222.2 47.4% 11.2%;  /* ~#0f172a */
+         --secondary: 217.2 32.6% 17.5%;    /* ~#1e293b */
+         --secondary-foreground: 210 40% 98%;
+         --muted: 217.2 32.6% 17.5%;
+         --muted-foreground: 215 20.2% 65.1%;  /* ~#94a3b8 */
+         --accent: 217.2 32.6% 17.5%;
+         --accent-foreground: 210 40% 98%;
+         --destructive: 0 62.8% 30.6%;      /* Deep red ~#7f1d1d */
+         --border: 217.2 32.6% 17.5%;
+         --input: 217.2 32.6% 17.5%;
+         --ring: 212.7 26.8% 83.9%;
+         --radius: 0.5rem;
+       }
+
+       ---
+       3. Button styles
+
+       DaisyUI buttons (used in most of the app)
+
+       /* tailwind.config.js theme variables */
+       --rounded-btn: 2rem;        /* pill shape */
+       --animation-btn: 0.5s;
+       --btn-focus-scale: 0.95;    /* scale down on focus */
+       --border-btn: 1px;
+       --btn-text-case: uppercase;
+
+       /* Upscayl theme override */
+       [data-theme="upscayl"] .btn {
+         height: 2.5rem;            /* h-10 */
+         min-height: unset;         /* !min-h-min */
+         padding: 0.5rem 0.75rem;   /* px-3 py-2 */
+         font-weight: 500;          /* font-medium */
+         text-transform: none;      /* normal-case overrides uppercase default */
+       }
+
+       Variants used:
+       - btn btn-primary — background #334155, text auto-contrast
+       - btn btn-secondary — background #4f46e5 (indigo)
+       - btn btn-outline — transparent with border, used for "Stop" button
+       - btn btn-neutral — background #475569
+
+       shadcn/ui Button component (used in Dialog footers, etc.)
+
+       Base: rounded-md, text-sm, font-medium, ring-offset-background
+             transition-colors, disabled:opacity-50
+
+       Sizes:
+         default: h-10 px-4 py-2
+         sm:      h-9  px-3 rounded-md
+         lg:      h-11 px-8 rounded-md
+         icon:    h-10 w-10
+
+       Variants:
+         default:     bg-primary text-primary-foreground hover:bg-primary/90
+         destructive: bg-destructive text-destructive-foreground hover:bg-destructive/90
+         outline:     border border-input bg-background hover:bg-accent hover:text-accent-foreground
+         secondary:   bg-secondary text-secondary-foreground hover:bg-secondary/80
+         ghost:       hover:bg-accent hover:text-accent-foreground
+         link:        text-primary underline-offset-4 hover:underline
+
+       ---
+       4. Typography
+
+       Font family: Poppins (bundled, 6 weights)
+
+       @font-face { font-family: "Poppins"; font-weight: normal; }  /* 400 - Regular */
+       @font-face { font-family: "Poppins"; font-weight: 500; }     /* Medium */
+       @font-face { font-family: "Poppins"; font-weight: 600; }     /* SemiBold */
+       @font-face { font-family: "Poppins"; font-weight: 700; }     /* Bold */
+       @font-face { font-family: "Poppins"; font-weight: 800; }     /* ExtraBold */
+       @font-face { font-family: "Poppins"; font-weight: 900; }     /* Black */
+
+       * { font-family: "Poppins", sans-serif; }
+
+       Sizes and weights used:
+       - App title (header): text-3xl font-bold (1.875rem / 30px, weight 700)
+       - Version badge: text-xs (0.75rem / 12px)
+       - Step headings: font-semibold (600) with mb-2
+       - Body/description: text-sm (0.875rem / 14px)
+       - Sub-descriptions: text-xs text-base-content/80 (12px, 80% opacity)
+       - Footer: text-xs text-base-content/50 (12px, 50% opacity)
+       - Dialog title: text-4xl (2.25rem / 36px) text-center
+       - Dialog description: text-lg text-base-content/70 (1.125rem / 18px, 70% opacity)
+       - Select dropdowns: text-sm font-semibold uppercase
+
+       ---
+       5. Input / textbox styling
+
+       DaisyUI inputs (used for GPU ID, tile size, etc.):
+       <input class="input input-bordered w-full max-w-xs" />
+       DaisyUI input class gives: height matching buttons, border-radius from --rounded-btn (2rem), background from base-100, border      
+       from theme.
+
+       shadcn/ui Input (used in command dialogs):
+       h-10, w-full, rounded-md, border border-input, bg-background
+       px-3 py-2, text-sm
+       placeholder:text-muted-foreground
+       focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
+       disabled:opacity-50
+
+       Range sliders (compression, etc.):
+       <input type="range" class="range range-primary w-full max-w-xs" />
+       Upscayl theme override: input[type="range"] { border-radius: 9999px; } (rounded-full)
+
+       ---
+       6. Toggle switch styling
+
+       Uses DaisyUI's toggle class directly:
+       <input type="checkbox" className="toggle" />
+
+       DaisyUI toggle uses --animation-input: 0.5s for transition duration. The toggle inherits the theme's primary colour for the        
+       checked state. No custom overrides. Sizing is DaisyUI default (~1.5rem height, ~3rem width).
+
+       In the onboarding dialog, toggles are used inline:
+       <input type="checkbox" className="toggle" id={option.key} />
+
+       Checkboxes also use DaisyUI:
+       <input type="checkbox" className="checkbox" />
+
+       ---
+       7. Card / surface styling
+
+       Three-tier depth system:
+       - Outermost: bg-base-300 = #020617 (the main content area background)
+       - Sidebar: bg-base-100 = #1e293b (350px wide, min-w-[350px] max-w-[350px])
+       - Cards/panels: bg-base-200 = #0f172a with rounded-btn (2rem border-radius)
+
+       Instructions card:
+       <div class="flex flex-col items-center gap-4 rounded-btn bg-base-200 p-4">
+
+       No box-shadows on cards. The tone shift from #1e293b to #0f172a provides subtle depth differentiation.
+
+       Badges: badge badge-primary / badge badge-neutral badge-sm
+
+       Onboarding config panel: bg-primary p-8 with rounded-sm (so bg-primary = #334155)
+
+       ---
+       8. Glassmorphism / transparency effects
+
+       Progress overlay (the main glassmorphism element):
+       <div class="bg-base-300/50 backdrop-blur-lg">
+         <div class="rounded-btn bg-base-100/50 p-4 backdrop-blur-lg">
+
+       Breakdown:
+       - Outer overlay: bg-base-300/50 = #020617 at 50% opacity + backdrop-blur-lg (16px blur)
+       - Inner card: bg-base-100/50 = #1e293b at 50% opacity + backdrop-blur-lg (16px blur)
+       - Combined: double-layer blur creating frosted glass effect
+
+       Scrollbar transparency:
+       ::-webkit-scrollbar-track { bg-base-300/30; }    /* 30% opacity */
+       ::-webkit-scrollbar-thumb { bg-base-content/20; } /* 20% opacity */
+       ::-webkit-scrollbar-thumb:hover { bg-base-content/50; } /* 50% opacity */
+       ::-webkit-scrollbar { width: 0.75rem; }            /* w-3 = 12px */
+
+       All scrollbar elements use rounded-full (9999px border-radius).
+
+       Text opacity patterns:
+       - Muted text: text-base-content/80 (80%)
+       - Secondary text: text-base-content/70 (70%)
+       - Footer/hint text: text-base-content/50 (50%)
+       - Progress hint: text-neutral-content/50 animate-pulse
+
+       ---
+       9. Animations
+
+       /* Step entrance animation */
+       .animate-step-in {
+         animation: animate-step-in 0.6s cubic-bezier(0.07, 0.43, 0.02, 1);
+       }
+       @keyframes animate-step-in {
+         0%   { opacity: 0; transform: translateY(-10px); }
+         80%  { opacity: 1; }
+         100% { opacity: 1; transform: translateY(0px); }
+       }
+
+       /* Global animate utility */
+       .animate { transition: all 300ms ease-in-out; }
+
+       /* Logo spinner */
+       .spinner { animation: sk-rotateplane 2.2s infinite ease-in-out; }
+       /* 3D perspective rotate on X then Y axes */
+
+       /* Marquee (news ticker) */
+       animation: marquee 25s linear infinite;
+
+       /* Button interaction */
+       --animation-btn: 0.5s;
+       --btn-focus-scale: 0.95;
+
+       ---
+       10. Sidebar collapse button
+
+       <button class="absolute -right-0 top-1/2 z-50 -translate-y-1/2 translate-x-1/2
+                      rounded-full bg-base-100 p-4">
+       A circular floating button using bg-base-100 (#1e293b), centred vertically, protruding from the sidebar edge.
+
+       ---
+       11. Select dropdown (react-select styling)
+
+       .react-select__control {
+         height: 2.5rem;            /* h-10 */
+         cursor: pointer;
+         border-radius: var(--rounded-btn);  /* 2rem */
+         border: none;
+         background: var(--primary);         /* #334155 */
+         box-shadow: none;
+       }
+       .react-select__single-value {
+         font-weight: 500;
+         text-transform: none;       /* normal-case in upscayl theme */
+         color: var(--primary-content);
+       }
+       .react-select__menu {
+         border-radius: 0.5rem;      /* rounded-lg */
+         background: var(--primary);
+         padding: 0.25rem;
+       }
+       .react-select__option {
+         margin: 0.25rem 0;
+         cursor: pointer;
+         border-radius: 0.375rem;    /* rounded-md */
+         background: var(--primary);
+         hover: bg-primary-content/20;
+       }
+       .react-select__option--is-selected {
+         background: var(--accent);   /* #6d28d9 */
+         color: var(--accent-content);
+       }
+
+       ---
+       12. Dialog / modal overlay
+
+       /* Overlay */
+       bg-black/80    /* black at 80% opacity */
+       animate-in/animate-out with fade
+
+       /* Content */
+       border, bg-background, p-6, shadow-lg, rounded-lg (sm: breakpoint)
+       max-width: 32rem (max-w-lg) for standard, 80% for onboarding
+       zoom-in-95 / zoom-out-95 animations
+       slide-in-from-top-[48%]
+
+       ---
+       Summary of key numbers for WPF translation
+
+       ┌─────────────────────────────────┬──────────────────────────────────────────────────────────────────┐
+       │            Property             │                              Value                               │
+       ├─────────────────────────────────┼──────────────────────────────────────────────────────────────────┤
+       │ Primary background (deepest)    │ #020617                                                          │
+       ├─────────────────────────────────┼──────────────────────────────────────────────────────────────────┤
+       │ Sidebar / card-level background │ #1e293b                                                          │
+       ├─────────────────────────────────┼──────────────────────────────────────────────────────────────────┤
+       │ Card / elevated surface         │ #0f172a                                                          │
+       ├─────────────────────────────────┼──────────────────────────────────────────────────────────────────┤
+       │ Primary button fill             │ #334155                                                          │
+       ├─────────────────────────────────┼──────────────────────────────────────────────────────────────────┤
+       │ Action/CTA button fill          │ #4f46e5                                                          │
+       ├─────────────────────────────────┼──────────────────────────────────────────────────────────────────┤
+       │ Accent/selection highlight      │ #6d28d9                                                          │
+       ├─────────────────────────────────┼──────────────────────────────────────────────────────────────────┤
+       │ Neutral elements                │ #475569                                                          │
+       ├─────────────────────────────────┼──────────────────────────────────────────────────────────────────┤
+       │ Text on dark (foreground)       │ ~#f8fafc                                                         │
+       ├─────────────────────────────────┼──────────────────────────────────────────────────────────────────┤
+       │ Muted text                      │ ~#94a3b8 (or base-content at 50-80% opacity)                     │
+       ├─────────────────────────────────┼──────────────────────────────────────────────────────────────────┤
+       │ Font family                     │ Poppins, sans-serif                                              │
+       ├─────────────────────────────────┼──────────────────────────────────────────────────────────────────┤
+       │ Font weights used               │ 400, 500, 600, 700                                               │
+       ├─────────────────────────────────┼──────────────────────────────────────────────────────────────────┤
+       │ Body text size                  │ 14px (0.875rem)                                                  │
+       ├─────────────────────────────────┼──────────────────────────────────────────────────────────────────┤
+       │ Small text                      │ 12px (0.75rem)                                                   │
+       ├─────────────────────────────────┼──────────────────────────────────────────────────────────────────┤
+       │ Heading text                    │ 30px (1.875rem)                                                  │
+       ├─────────────────────────────────┼──────────────────────────────────────────────────────────────────┤
+       │ Button border-radius            │ 2rem (32px) — pill shape                                         │
+       ├─────────────────────────────────┼──────────────────────────────────────────────────────────────────┤
+       │ Card border-radius              │ 2rem (32px) — same as --rounded-btn                              │
+       ├─────────────────────────────────┼──────────────────────────────────────────────────────────────────┤
+       │ Dialog border-radius            │ 0.5rem (8px)                                                     │
+       ├─────────────────────────────────┼──────────────────────────────────────────────────────────────────┤
+       │ Button height                   │ 2.5rem (40px)                                                    │
+       ├─────────────────────────────────┼──────────────────────────────────────────────────────────────────┤
+       │ Button padding                  │ 0.5rem 0.75rem (8px 12px)                                        │
+       ├─────────────────────────────────┼──────────────────────────────────────────────────────────────────┤
+       │ Glassmorphism blur              │ 16px (backdrop-blur-lg)                                          │
+       ├─────────────────────────────────┼──────────────────────────────────────────────────────────────────┤
+       │ Glassmorphism opacity           │ 50% on background colour                                         │
+       ├─────────────────────────────────┼──────────────────────────────────────────────────────────────────┤
+       │ Scrollbar width                 │ 12px                                                             │
+       ├─────────────────────────────────┼──────────────────────────────────────────────────────────────────┤
+       │ Scrollbar track opacity         │ 30%                                                              │
+       ├─────────────────────────────────┼──────────────────────────────────────────────────────────────────┤
+       │ Scrollbar thumb opacity         │ 20% (hover: 50%)                                                 │
+       ├─────────────────────────────────┼──────────────────────────────────────────────────────────────────┤
+       │ Transition duration             │ 300ms ease-in-out (general), 500ms (buttons)                     │
+       ├─────────────────────────────────┼──────────────────────────────────────────────────────────────────┤
+       │ Button focus scale              │ 0.95                                                             │
+       ├─────────────────────────────────┼──────────────────────────────────────────────────────────────────┤
+       │ Step entrance animation         │ 600ms, cubic-bezier(0.07, 0.43, 0.02, 1), translateY(-10px to 0) │
+       └─────────────────────────────────┴──────────────────────────────────────────────────────────────────┘
+  ⎿  Done (33 tool uses · 54.1k tokens · 9m 27s)

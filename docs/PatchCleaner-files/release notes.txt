@@ -1,0 +1,122 @@
+Version 1.4.2.0
+Released 3/3/2016
+Version 1.4.2.0 of PatchCleaner is another point release that  implements the following fixes:
+
+Fix for object not found crash in UI.
+Fix for crash on Cannot convert Null to System.DateTime
+Error handling for vbScript not configured on PC.
+Fix for duplicate patch files appearing
+UI enhancement for missing files.
+Thats all the bugs fixed now.
+
+Version 1.4.1.0
+Released 2/16/2016
+Version 1.4.1.0 of PatchCleaner is a hotfix release due to a crash that was occuring on Windows 7 machines
+
+The hotfix also  implements the following fixes:
+
+Fix for Shell32 program crash
+Improved error handling after all the previous crashes.
+Improved product crash handling
+Improved file access performance
+Deep scan mode for improved performance but reduced functionality.
+ Move to .Net Framework 4.5.2
+Fixes for issues on Non-English versions of windows.
+Missing msi/msp file notification
+Version 1.4.0.0
+Released 2/10/2016
+Version 1.4.0.0 of PatchCleaner implements new functionality, including:
+
+File Details
+
+PatchCleaner now provides the details of:
+
+The files that are still in use and need to be retained
+The orphaned files including those files that are excluded via the exclusion filters
+Exclusion filters
+
+There is a known issue in previous versions where PatchCleaner falsely identifies Adobe Acrobat Reader patches as not being required. Adobe do something proprietary when it comes to their automatic updating such that if PatchCleaner removes the "orphaned" patches from the installer directory, Adobe Reader automatic updates will no longer successfully install.
+
+The exclusion filters feature allows you to add keywords that are used in "contains" filters to exclude patches that match these keywords. These "contains" checks are applied against the file title, subject, author and digital signature.
+
+PatchCleaner is now pre-configured to exclude "Acrobat" which will exclude any Adobe Reader files from the set of orphaned files.
+
+These exclusion filters are able to altered by you.
+
+Bug Fixes
+
+Issue with the "version" checking where version 1.3.0.0 always displayed that version 1.3.0.0 was available for download.
+Adobe Reader
+
+If you are concerned that PatchCleaner has detected your AdobeReader patches as orphaned, you could apply the following steps to recover them. (Note: This assumes you have used the move feature and have access to the full list of patches that have been marked as orphaned.)
+
+ 
+
+Install PatchCleaner 1.4.0.0
+Run patch cleaner
+Move your orphaned files to your "Move" folder. Patch cleaner should now say you have "0" orphaned files.
+Copy your patches from your "Move" location back to "c:\windows\installer"
+Run PatchCleaner (or click refresh if you left it running)
+Use the delete action.
+Any Adobe Reader patches that were copied back to "c:\windows\installer" as part of step 4, will have been excluded from the set of orphaned files and will remain in the installer folder.
+
+Version 1.3.0.0
+Released 11/14/2015
+Version 1.3.0.0 of patch cleaner implements a CLI, (Command Line Interface).
+
+The application can now be run from the command line with the following switches:
+
+     /d  - This will execute with the delete action.
+     /m - This will execute the move action with the default location as stored in your local app configuration.
+     /m [FilePath] - This will execute the move action, where [FilePath] is the location you wish to move the files to.
+
+The process will write the output to the console window and also logs the messages to the windows event log.
+
+Bug Fixes
+
+There was code to ensure that the application had write access to the "Move" location. This seemed to cause security issues if your move location was the root of your drive. This functionality has been removed and the application will just log an error if it does not have write permission to the target "Move" location. 
+ 
+
+Version 1.2.0.0
+Released 6/16/2015
+This version contains some minor fixes, including:
+
+Fix to save the move folder location between sessions. Previously PatchCleaner would not retain you chosen move location.
+Performance improvements, by removal of redundant code.
+Note: There have been no functional changes to the code
+
+Since version 1.1.1.0, HomeDev has performed further testing, which involved testing with the latest round of windows updates.
+
+All windows update patches installed with no issues being encountered.
+
+Running patch cleaner after running a large set of windows updates recovered another 1GB of free space.
+
+Version 1.1.0.0
+Released 6/9/2015
+Hotfix for issue that was identifying false positives.
+
+There was a bug that was falsely identifying a small number of patches as orphaned when in fact they were not. For example on a test computer it found 42 files worth 300MB of actual patch files that should have been retained.
+
+If you used the move function the recovery process is:
+
+ copy the files back into the c:\windows\Installer directory; and
+re-run the PatchCleaner v1.1.0.0  to correctly identify orphaned patches.
+If you deleted... Sorry :-(
+
+I ran this for over a month with out any issues before releasing the first version of the product. It was only today that I had my first issue.
+
+I appologise if this has caused any problems.
+
+ 
+
+Version 1.0.1.0
+Released 6/2/2015
+Fixes issue with move action crashing.
+
+Added better error capturing around the move logic.
+
+If you have crashes when attempting the move action it will be related to file system permissions. Try choosing a destination location that you have full control over.
+
+Version 1.0.0.0
+Released 5/23/2015
+First version of PatchCleaner.

@@ -1,4 +1,6 @@
+using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Interop;
 using SimpleWindowsInstallerCleaner.Services;
 using SimpleWindowsInstallerCleaner.ViewModels;
 
@@ -6,11 +8,24 @@ namespace SimpleWindowsInstallerCleaner;
 
 public partial class App : Application
 {
+    [DllImport("dwmapi.dll", PreserveSig = true)]
+    private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int value, int size);
+
     protected override async void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
 
-        ThemeService.ApplySystemTheme();
+        // Force dark titlebar on all windows
+        EventManager.RegisterClassHandler(typeof(Window), Window.LoadedEvent,
+            new RoutedEventHandler((s, _) =>
+            {
+                if (s is Window w)
+                {
+                    var hwnd = new WindowInteropHelper(w).Handle;
+                    int value = 1;
+                    DwmSetWindowAttribute(hwnd, 20, ref value, sizeof(int));
+                }
+            }));
 
         var splash = new SplashWindow();
         splash.Show();
