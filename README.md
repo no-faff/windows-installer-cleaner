@@ -33,7 +33,7 @@ This project is a modern replacement:
 ## Getting started
 
 1. Download the latest release from the [releases page](https://github.com/no-faff/windows-installer-cleaner/releases)
-2. Right-click the exe and choose **Run as administrator** (required to read the Installer folder)
+2. Run the exe — Windows will prompt for administrator access (required to read the Installer folder)
 3. The app scans automatically on startup
 4. Choose a move destination and click **Move**, or click **Delete** if you prefer
 
