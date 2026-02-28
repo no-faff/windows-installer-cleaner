@@ -6,8 +6,7 @@ Windows keeps every MSI installer and MSP patch it has ever used. Over time, man
 
 Simple Windows installer cleaner scans your Installer folder, cross-references every file against the Windows Installer API, and shows you exactly which files are still needed and which are safe to remove.
 
-<!-- Screenshot: replace this with an actual screenshot of the app -->
-<!-- ![Screenshot of Simple Windows installer cleaner](docs/screenshot.png) -->
+![Screenshot of Simple Windows installer cleaner](docs/screenshot.png)
 
 ## How it works
 
