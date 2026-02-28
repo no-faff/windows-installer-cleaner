@@ -43,50 +43,63 @@
                          Foreground="#cbd5e1"/>
                 </TextBlock>
 
-                <!-- Still used -->
-                <DockPanel Margin="0,0,0,4">
-                    <Button DockPanel.Dock="Right" Style="{StaticResource GhostPill}"
-                            Content="details..." Command="{Binding OpenRegisteredDetailsCommand}"
-                            Height="28" Padding="12,0" FontSize="12"
-                            VerticalAlignment="Center" Margin="12,0,0,0"/>
-                    <TextBlock DockPanel.Dock="Right" Text="{Binding RegisteredSizeDisplay}"
-                               Foreground="#94a3b8" FontSize="12"
-                               VerticalAlignment="Center" MinWidth="72" TextAlignment="Right"/>
-                    <TextBlock VerticalAlignment="Center">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="4"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="12"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Still used -->
+                    <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">
                         <Run Text="{Binding RegisteredFileCount, Mode=OneWay}" Foreground="#cbd5e1"
                              FontSize="15"/>
                         <Run Text=" files still used" Foreground="#cbd5e1"
                              FontSize="14"/>
                     </TextBlock>
-                </DockPanel>
-
-                <!-- Excluded by filters -->
-                <DockPanel Margin="0,0,0,12">
-                    <TextBlock DockPanel.Dock="Right" Text="{Binding ExcludedSizeDisplay}"
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding RegisteredSizeDisplay}"
                                Foreground="#94a3b8" FontSize="12"
-                               VerticalAlignment="Center" MinWidth="72" TextAlignment="Right"/>
-                    <TextBlock VerticalAlignment="Center" Foreground="#94a3b8" FontSize="14">
+                               VerticalAlignment="Center" MinWidth="72" TextAlignment="Right"
+                               Margin="12,0"/>
+                    <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource GhostPill}"
+                            Content="details..." Command="{Binding OpenRegisteredDetailsCommand}"
+                            Height="28" Padding="12,0" FontSize="12"
+                            VerticalAlignment="Center"/>
+
+                    <!-- Excluded by filters -->
+                    <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"
+                               Foreground="#94a3b8" FontSize="14">
                         <Run Text="{Binding ExcludedFileCount, Mode=OneWay}"/>
                         <Run Text=" files excluded by filters"/>
                     </TextBlock>
-                </DockPanel>
-
-                <!-- Orphaned -->
-                <DockPanel>
-                    <Button DockPanel.Dock="Right" Style="{StaticResource GhostPill}"
-                            Content="details..." Command="{Binding OpenOrphanedDetailsCommand}"
-                            Height="28" Padding="12,0" FontSize="12"
-                            VerticalAlignment="Center" Margin="12,0,0,0"/>
-                    <TextBlock DockPanel.Dock="Right" Text="{Binding OrphanedSizeDisplay}"
+                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding ExcludedSizeDisplay}"
                                Foreground="#94a3b8" FontSize="12"
-                               VerticalAlignment="Center" MinWidth="72" TextAlignment="Right"/>
-                    <TextBlock VerticalAlignment="Center">
+                               VerticalAlignment="Center" MinWidth="72" TextAlignment="Right"
+                               Margin="12,0"/>
+
+                    <!-- Orphaned -->
+                    <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center">
                         <Run Text="{Binding OrphanedFileCount, Mode=OneWay}" Foreground="#cbd5e1"
                              FontSize="15"/>
                         <Run Text=" files orphaned" Foreground="#cbd5e1"
                              FontSize="14"/>
                     </TextBlock>
-                </DockPanel>
+                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding OrphanedSizeDisplay}"
+                               Foreground="#94a3b8" FontSize="12"
+                               VerticalAlignment="Center" MinWidth="72" TextAlignment="Right"
+                               Margin="12,0"/>
+                    <Button Grid.Row="4" Grid.Column="2" Style="{StaticResource GhostPill}"
+                            Content="details..." Command="{Binding OpenOrphanedDetailsCommand}"
+                            Height="28" Padding="12,0" FontSize="12"
+                            VerticalAlignment="Center"/>
+                </Grid>
 
             </StackPanel>
 
