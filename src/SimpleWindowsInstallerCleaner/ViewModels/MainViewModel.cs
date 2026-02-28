@@ -242,13 +242,11 @@ public partial class MainViewModel : ObservableObject
         var count = _lastFilteredResult.Actionable.Count;
         var sizeDisplay = OrphanedSizeDisplay;
 
-        var confirm = MessageBox.Show(
-            $"Permanently delete {count} {DisplayHelpers.Pluralise(count, "file", "files")} ({sizeDisplay})?\n\nThis cannot be undone.",
-            "Confirm delete",
-            MessageBoxButton.YesNo,
-            MessageBoxImage.Warning);
-
-        if (confirm != MessageBoxResult.Yes) return;
+        var dialog = new ConfirmDeleteWindow(count, sizeDisplay)
+        {
+            Owner = Application.Current.MainWindow
+        };
+        if (dialog.ShowDialog() != true) return;
 
         var filePaths = _lastFilteredResult.Actionable.Select(f => f.FullPath).ToList();
         IsOperating = true;
