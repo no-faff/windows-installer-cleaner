@@ -21,7 +21,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Text="Simple Windows installer cleaner"
+            <TextBlock Grid.Row="0" Text="Windows installer cleaner"
                        Foreground="#f8fafc" FontSize="20" FontWeight="SemiBold" TextWrapping="Wrap"/>
             <TextBlock Grid.Row="2" Text="Version 0.1.0-alpha"
                        Foreground="#cbd5e1" FontSize="12"/>

@@ -124,7 +124,7 @@
 
                 <!-- Move location label -->
                 <TextBlock Grid.Row="2" Text="MOVE LOCATION"
-                           Foreground="#94a3b8" FontSize="11" FontWeight="SemiBold"/>
+                           Foreground="#94a3b8" FontSize="13" FontWeight="SemiBold"/>
 
                 <!-- Move destination -->
                 <Grid Grid.Row="4">

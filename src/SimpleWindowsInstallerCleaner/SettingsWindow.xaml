@@ -31,7 +31,7 @@
 
         <!-- EXCLUSION FILTERS heading -->
         <TextBlock Grid.Row="0" Text="EXCLUSION FILTERS"
-                   Foreground="#94a3b8" FontSize="11" FontWeight="SemiBold"/>
+                   Foreground="#94a3b8" FontSize="13" FontWeight="SemiBold"/>
 
         <!-- Description -->
         <StackPanel Grid.Row="2">
@@ -63,7 +63,7 @@
         <!-- Filter list — plain Border, NO CardNoPad (avoids wpfui overrides) -->
         <Border Grid.Row="6" Background="#0f172a" CornerRadius="12"
                 MinHeight="60">
-            <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="4">
+            <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="4">
                 <ItemsControl ItemsSource="{Binding Filters}" Padding="8,4">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
@@ -87,7 +87,7 @@
 
         <!-- OPTIONS heading -->
         <TextBlock Grid.Row="8" Text="OPTIONS"
-                   Foreground="#94a3b8" FontSize="11" FontWeight="SemiBold"/>
+                   Foreground="#94a3b8" FontSize="13" FontWeight="SemiBold"/>
 
         <!-- Checkbox with explicit template to bypass wpfui -->
         <CheckBox Grid.Row="10"

@@ -20,9 +20,9 @@
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0" Text="PRODUCTS" Foreground="#94a3b8"
-                       FontSize="11" FontWeight="SemiBold"/>
+                       FontSize="13" FontWeight="SemiBold"/>
 
-            <Border Grid.Row="2" Style="{StaticResource CardNoPad}">
+            <Border Grid.Row="2" Style="{StaticResource CardNoPad}" ClipToBounds="True">
                 <ListView ItemsSource="{Binding Products}"
                           SelectedItem="{Binding SelectedProduct, Mode=TwoWay}"
                           BorderThickness="0" Background="Transparent"
@@ -80,7 +80,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Text="PATCHES" Foreground="#94a3b8"
-                               FontSize="11" FontWeight="SemiBold"/>
+                               FontSize="13" FontWeight="SemiBold"/>
                     <Border Grid.Row="2" Style="{StaticResource CardNoPad}">
                         <Grid>
                             <TextBlock Text="(none)" Foreground="#64748b" FontSize="12"
@@ -130,7 +130,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Text="PRODUCT DETAILS" Foreground="#94a3b8"
-                               FontSize="11" FontWeight="SemiBold"/>
+                               FontSize="13" FontWeight="SemiBold"/>
                     <Border Grid.Row="2" Style="{StaticResource Card}">
                         <Grid>
                             <TextBlock Text="Select a product to view details."
