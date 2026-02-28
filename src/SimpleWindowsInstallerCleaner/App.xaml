@@ -167,6 +167,66 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            <!-- Dark selection for ListView items (overrides wpfui white/blue highlight) -->
+            <Style TargetType="ListViewItem">
+                <Setter Property="Foreground" Value="#f8fafc"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListViewItem">
+                            <Border x:Name="Bd" Background="Transparent" Padding="4,6">
+                                <GridViewRowPresenter/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="Bd" Property="Background" Value="#334155"/>
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Bd" Property="Background" Value="#1e293b"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Dark selection for ListBox items (overrides wpfui white/blue highlight) -->
+            <Style TargetType="ListBoxItem">
+                <Setter Property="Foreground" Value="#f8fafc"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListBoxItem">
+                            <Border x:Name="Bd" Background="Transparent" Padding="2,2">
+                                <ContentPresenter/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="Bd" Property="Background" Value="#334155"/>
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Bd" Property="Background" Value="#1e293b"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Dark GridViewColumnHeader (overrides wpfui white header) -->
+            <Style TargetType="GridViewColumnHeader">
+                <Setter Property="Foreground" Value="#94a3b8"/>
+                <Setter Property="FontSize" Value="11"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="GridViewColumnHeader">
+                            <Border Background="#0f172a" Padding="8,6" BorderThickness="0,0,1,1"
+                                    BorderBrush="#1e293b">
+                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
             <!-- Warning tooltip (Upscayl-style, indigo background) -->
             <Style x:Key="WarningTooltip" TargetType="ToolTip">
                 <Setter Property="Background" Value="#4f46e5"/>
