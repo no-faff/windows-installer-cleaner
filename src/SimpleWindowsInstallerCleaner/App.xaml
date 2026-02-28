@@ -120,6 +120,7 @@
                 <Setter Property="Padding" Value="20,8"/>
                 <Setter Property="Height" Value="40"/>
                 <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
@@ -218,10 +219,35 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="GridViewColumnHeader">
-                            <Border Background="#0f172a" Padding="8,6" BorderThickness="0,0,1,1"
+                            <Border Background="Transparent" Padding="8,6" BorderThickness="0,0,0,1"
                                     BorderBrush="#1e293b">
                                 <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
                             </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Link button (details..., text-only, coloured like a hyperlink) -->
+            <Style x:Key="LinkButton" TargetType="Button">
+                <Setter Property="Foreground" Value="#818cf8"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <TextBlock x:Name="Tx" Text="{TemplateBinding Content}"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       FontSize="{TemplateBinding FontSize}"
+                                       VerticalAlignment="Center"/>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Tx" Property="TextDecorations" Value="Underline"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="Tx" Property="Opacity" Value="0.5"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>

@@ -65,10 +65,9 @@
                                Foreground="#cbd5e1" FontSize="12"
                                VerticalAlignment="Center" MinWidth="72" TextAlignment="Right"
                                Margin="12,0"/>
-                    <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource GhostPill}"
+                    <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource LinkButton}"
                             Content="details..." Command="{Binding OpenRegisteredDetailsCommand}"
-                            Height="28" Padding="12,0" FontSize="12"
-                            VerticalAlignment="Center"/>
+                            VerticalAlignment="Center" Margin="12,0,0,0"/>
 
                     <!-- Excluded by filters -->
                     <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"
@@ -116,15 +115,14 @@
                                Foreground="#cbd5e1" FontSize="12"
                                VerticalAlignment="Center" MinWidth="72" TextAlignment="Right"
                                Margin="12,0"/>
-                    <Button Grid.Column="2" Style="{StaticResource GhostPill}"
+                    <Button Grid.Column="2" Style="{StaticResource LinkButton}"
                             Content="details..." Command="{Binding OpenOrphanedDetailsCommand}"
-                            Height="28" Padding="12,0" FontSize="12"
-                            VerticalAlignment="Center"/>
+                            VerticalAlignment="Center" Margin="12,0,0,0"/>
                 </Grid>
 
                 <!-- Move location label -->
                 <TextBlock Grid.Row="2" Text="MOVE LOCATION"
-                           Foreground="#94a3b8" FontSize="13" FontWeight="SemiBold"/>
+                           Foreground="#94a3b8" FontSize="14"/>
 
                 <!-- Move destination -->
                 <Grid Grid.Row="4">

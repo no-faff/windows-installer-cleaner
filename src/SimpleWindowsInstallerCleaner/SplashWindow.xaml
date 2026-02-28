@@ -24,19 +24,12 @@
                 <RowDefinition Height="Auto"/>  <!-- version -->
             </Grid.RowDefinitions>
 
-            <!-- App name (two-line, bold) -->
-            <StackPanel Grid.Row="0">
-                <TextBlock Text="Windows"
-                           Foreground="#f8fafc"
-                           FontSize="22"
-                           FontWeight="Bold"
-                           LineHeight="28"/>
-                <TextBlock Text="installer cleaner"
-                           Foreground="#f8fafc"
-                           FontSize="22"
-                           FontWeight="Bold"
-                           LineHeight="28"/>
-            </StackPanel>
+            <!-- App name (single line) -->
+            <TextBlock Grid.Row="0"
+                       Text="Windows installer cleaner"
+                       Foreground="#f8fafc"
+                       FontSize="22"
+                       FontWeight="Bold"/>
 
             <!-- Progress bar (the star of the show) -->
             <Border Grid.Row="2" CornerRadius="12" Background="#0f172a" Height="24">

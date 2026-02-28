@@ -12,10 +12,13 @@ public partial class AboutWindow : Window
 
     private void Hyperlink_Click(object sender, RoutedEventArgs e)
     {
-        Process.Start(new ProcessStartInfo
+        if (sender is System.Windows.Documents.Hyperlink link && link.NavigateUri is not null)
         {
-            FileName = "https://github.com/no-faff/windows-installer-cleaner",
-            UseShellExecute = true
-        });
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = link.NavigateUri.AbsoluteUri,
+                UseShellExecute = true
+            });
+        }
     }
 }
