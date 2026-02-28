@@ -24,7 +24,10 @@
       "WebFetch(domain:wpfui.lepo.co)",
       "Bash(gh api:*)",
       "Bash(taskkill:*)",
-      "Bash(tasklist:*)"
+      "Bash(tasklist:*)",
+      "Bash(cat:*)",
+      "Bash(gh repo:*)",
+      "Bash(gh auth:*)"
     ]
   }
 }
