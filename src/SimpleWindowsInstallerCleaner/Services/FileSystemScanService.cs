@@ -82,7 +82,7 @@ public sealed class FileSystemScanService : IFileSystemScanService
         if (!Directory.Exists(InstallerFolder))
             return Enumerable.Empty<string>();
 
-        return Directory.EnumerateFiles(InstallerFolder, "*.msi")
-            .Concat(Directory.EnumerateFiles(InstallerFolder, "*.msp"));
+        return Directory.EnumerateFiles(InstallerFolder, "*.msi", SearchOption.AllDirectories)
+            .Concat(Directory.EnumerateFiles(InstallerFolder, "*.msp", SearchOption.AllDirectories));
     }
 }

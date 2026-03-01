@@ -59,6 +59,12 @@ public partial class MainViewModel : ObservableObject
     // Whether scan has completed at least once
     [ObservableProperty] private bool _hasScanned;
 
+    // Completion screen state
+    [ObservableProperty] private bool _isComplete;
+    [ObservableProperty] private string _completionHeading = string.Empty;
+    [ObservableProperty] private string _completionSummary = string.Empty;
+    [ObservableProperty] private string _completionRestore = string.Empty;
+
     private ScanResult? _lastScanResult;
     private FilteredResult? _lastFilteredResult;
     private AppSettings _settings = new();
@@ -248,13 +254,21 @@ public partial class MainViewModel : ObservableObject
                 OperationProgress = $"{p.CurrentFile} of {p.TotalFiles} files";
             });
             var result = await _moveService.MoveFilesAsync(filePaths, MoveDestination, progress, _operationCts.Token);
-
-            var movedLabel = DisplayHelpers.Pluralise(result.MovedCount, "file", "files");
-            OperationProgress = result.Errors.Count == 0
-                ? $"Moved {result.MovedCount} {movedLabel}. To restore, copy them back from {MoveDestination}."
-                : $"Moved {result.MovedCount} {movedLabel}. {result.Errors.Count} {DisplayHelpers.Pluralise(result.Errors.Count, "error", "errors")}.";
+            var movedSize = sizeDisplay;
+            var movedCount = result.MovedCount;
+            var movedDest = MoveDestination;
+            var errorCount = result.Errors.Count;
 
             await ScanAsync();
+
+            // Show completion screen
+            CompletionHeading = "All done";
+            var movedLabel = DisplayHelpers.Pluralise(movedCount, "file", "files");
+            CompletionSummary = errorCount == 0
+                ? $"{movedCount} {movedLabel} ({movedSize}) moved to {movedDest}"
+                : $"{movedCount} {movedLabel} ({movedSize}) moved. {errorCount} {DisplayHelpers.Pluralise(errorCount, "error", "errors")}.";
+            CompletionRestore = $"If anything stops working, copy them back from {movedDest}";
+            IsComplete = true;
         }
         catch (OperationCanceledException)
         {
@@ -267,8 +281,9 @@ public partial class MainViewModel : ObservableObject
         }
         finally
         {
-            _operationCts?.Dispose();
+            var cts = _operationCts;
             _operationCts = null;
+            cts?.Dispose();
             IsOperating = false;
             OperationProgressPercent = 0;
         }
@@ -305,12 +320,20 @@ public partial class MainViewModel : ObservableObject
                 OperationProgress = $"{p.CurrentFile} of {p.TotalFiles} files";
             });
             var result = await _deleteService.DeleteFilesAsync(filePaths, progress, _operationCts.Token);
-
-            OperationProgress = result.Errors.Count == 0
-                ? $"Deleted {result.DeletedCount} {DisplayHelpers.Pluralise(result.DeletedCount, "file", "files")}."
-                : $"Deleted {result.DeletedCount} {DisplayHelpers.Pluralise(result.DeletedCount, "file", "files")}. {result.Errors.Count} {DisplayHelpers.Pluralise(result.Errors.Count, "error", "errors")}.";
+            var deletedSize = sizeDisplay;
+            var deletedCount = result.DeletedCount;
+            var errorCount = result.Errors.Count;
 
             await ScanAsync();
+
+            // Show completion screen
+            CompletionHeading = "All done";
+            var deletedLabel = DisplayHelpers.Pluralise(deletedCount, "file", "files");
+            CompletionSummary = errorCount == 0
+                ? $"{deletedCount} {deletedLabel} ({deletedSize}) sent to Recycle Bin"
+                : $"{deletedCount} {deletedLabel} ({deletedSize}) deleted. {errorCount} {DisplayHelpers.Pluralise(errorCount, "error", "errors")}.";
+            CompletionRestore = "Files are in your Recycle Bin if you need them back";
+            IsComplete = true;
         }
         catch (OperationCanceledException)
         {
@@ -323,8 +346,9 @@ public partial class MainViewModel : ObservableObject
         }
         finally
         {
-            _operationCts?.Dispose();
+            var cts = _operationCts;
             _operationCts = null;
+            cts?.Dispose();
             IsOperating = false;
             OperationProgressPercent = 0;
         }
@@ -365,7 +389,7 @@ public partial class MainViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void OpenSettings()
+    private async Task OpenSettingsAsync()
     {
         var viewModel = new SettingsViewModel(_settings, _settingsService);
         var window = new SettingsWindow(viewModel)
@@ -381,8 +405,8 @@ public partial class MainViewModel : ObservableObject
 
             if (_lastScanResult is not null)
             {
-                _lastFilteredResult = _exclusionService.ApplyFilters(
-                    _lastScanResult.OrphanedFiles, _settings.ExclusionFilters, _msiInfoService);
+                _lastFilteredResult = await Task.Run(() => _exclusionService.ApplyFilters(
+                    _lastScanResult.OrphanedFiles, _settings.ExclusionFilters, _msiInfoService));
 
                 ExcludedFileCount = _lastFilteredResult.Excluded.Count;
                 ExcludedSizeDisplay = DisplayHelpers.FormatSize(_lastFilteredResult.Excluded.Sum(f => f.SizeBytes));
@@ -403,7 +427,7 @@ public partial class MainViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void Donate()
+    private void OpenGitHub()
     {
         System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
         {
@@ -418,6 +442,18 @@ public partial class MainViewModel : ObservableObject
         await RunScanCoreAsync(progress);
         sw.Stop();
         ScanProgress = $"Scan complete ({sw.Elapsed.TotalSeconds:F1}s)";
+    }
+
+    [RelayCommand]
+    private void DismissCompletion()
+    {
+        IsComplete = false;
+    }
+
+    [RelayCommand]
+    private void CloseApp()
+    {
+        Application.Current.MainWindow?.Close();
     }
 
     [RelayCommand]

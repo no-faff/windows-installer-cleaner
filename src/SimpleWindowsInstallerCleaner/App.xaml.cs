@@ -38,11 +38,16 @@ public partial class App : Application
                 }
             }));
 
+        // Show splash immediately and force a render so it paints before scan work begins
         var splash = new SplashWindow();
         splash.Show();
+        await Dispatcher.InvokeAsync(() => { }, System.Windows.Threading.DispatcherPriority.Render);
 
         try
         {
+            // Step 1: show immediately while services are constructed
+            splash.UpdateStep("Step 1/5: Initialising...", 10);
+
             var settingsService = new SettingsService();
             var queryService = new InstallerQueryService();
             var scanService = new FileSystemScanService(queryService);
@@ -55,10 +60,6 @@ public partial class App : Application
             var viewModel = new MainViewModel(
                 scanService, moveService, deleteService,
                 exclusionService, settingsService, rebootService, msiInfoService);
-
-            // Step 1: brief pause so the user sees it
-            splash.UpdateStep("Step 1/5: Checking system status...", 10);
-            await Task.Delay(400);
 
             // Step 2: the actual scan (this is where the time is spent)
             splash.UpdateStep("Step 2/5: Enumerating installed products...", 20);
