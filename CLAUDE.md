@@ -35,7 +35,6 @@ user-chosen location so they can be restored if anything breaks.
 
 - **Studio:** No faff (`github.com/no-faff`)
 - **App name:** InstallerClean
-- **Sentence case throughout** — no title case anywhere
 - **British English** — colour, organise, etc.
 - No Oxford comma
 - No em dashes in UI text
