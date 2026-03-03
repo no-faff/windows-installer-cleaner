@@ -21,7 +21,7 @@ internal static class InstallerCacheHelpers
                 if (!Directory.EnumerateFileSystemEntries(dir).Any())
                     Directory.Delete(dir);
             }
-            catch { /* skip protected directories */ }
+            catch (Exception) { /* skip protected directories */ }
         }
     }
 }

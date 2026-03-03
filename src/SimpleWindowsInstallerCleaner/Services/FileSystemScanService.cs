@@ -50,7 +50,7 @@ public sealed class FileSystemScanService : IFileSystemScanService
                 continue;
 
             long size = 0;
-            try { size = new FileInfo(filePath).Length; } catch { /* skip inaccessible files */ }
+            try { size = new FileInfo(filePath).Length; } catch (Exception) { /* skip inaccessible files */ }
 
             removable.Add(new OrphanedFile(
                 FullPath: filePath,
@@ -65,7 +65,7 @@ public sealed class FileSystemScanService : IFileSystemScanService
 
             long size = 0;
             try { if (File.Exists(pkg.LocalPackagePath)) size = new FileInfo(pkg.LocalPackagePath).Length; }
-            catch { }
+            catch (Exception) { }
 
             var ext = Path.GetExtension(pkg.LocalPackagePath);
             removable.Add(new OrphanedFile(
@@ -85,7 +85,7 @@ public sealed class FileSystemScanService : IFileSystemScanService
                 if (File.Exists(pkg.LocalPackagePath))
                     stillUsedBytes += new FileInfo(pkg.LocalPackagePath).Length;
             }
-            catch { }
+            catch (Exception) { }
         }
 
         progress?.Report($"Found {removable.Count} {DisplayHelpers.Pluralise(removable.Count, "file", "files")} to clean up.");
