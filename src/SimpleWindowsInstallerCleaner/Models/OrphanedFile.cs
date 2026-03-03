@@ -12,7 +12,9 @@ public record OrphanedFile(
     /// <summary>File size in bytes.</summary>
     long SizeBytes,
     /// <summary>True for .msp patch files; false for .msi.</summary>
-    bool IsPatch)
+    bool IsPatch,
+    /// <summary>Why this file is removable: "Orphaned" or "Superseded".</summary>
+    string Reason = "Orphaned")
 {
     /// <summary>File name without directory.</summary>
     public string FileName => Path.GetFileName(FullPath);

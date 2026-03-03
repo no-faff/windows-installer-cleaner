@@ -69,6 +69,12 @@ public static class MsiInstallProperty
 
     /// <summary>Display name of the installed product.</summary>
     public const string ProductName = "ProductName";
+
+    /// <summary>Patch state: 1=Applied, 2=Superseded, 4=Obsoleted.</summary>
+    public const string State = "State";
+
+    /// <summary>Whether the patch can be uninstalled ("1" = yes).</summary>
+    public const string Uninstallable = "Uninstallable";
 }
 
 /// <summary>

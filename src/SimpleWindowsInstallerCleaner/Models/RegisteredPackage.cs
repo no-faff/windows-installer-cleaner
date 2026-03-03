@@ -14,7 +14,15 @@ namespace SimpleWindowsInstallerCleaner.Models;
 /// <param name="ProductCode">
 /// Product code GUID string (e.g. <c>{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c>).
 /// </param>
+/// <param name="PatchState">
+/// Patch state: 0=not a patch (MSI product), 1=applied, 2=superseded, 4=obsoleted.
+/// </param>
+/// <param name="IsRemovable">
+/// True if this is a superseded/obsoleted patch that is not uninstallable.
+/// </param>
 public record RegisteredPackage(
     string LocalPackagePath,
     string ProductName,
-    string ProductCode);
+    string ProductCode,
+    int PatchState = 0,
+    bool IsRemovable = false);

@@ -85,7 +85,15 @@ public sealed class InstallerQueryService : IInstallerQueryService
 
                 if (!string.IsNullOrEmpty(patchPath))
                 {
-                    claimed.TryAdd(patchPath, new RegisteredPackage(patchPath, productName, productCode));
+                    var stateStr = GetPatchProperty(patchCode, productCode, patchUserSid, patchContext, MsiInstallProperty.State);
+                    var uninstallableStr = GetPatchProperty(patchCode, productCode, patchUserSid, patchContext, MsiInstallProperty.Uninstallable);
+
+                    int.TryParse(stateStr, out var patchState);
+                    var isSuperseded = patchState is 2 or 4;
+                    var isUninstallable = uninstallableStr == "1";
+                    var isRemovable = isSuperseded && !isUninstallable;
+
+                    claimed.TryAdd(patchPath, new RegisteredPackage(patchPath, productName, productCode, patchState, isRemovable));
                 }
             }
         }
