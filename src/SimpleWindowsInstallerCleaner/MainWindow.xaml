@@ -40,7 +40,7 @@
 
                 <!-- Explanatory text -->
                 <TextBlock TextWrapping="Wrap" Foreground="#94a3b8" FontSize="12" Margin="0,0,0,16"
-                           Text="C:\Windows\Installer contains cached files used by Windows to repair and update software. Orphaned files are no longer needed by any installed product and can be safely moved to free up space."/>
+                           Text="C:\Windows\Installer contains cached files used by Windows to repair and update software. Orphaned files are no longer needed by any installed product. Superseded patches have been replaced by newer updates. Both are safe to move or delete to free up space."/>
 
                 <!-- Pending reboot warning -->
                 <TextBlock Margin="0,0,0,18"

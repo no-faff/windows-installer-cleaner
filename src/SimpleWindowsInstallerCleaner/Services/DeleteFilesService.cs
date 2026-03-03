@@ -40,6 +40,7 @@ public sealed class DeleteFilesService : IDeleteFilesService
                 }
             }
 
+            InstallerCacheHelpers.PruneEmptySubdirectories();
             return new DeleteResult(deleted, errors.AsReadOnly());
         }, cancellationToken);
     }

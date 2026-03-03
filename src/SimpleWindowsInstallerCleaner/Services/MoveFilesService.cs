@@ -45,6 +45,7 @@ public sealed class MoveFilesService : IMoveFilesService
                 }
             }
 
+            InstallerCacheHelpers.PruneEmptySubdirectories();
             return new MoveResult(moved, errors.AsReadOnly());
         }, cancellationToken);
     }

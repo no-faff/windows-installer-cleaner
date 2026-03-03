@@ -98,6 +98,48 @@ public sealed class InstallerQueryService : IInstallerQueryService
             }
         }
 
+        // Registry fallback: catch packages the API might miss
+        progress?.Report("Checking registry for additional packages...");
+        try
+        {
+            var udKey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(
+                @"SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UserData");
+            if (udKey is not null)
+            {
+                foreach (var sidName in udKey.GetSubKeyNames())
+                {
+                    ct.ThrowIfCancellationRequested();
+
+                    // Products
+                    var productsKey = udKey.OpenSubKey($@"{sidName}\Products");
+                    if (productsKey is not null)
+                    {
+                        foreach (var prodGuid in productsKey.GetSubKeyNames())
+                        {
+                            var ipKey = productsKey.OpenSubKey($@"{prodGuid}\InstallProperties");
+                            var localPkg = ipKey?.GetValue("LocalPackage") as string;
+                            if (!string.IsNullOrEmpty(localPkg))
+                                claimed.TryAdd(localPkg, new RegisteredPackage(localPkg, "", ""));
+                        }
+                    }
+
+                    // Patches
+                    var patchesKey = udKey.OpenSubKey($@"{sidName}\Patches");
+                    if (patchesKey is not null)
+                    {
+                        foreach (var patchGuid in patchesKey.GetSubKeyNames())
+                        {
+                            var patchKey = patchesKey.OpenSubKey(patchGuid);
+                            var localPkg = patchKey?.GetValue("LocalPackage") as string;
+                            if (!string.IsNullOrEmpty(localPkg))
+                                claimed.TryAdd(localPkg, new RegisteredPackage(localPkg, "", ""));
+                        }
+                    }
+                }
+            }
+        }
+        catch { /* registry fallback is best-effort */ }
+
         progress?.Report($"Scan complete. {claimed.Count} registered package(s) found.");
 
         return claimed.Values.ToList().AsReadOnly();
