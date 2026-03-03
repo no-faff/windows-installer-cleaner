@@ -38,7 +38,17 @@
       "Bash(gh search:*)",
       "WebFetch(domain:more.ko-fi.com)",
       "Bash(curl:*)",
-      "WebFetch(domain:proton.me)"
+      "WebFetch(domain:proton.me)",
+      "WebFetch(domain:www.reddit.com)",
+      "WebFetch(domain:www.winhelponline.com)",
+      "WebFetch(domain:community.adobe.com)",
+      "WebFetch(domain:www.tenforums.com)",
+      "WebFetch(domain:devblogs.microsoft.com)",
+      "WebFetch(domain:www.powershellgallery.com)",
+      "WebFetch(domain:gist.github.com)",
+      "WebFetch(domain:www.mcbsys.com)",
+      "WebFetch(domain:yomotherboard.com)",
+      "WebFetch(domain:www.adobe.com)"
     ]
   }
 }
