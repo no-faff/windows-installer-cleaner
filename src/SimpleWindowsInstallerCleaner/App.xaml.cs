@@ -139,28 +139,14 @@ public partial class App : Application
         {
             Console.WriteLine($"Unknown argument: {args[0]}");
             Console.WriteLine();
-            Console.WriteLine("InstallerClean — clean up C:\\Windows\\Installer");
-            Console.WriteLine();
-            Console.WriteLine("Usage:");
-            Console.WriteLine("  InstallerClean.exe          Launch the GUI");
-            Console.WriteLine("  InstallerClean.exe /d       Delete removable files (Recycle Bin)");
-            Console.WriteLine("  InstallerClean.exe /m       Move to saved default location");
-            Console.WriteLine("  InstallerClean.exe /m PATH  Move to specified path");
-            Console.WriteLine();
+            PrintUsage();
             Shutdown(1);
             return;
         }
 
         if (arg is "--help" or "/?" or "-h")
         {
-            Console.WriteLine("InstallerClean — clean up C:\\Windows\\Installer");
-            Console.WriteLine();
-            Console.WriteLine("Usage:");
-            Console.WriteLine("  InstallerClean.exe          Launch the GUI");
-            Console.WriteLine("  InstallerClean.exe /d       Delete removable files (Recycle Bin)");
-            Console.WriteLine("  InstallerClean.exe /m       Move to saved default location");
-            Console.WriteLine("  InstallerClean.exe /m PATH  Move to specified path");
-            Console.WriteLine();
+            PrintUsage();
             Shutdown();
             return;
         }
@@ -235,5 +221,17 @@ public partial class App : Application
             Console.WriteLine($"Error: {ex.Message}");
             Shutdown(1);
         }
+    }
+
+    private static void PrintUsage()
+    {
+        Console.WriteLine("InstallerClean — clean up C:\\Windows\\Installer");
+        Console.WriteLine();
+        Console.WriteLine("Usage:");
+        Console.WriteLine("  InstallerClean.exe          Launch the GUI");
+        Console.WriteLine("  InstallerClean.exe /d       Delete removable files (Recycle Bin)");
+        Console.WriteLine("  InstallerClean.exe /m       Move to saved default location");
+        Console.WriteLine("  InstallerClean.exe /m PATH  Move to specified path");
+        Console.WriteLine();
     }
 }

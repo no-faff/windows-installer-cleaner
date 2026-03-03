@@ -129,6 +129,6 @@ public partial class RegisteredFilesViewModel : ObservableObject
     private static string GetSizeDisplay(string path)
     {
         try { return DisplayHelpers.FormatSize(new FileInfo(path).Length); }
-        catch { return string.Empty; }
+        catch (Exception) { return string.Empty; }
     }
 }
