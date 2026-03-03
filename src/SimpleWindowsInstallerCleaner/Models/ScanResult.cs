@@ -1,6 +1,6 @@
 namespace SimpleWindowsInstallerCleaner.Models;
 
 public record ScanResult(
-    IReadOnlyList<OrphanedFile> OrphanedFiles,
+    IReadOnlyList<OrphanedFile> RemovableFiles,
     IReadOnlyList<RegisteredPackage> RegisteredPackages,
     long RegisteredTotalBytes);

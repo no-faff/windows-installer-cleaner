@@ -58,8 +58,6 @@
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="4"/>
-                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
                     <!-- Still used -->
@@ -76,17 +74,6 @@
                             Content="Details" Command="{Binding OpenRegisteredDetailsCommand}"
                             Height="28" Padding="12,0" FontSize="14"
                             VerticalAlignment="Center" Margin="12,0,0,0"/>
-
-                    <!-- Excluded by filters -->
-                    <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"
-                               Foreground="#94a3b8" FontSize="14">
-                        <Run Text="{Binding ExcludedFileCount, Mode=OneWay}"/>
-                        <Run Text=" files excluded by filters"/>
-                    </TextBlock>
-                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding ExcludedSizeDisplay}"
-                               Foreground="#94a3b8" FontSize="14"
-                               VerticalAlignment="Center" MinWidth="72" TextAlignment="Right"
-                               Margin="12,0"/>
                 </Grid>
 
             </StackPanel>
@@ -116,7 +103,7 @@
                     <TextBlock Grid.Column="0" VerticalAlignment="Center">
                         <Run Text="{Binding OrphanedFileCount, Mode=OneWay}" Foreground="#cbd5e1"
                              FontSize="14"/>
-                        <Run Text=" files orphaned" Foreground="#cbd5e1"
+                        <Run Text=" files to clean up" Foreground="#cbd5e1"
                              FontSize="14"/>
                     </TextBlock>
                     <TextBlock Grid.Column="1" Text="{Binding OrphanedSizeDisplay}"
@@ -187,9 +174,7 @@
         <!-- ── Bottom nav ────────────────────────────────────── -->
         <DockPanel Grid.Row="2" LastChildFill="False" Margin="24,8,24,8">
             <Button DockPanel.Dock="Left" Style="{StaticResource GhostPill}"
-                    Content="Filters" Command="{Binding OpenSettingsCommand}"/>
-            <Button DockPanel.Dock="Left" Style="{StaticResource GhostPill}"
-                    Content="Re-scan" Command="{Binding RefreshCommand}" Margin="8,0,0,0"/>
+                    Content="Re-scan" Command="{Binding RefreshCommand}"/>
             <Button DockPanel.Dock="Left" Style="{StaticResource GhostPill}"
                     Content="About" Command="{Binding ShowAboutCommand}" Margin="8,0,0,0"/>
             <Button DockPanel.Dock="Right" Style="{StaticResource GhostPill}"

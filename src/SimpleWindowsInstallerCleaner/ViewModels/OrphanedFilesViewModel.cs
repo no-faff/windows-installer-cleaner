@@ -10,9 +10,7 @@ public partial class OrphanedFilesViewModel : ObservableObject
     private readonly IMsiFileInfoService _infoService;
     private readonly Dictionary<string, MsiSummaryInfo?> _cache = new();
 
-    public IReadOnlyList<OrphanedFile> ActionableFiles { get; }
-    public IReadOnlyList<OrphanedFile> ExcludedFiles { get; }
-    public bool HasExcludedFiles => ExcludedFiles.Count > 0;
+    public IReadOnlyList<OrphanedFile> Files { get; }
     public string Summary { get; }
 
     [ObservableProperty]
@@ -31,24 +29,17 @@ public partial class OrphanedFilesViewModel : ObservableObject
     public bool ShowNoMetadata => SelectedFile is not null && SelectedDetails is null;
 
     public OrphanedFilesViewModel(
-        IReadOnlyList<OrphanedFile> actionableFiles,
-        IReadOnlyList<OrphanedFile> excludedFiles,
+        IReadOnlyList<OrphanedFile> files,
         IMsiFileInfoService infoService)
     {
         _infoService = infoService;
+        Files = files.OrderByDescending(f => f.SizeBytes).ToList();
 
-        ActionableFiles = actionableFiles.OrderByDescending(f => f.SizeBytes).ToList();
-        ExcludedFiles = excludedFiles.OrderByDescending(f => f.SizeBytes).ToList();
+        var totalSize = DisplayHelpers.FormatSize(files.Sum(f => f.SizeBytes));
+        Summary = $"{files.Count} {DisplayHelpers.Pluralise(files.Count, "file", "files")} ({totalSize})";
 
-        var orphanedSize = DisplayHelpers.FormatSize(actionableFiles.Sum(f => f.SizeBytes));
-        var excludedSize = DisplayHelpers.FormatSize(excludedFiles.Sum(f => f.SizeBytes));
-
-        Summary = excludedFiles.Count > 0
-            ? $"{actionableFiles.Count} orphaned ({orphanedSize}) · {excludedFiles.Count} excluded ({excludedSize})"
-            : $"{actionableFiles.Count} orphaned ({orphanedSize})";
-
-        if (ActionableFiles.Count > 0)
-            SelectedFile = ActionableFiles[0];
+        if (Files.Count > 0)
+            SelectedFile = Files[0];
     }
 
     async partial void OnSelectedFileChanged(OrphanedFile? value)

@@ -32,8 +32,8 @@ public class FileSystemScanServiceTests
 
         var result = await svc.ScanAsync();
 
-        Assert.Single(result.OrphanedFiles);
-        Assert.Equal(@"C:\Windows\Installer\bbb.msi", result.OrphanedFiles[0].FullPath);
+        Assert.Single(result.RemovableFiles);
+        Assert.Equal(@"C:\Windows\Installer\bbb.msi", result.RemovableFiles[0].FullPath);
     }
 
     [Fact]
@@ -54,7 +54,7 @@ public class FileSystemScanServiceTests
         var svc = new FileSystemScanService(mockQuery.Object, fakeFiles);
         var result = await svc.ScanAsync();
 
-        Assert.Empty(result.OrphanedFiles);
+        Assert.Empty(result.RemovableFiles);
     }
 
     [Fact]
@@ -81,6 +81,6 @@ public class FileSystemScanServiceTests
         Assert.Equal(2, result.RegisteredPackages.Count);
         // Files don't exist on disk, so total bytes is 0.
         Assert.Equal(0, result.RegisteredTotalBytes);
-        Assert.Single(result.OrphanedFiles);
+        Assert.Single(result.RemovableFiles);
     }
 }

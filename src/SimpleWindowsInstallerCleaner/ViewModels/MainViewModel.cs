@@ -13,7 +13,6 @@ public partial class MainViewModel : ObservableObject
     private readonly IFileSystemScanService _scanService;
     private readonly IMoveFilesService _moveService;
     private readonly IDeleteFilesService _deleteService;
-    private readonly IExclusionService _exclusionService;
     private readonly ISettingsService _settingsService;
     private readonly IPendingRebootService _rebootService;
     private readonly IMsiFileInfoService _msiInfoService;
@@ -25,18 +24,6 @@ public partial class MainViewModel : ObservableObject
     // Summary line data
     [ObservableProperty] private int _registeredFileCount;
     [ObservableProperty] private string _registeredSizeDisplay = string.Empty;
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(HasExcludedFiles))]
-    [NotifyPropertyChangedFor(nameof(ExcludedFilterDisplay))]
-    private int _excludedFileCount;
-    [ObservableProperty] private string _excludedSizeDisplay = string.Empty;
-
-    public bool HasExcludedFiles => ExcludedFileCount > 0;
-
-    public string ExcludedFilterDisplay =>
-        _settings.ExclusionFilters.Count > 0
-            ? string.Join(", ", _settings.ExclusionFilters)
-            : string.Empty;
     [ObservableProperty] private int _orphanedFileCount;
     [ObservableProperty] private string _orphanedSizeDisplay = string.Empty;
 
@@ -67,14 +54,12 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty] private string _completionErrors = string.Empty;
 
     private ScanResult? _lastScanResult;
-    private FilteredResult? _lastFilteredResult;
     private AppSettings _settings = new();
 
     public MainViewModel(
         IFileSystemScanService scanService,
         IMoveFilesService moveService,
         IDeleteFilesService deleteService,
-        IExclusionService exclusionService,
         ISettingsService settingsService,
         IPendingRebootService rebootService,
         IMsiFileInfoService msiInfoService)
@@ -82,7 +67,6 @@ public partial class MainViewModel : ObservableObject
         _scanService = scanService;
         _moveService = moveService;
         _deleteService = deleteService;
-        _exclusionService = exclusionService;
         _settingsService = settingsService;
         _rebootService = rebootService;
         _msiInfoService = msiInfoService;
@@ -126,19 +110,11 @@ public partial class MainViewModel : ObservableObject
 
         _lastScanResult = await _scanService.ScanAsync(progress);
 
-        // Run filter application on background thread — GetSummaryInfo reads MSI
-        // metadata synchronously and can freeze the UI with many orphaned files.
-        _lastFilteredResult = await Task.Run(() => _exclusionService.ApplyFilters(
-            _lastScanResult.OrphanedFiles, _settings.ExclusionFilters, _msiInfoService));
-
         RegisteredFileCount = _lastScanResult.RegisteredPackages.Count;
         RegisteredSizeDisplay = DisplayHelpers.FormatSize(_lastScanResult.RegisteredTotalBytes);
 
-        ExcludedFileCount = _lastFilteredResult.Excluded.Count;
-        ExcludedSizeDisplay = DisplayHelpers.FormatSize(_lastFilteredResult.Excluded.Sum(f => f.SizeBytes));
-
-        OrphanedFileCount = _lastFilteredResult.Actionable.Count;
-        OrphanedSizeDisplay = DisplayHelpers.FormatSize(_lastFilteredResult.Actionable.Sum(f => f.SizeBytes));
+        OrphanedFileCount = _lastScanResult.RemovableFiles.Count;
+        OrphanedSizeDisplay = DisplayHelpers.FormatSize(_lastScanResult.RemovableFiles.Sum(f => f.SizeBytes));
 
         HasScanned = true;
     }
@@ -164,7 +140,7 @@ public partial class MainViewModel : ObservableObject
             if (OrphanedFileCount == 0 && !IsOperating)
             {
                 CompletionHeading = "All clear";
-                CompletionSummary = "No orphaned files found in C:\\Windows\\Installer";
+                CompletionSummary = "Nothing to clean up in C:\\Windows\\Installer";
                 CompletionRestore = "Nothing to clean up. You're all good.";
                 CompletionErrors = string.Empty;
                 IsComplete = true;
@@ -228,7 +204,7 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand(CanExecute = nameof(CanMove))]
     private async Task MoveAllAsync()
     {
-        if (_lastFilteredResult is null) return;
+        if (_lastScanResult is null) return;
 
         var dest = MoveDestination;
         if (dest.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
@@ -256,9 +232,9 @@ public partial class MainViewModel : ObservableObject
             return;
         }
 
-        var filePaths = _lastFilteredResult.Actionable.Select(f => f.FullPath).ToList();
+        var filePaths = _lastScanResult.RemovableFiles.Select(f => f.FullPath).ToList();
         var count = filePaths.Count;
-        var totalBytes = _lastFilteredResult.Actionable.Sum(f => f.SizeBytes);
+        var totalBytes = _lastScanResult.RemovableFiles.Sum(f => f.SizeBytes);
         var sizeDisplay = OrphanedSizeDisplay;
 
         // Check free space
@@ -335,11 +311,11 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand(CanExecute = nameof(CanDelete))]
     private async Task DeleteAllAsync()
     {
-        if (_lastFilteredResult is null) return;
+        if (_lastScanResult is null) return;
 
-        var count = _lastFilteredResult.Actionable.Count;
+        var count = _lastScanResult.RemovableFiles.Count;
         var sizeDisplay = OrphanedSizeDisplay;
-        var totalBytes = _lastFilteredResult.Actionable.Sum(f => f.SizeBytes);
+        var totalBytes = _lastScanResult.RemovableFiles.Sum(f => f.SizeBytes);
 
         var dialog = new ConfirmDeleteWindow(count, sizeDisplay, totalBytes)
         {
@@ -349,7 +325,7 @@ public partial class MainViewModel : ObservableObject
 
         IsOperating = true;
         _operationCts = new CancellationTokenSource();
-        var filePaths = _lastFilteredResult.Actionable.Select(f => f.FullPath).ToList();
+        var filePaths = _lastScanResult.RemovableFiles.Select(f => f.FullPath).ToList();
         OperationProgress = $"Deleting {filePaths.Count} {DisplayHelpers.Pluralise(filePaths.Count, "file", "files")}...";
 
         try
@@ -403,11 +379,10 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private void OpenOrphanedDetails()
     {
-        if (_lastFilteredResult is null) return;
+        if (_lastScanResult is null) return;
 
         var viewModel = new OrphanedFilesViewModel(
-            _lastFilteredResult.Actionable,
-            _lastFilteredResult.Excluded,
+            _lastScanResult.RemovableFiles,
             _msiInfoService);
 
         var window = new OrphanedFilesWindow(viewModel)
@@ -432,34 +407,6 @@ public partial class MainViewModel : ObservableObject
             Owner = Application.Current.MainWindow
         };
         window.ShowDialog();
-    }
-
-    [RelayCommand]
-    private async Task OpenSettingsAsync()
-    {
-        var viewModel = new SettingsViewModel(_settings, _settingsService);
-        var window = new SettingsWindow(viewModel)
-        {
-            Owner = Application.Current.MainWindow
-        };
-
-        if (window.ShowDialog() == true)
-        {
-            _settings = _settingsService.Load();
-            MoveDestination = _settings.MoveDestination;
-            OnPropertyChanged(nameof(ExcludedFilterDisplay));
-
-            if (_lastScanResult is not null)
-            {
-                _lastFilteredResult = await Task.Run(() => _exclusionService.ApplyFilters(
-                    _lastScanResult.OrphanedFiles, _settings.ExclusionFilters, _msiInfoService));
-
-                ExcludedFileCount = _lastFilteredResult.Excluded.Count;
-                ExcludedSizeDisplay = DisplayHelpers.FormatSize(_lastFilteredResult.Excluded.Sum(f => f.SizeBytes));
-                OrphanedFileCount = _lastFilteredResult.Actionable.Count;
-                OrphanedSizeDisplay = DisplayHelpers.FormatSize(_lastFilteredResult.Actionable.Sum(f => f.SizeBytes));
-            }
-        }
     }
 
     [RelayCommand]
@@ -502,7 +449,7 @@ public partial class MainViewModel : ObservableObject
         if (OrphanedFileCount == 0)
         {
             CompletionHeading = "All clear";
-            CompletionSummary = "No orphaned files found in C:\\Windows\\Installer";
+            CompletionSummary = "Nothing to clean up in C:\\Windows\\Installer";
             CompletionRestore = "Nothing to clean up. You're all good.";
             CompletionErrors = string.Empty;
             IsComplete = true;

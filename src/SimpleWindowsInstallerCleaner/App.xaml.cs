@@ -66,13 +66,12 @@ public partial class App : Application
             var scanService = new FileSystemScanService(queryService);
             var moveService = new MoveFilesService();
             var deleteService = new DeleteFilesService();
-            var exclusionService = new ExclusionService();
             var rebootService = new PendingRebootService();
             var msiInfoService = new MsiFileInfoService();
 
             var viewModel = new MainViewModel(
                 scanService, moveService, deleteService,
-                exclusionService, settingsService, rebootService, msiInfoService);
+                settingsService, rebootService, msiInfoService);
 
             // Step 2: the actual scan (this is where the time is spent)
             splash.UpdateStep("Step 2/5: Scanning installed products...", 20);
@@ -123,11 +122,11 @@ public partial class App : Application
         var arg = args[0].ToLowerInvariant();
         if (arg is not "/d" and not "/m" and not "--help" and not "/?" and not "-h")
         {
-            Console.WriteLine("InstallerClean — clean orphaned files from C:\\Windows\\Installer");
+            Console.WriteLine("InstallerClean — clean up C:\\Windows\\Installer");
             Console.WriteLine();
             Console.WriteLine("Usage:");
             Console.WriteLine("  InstallerClean.exe          Launch the GUI");
-            Console.WriteLine("  InstallerClean.exe /d       Delete orphaned files (Recycle Bin)");
+            Console.WriteLine("  InstallerClean.exe /d       Delete removable files (Recycle Bin)");
             Console.WriteLine("  InstallerClean.exe /m       Move to saved default location");
             Console.WriteLine("  InstallerClean.exe /m PATH  Move to specified path");
             Console.WriteLine();
@@ -137,11 +136,11 @@ public partial class App : Application
 
         if (arg is "--help" or "/?" or "-h")
         {
-            Console.WriteLine("InstallerClean — clean orphaned files from C:\\Windows\\Installer");
+            Console.WriteLine("InstallerClean — clean up C:\\Windows\\Installer");
             Console.WriteLine();
             Console.WriteLine("Usage:");
             Console.WriteLine("  InstallerClean.exe          Launch the GUI");
-            Console.WriteLine("  InstallerClean.exe /d       Delete orphaned files (Recycle Bin)");
+            Console.WriteLine("  InstallerClean.exe /d       Delete removable files (Recycle Bin)");
             Console.WriteLine("  InstallerClean.exe /m       Move to saved default location");
             Console.WriteLine("  InstallerClean.exe /m PATH  Move to specified path");
             Console.WriteLine();
@@ -155,31 +154,27 @@ public partial class App : Application
             var settings = settingsService.Load();
             var queryService = new InstallerQueryService();
             var scanService = new FileSystemScanService(queryService);
-            var exclusionService = new ExclusionService();
-            var msiInfoService = new MsiFileInfoService();
 
             Console.WriteLine("Scanning C:\\Windows\\Installer...");
             var scanResult = await scanService.ScanAsync();
-            var filtered = exclusionService.ApplyFilters(
-                scanResult.OrphanedFiles, settings.ExclusionFilters, msiInfoService);
 
-            var orphanCount = filtered.Actionable.Count;
-            var orphanSize = DisplayHelpers.FormatSize(filtered.Actionable.Sum(f => f.SizeBytes));
-            Console.WriteLine($"Found {orphanCount} orphaned {DisplayHelpers.Pluralise(orphanCount, "file", "files")} ({orphanSize}).");
+            var count = scanResult.RemovableFiles.Count;
+            var size = DisplayHelpers.FormatSize(scanResult.RemovableFiles.Sum(f => f.SizeBytes));
+            Console.WriteLine($"Found {count} {DisplayHelpers.Pluralise(count, "file", "files")} to clean up ({size}).");
 
-            if (orphanCount == 0)
+            if (count == 0)
             {
                 Console.WriteLine("Nothing to do.");
                 Shutdown(0);
                 return;
             }
 
-            var filePaths = filtered.Actionable.Select(f => f.FullPath).ToList();
+            var filePaths = scanResult.RemovableFiles.Select(f => f.FullPath).ToList();
 
             if (arg == "/d")
             {
                 var deleteService = new DeleteFilesService();
-                Console.WriteLine($"Deleting {orphanCount} files...");
+                Console.WriteLine($"Deleting {count} files...");
                 var result = await deleteService.DeleteFilesAsync(filePaths, null, CancellationToken.None);
                 Console.WriteLine($"Deleted {result.DeletedCount} {DisplayHelpers.Pluralise(result.DeletedCount, "file", "files")}.");
                 if (result.Errors.Count > 0)
@@ -201,7 +196,7 @@ public partial class App : Application
                 }
 
                 var moveService = new MoveFilesService();
-                Console.WriteLine($"Moving {orphanCount} files to {dest}...");
+                Console.WriteLine($"Moving {count} files to {dest}...");
                 var result = await moveService.MoveFilesAsync(filePaths, dest, null, CancellationToken.None);
                 Console.WriteLine($"Moved {result.MovedCount} {DisplayHelpers.Pluralise(result.MovedCount, "file", "files")}.");
                 if (result.Errors.Count > 0)

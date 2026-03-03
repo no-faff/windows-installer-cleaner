@@ -26,7 +26,7 @@ public class SettingsServiceTests : IDisposable
         var settings = svc.Load();
 
         Assert.Equal(string.Empty, settings.MoveDestination);
-        Assert.Contains("Acrobat", settings.ExclusionFilters);
+        Assert.Empty(settings.ExclusionFilters);
     }
 
     [Fact]
@@ -55,6 +55,6 @@ public class SettingsServiceTests : IDisposable
         var settings = svc.Load();
 
         Assert.Equal(string.Empty, settings.MoveDestination);
-        Assert.Contains("Acrobat", settings.ExclusionFilters);
+        Assert.Empty(settings.ExclusionFilters);
     }
 }

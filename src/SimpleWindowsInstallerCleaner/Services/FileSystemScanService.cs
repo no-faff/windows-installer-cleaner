@@ -35,22 +35,10 @@ public sealed class FileSystemScanService : IFileSystemScanService
             registered.Select(p => p.LocalPackagePath),
             StringComparer.OrdinalIgnoreCase);
 
-        // Size registered files that exist on disk.
-        long registeredBytes = 0;
-        foreach (var pkg in registered)
-        {
-            try
-            {
-                if (File.Exists(pkg.LocalPackagePath))
-                    registeredBytes += new FileInfo(pkg.LocalPackagePath).Length;
-            }
-            catch { /* skip inaccessible */ }
-        }
-
         progress?.Report("Scanning installer cache folder...");
 
         var diskFiles = _overrideFiles ?? GetInstallerFiles();
-        var orphans = new List<OrphanedFile>();
+        var removable = new List<OrphanedFile>();
 
         foreach (var filePath in diskFiles)
         {
@@ -67,14 +55,44 @@ public sealed class FileSystemScanService : IFileSystemScanService
             long size = 0;
             try { size = new FileInfo(filePath).Length; } catch { /* skip inaccessible files */ }
 
-            orphans.Add(new OrphanedFile(
+            removable.Add(new OrphanedFile(
                 FullPath: filePath,
                 SizeBytes: size,
                 IsPatch: ext.Equals(".msp", StringComparison.OrdinalIgnoreCase)));
         }
 
-        progress?.Report($"Found {orphans.Count} orphaned {DisplayHelpers.Pluralise(orphans.Count, "file", "files")}.");
-        return new ScanResult(orphans.AsReadOnly(), registered, registeredBytes);
+        // Superseded registered patches that are safe to remove
+        foreach (var pkg in registered.Where(p => p.IsRemovable))
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            long size = 0;
+            try { if (File.Exists(pkg.LocalPackagePath)) size = new FileInfo(pkg.LocalPackagePath).Length; }
+            catch { }
+
+            var ext = Path.GetExtension(pkg.LocalPackagePath);
+            removable.Add(new OrphanedFile(
+                FullPath: pkg.LocalPackagePath,
+                SizeBytes: size,
+                IsPatch: ext.Equals(".msp", StringComparison.OrdinalIgnoreCase),
+                Reason: "Superseded"));
+        }
+
+        // Filter removable packages out of the registered list for the "still used" count
+        var stillUsed = registered.Where(p => !p.IsRemovable).ToList().AsReadOnly();
+        long stillUsedBytes = 0;
+        foreach (var pkg in stillUsed)
+        {
+            try
+            {
+                if (File.Exists(pkg.LocalPackagePath))
+                    stillUsedBytes += new FileInfo(pkg.LocalPackagePath).Length;
+            }
+            catch { }
+        }
+
+        progress?.Report($"Found {removable.Count} {DisplayHelpers.Pluralise(removable.Count, "file", "files")} to clean up.");
+        return new ScanResult(removable.AsReadOnly(), stillUsed, stillUsedBytes);
     }
 
     private static IEnumerable<string> GetInstallerFiles()
