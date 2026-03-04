@@ -52,7 +52,8 @@
       "WebFetch(domain:lucide.dev)",
       "WebFetch(domain:heroicons.com)",
       "WebFetch(domain:ipa.co.uk)",
-      "WebFetch(domain:www.marketing91.com)"
+      "WebFetch(domain:www.marketing91.com)",
+      "Bash(dotnet publish:*)"
     ]
   }
 }
