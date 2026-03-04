@@ -50,7 +50,9 @@
       "WebFetch(domain:yomotherboard.com)",
       "WebFetch(domain:www.adobe.com)",
       "WebFetch(domain:lucide.dev)",
-      "WebFetch(domain:heroicons.com)"
+      "WebFetch(domain:heroicons.com)",
+      "WebFetch(domain:ipa.co.uk)",
+      "WebFetch(domain:www.marketing91.com)"
     ]
   }
 }

@@ -18,7 +18,7 @@ When you uninstall the software, the files stay. When a newer patch replaces an 
 
 These aren't temp files that get recreated the moment you close a cleaning tool. They're genuine dead weight: old installers from software you uninstalled years ago and patches that have been replaced three times over. Once they're gone, they don't come back.
 
-If you're looking for an easy way to free up disk space on Windows, this folder is one of the best places to start. InstallerClean finds the unneeded files and removes them safely.
+**If you're looking for an easy way to free up disk space on Windows, this folder is one of the best places to start.** InstallerClean finds the unneeded files and removes them safely.
 
 ## The search for help
 
