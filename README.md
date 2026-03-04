@@ -158,13 +158,13 @@ We never call `Win32_Product`. That WMI class triggers MSI consistency checks on
 ```
 git clone https://github.com/no-faff/windows-installer-cleaner.git
 cd windows-installer-cleaner
-dotnet build src/SimpleWindowsInstallerCleaner/SimpleWindowsInstallerCleaner.csproj
+dotnet build src/InstallerClean/InstallerClean.csproj
 ```
 
 Run the tests:
 
 ```
-dotnet test src/SimpleWindowsInstallerCleaner.Tests/
+dotnet test src/InstallerClean.Tests/
 ```
 
 ## Contributing

@@ -46,10 +46,10 @@ user-chosen location so they can be restored if anything breaks.
 
 - Platform: Windows 11
 - Terminal: PowerShell — use `$env:VAR = "value"` not `export`
-- Build: `dotnet build src/SimpleWindowsInstallerCleaner/SimpleWindowsInstallerCleaner.csproj`
-- Test: `dotnet test src/SimpleWindowsInstallerCleaner.Tests/`
-- Run (elevated terminal): `dotnet run --project src/SimpleWindowsInstallerCleaner`
-- Run (explorer): `src/SimpleWindowsInstallerCleaner/bin/Debug/net8.0-windows/InstallerClean.exe` (triggers UAC)
+- Build: `dotnet build src/InstallerClean/InstallerClean.csproj`
+- Test: `dotnet test src/InstallerClean.Tests/`
+- Run (elevated terminal): `dotnet run --project src/InstallerClean`
+- Run (explorer): `src/InstallerClean/bin/Debug/net8.0-windows/InstallerClean.exe` (triggers UAC)
 
 ---
 
@@ -107,8 +107,8 @@ custom thin ScrollBar (8px, rounded), dark ListViewItem/ListBoxItem selection.
 ## Project structure
 
 ```
-src/SimpleWindowsInstallerCleaner/          # Main WPF app
-src/SimpleWindowsInstallerCleaner.Tests/    # xUnit tests
+src/InstallerClean/                         # Main WPF app
+src/InstallerClean.Tests/                   # xUnit tests
 docs/                                       # Briefs, plans, screenshots
 docs/icons/                                 # Icon source files
 ```
