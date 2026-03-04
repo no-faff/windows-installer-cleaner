@@ -1,0 +1,267 @@
+Back
+r/Windows10 icon
+Go to Windows10
+r/Windows10
+•
+2y ago
+ksparks519
+
+Anyone ever figure out giant installer folders?
+Tech Support
+I've rooted around the internet over the years for a solution to giant installer folders in Windows 10. All of the threads I've found tend to recommend the same things which don't solve the problem, and then go dead. Those generally include running disk cleanup as admin (doesn't touch the problem) or trying a sketchy 3rd party cleaner program. It's been a consistent problem for me for years, and right now my windows installer folder is over 50gb. Curious if anyone has ever found a solution to this.
+
+
+r/Windows10 - Anyone ever figure out giant installer folders?
+Locked post. New comments cannot be posted.
+Archived post. New comments cannot be posted and votes cannot be cast.
+
+Upvote
+8
+
+Downvote
+
+11
+Go to comments
+
+
+Share
+Sort by:
+
+Best
+
+Search Comments
+Expand comment search
+Comments Section
+Guantanamino
+•
+2y ago
+The thing is, from the Microsoft perspective, 60-90GB size for this folder, as evidenced by some of their responses, is considered appropriate, and the manual manipulation of this directory is not, so anything you try to do to reduce the folder's size will be "sketchy", and may break your applications.
+
+PatchCleaner software seems to have helped a lot of people in this regard, so you might want to look at that and take whatever risks come therewith; if you are worried, then create a virtual machine running Windows, install software and whatnot on it as you normally do to recreate this Installer state, then run PatchCleaner (perhaps observe it with some tool, such as Process Monitor from Microsoft Sysinternals Suite, to make sure it's not up to no good) and see if it helps or breaks your system.
+
+
+
+Upvote
+3
+
+Downvote
+
+Award
+
+Share
+
+u/ksparks519 avatar
+ksparks519
+OP
+•
+2y ago
+Yeah, patchcleaner seems to be the only recourse. It's been an annoying problem for me but not prohibitive, so I've always been reticent to mess around with a 3rd party program and run the risk of causing a bigger problem.
+
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+Guantanamino
+•
+2y ago
+Since this has been a recurring problem for you, it is possible that it is the result of your use patterns, perhaps some of the software you frequently/always install leads to the population of this directory with large files; I'm not entirely sure how you would go about determining which is responsible for what, but perhaps you could view the properties of the large Installer files to see upon which date they were created, then compare those to the dates of the entries in the Control Panel?
+
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+u/ksparks519 avatar
+ksparks519
+OP
+•
+2y ago
+Oh I'm absolutely sure it's due what programs I use. Poking around the .msp's, it seems like a lot of the largest files are Adobe or Microsoft Office installers (I still run 2013 since I have a permanent license). Looks like it hangs onto the installer from every update!
+
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+Guantanamino
+•
+2y ago
+I mean, Adobe, Office, Visual Studio, Sony Vegas, et cetera, are some of the heaviest programs one can find, frankly I would just take the fact that they will limit my storage space for granted
+
+
+Upvote
+2
+
+Downvote
+
+Award
+
+Share
+
+u/Shajirr avatar
+Shajirr
+•
+2y ago
+•
+Edited 2y ago
+The thing is, from the Microsoft perspective, 60-90GB size for this folder, as evidenced by some of their responses, is considered appropriate
+
+There is no reason to keep old installers for an average user. This is just plain stupid and a waste of space for nothing. In a rare case you need to roll back, which majority of users will never need, surely you can re-download the version that you need.
+When I install regular programs myself via .exe files, I don't keep several prior installers just to waste space.
+
+
+Upvote
+-1
+
+Downvote
+
+Award
+
+Share
+
+u/BCProgramming avatar
+BCProgramming
+•
+2y ago
+emoji:approved: Fountain of Knowledge
+When you install a program that uses MSI, the actual package is stored there for when you want to remove/modify it, since the msi package is of course where all that logic resides for how to do that. I believe this is the same for certain windows updates. (There used to be a way in Windows to uninstall particular updates for which that was useful but I think that might have been removed)
+
+Fundamentally, the folder gets bigger as you install more software.
+
+I don't think they are actively used, though. If you have no intention of modifying or uninstalling a program you can delete the corresponding MSI. (If you can find it...)
+
+I'm also not sure if uninstalling a program results in it being deleted from the folder. Common sense says that it should be, but experience says probably not.
+
+
+Upvote
+3
+
+Downvote
+
+Award
+
+Share
+
+u/AutoModerator avatar
+AutoModerator
+MOD
+•
+2y ago
+•
+Hi u/ksparks519, thanks for posting to r/Windows! Don't worry, your post has not been removed. To let us help you better, try to include as much of the following information as possible! Posts with insufficient details might be removed at the moderator's discretion.
+
+Model of your computer - For example: "HP Spectre X360 14-EA0023DX"
+
+Your Windows and device specifications - You can find them by going to go to Settings > "System" > "About"
+
+What troubleshooting steps you have performed - Even sharing little things you tried (like rebooting) can help us find a better solution!
+
+Any error messages you have encountered - Those long error codes are not gibberish to us!
+
+Any screenshots or logs of the issue - You can upload screenshots other useful information in your post or comment, and use Pastebin for text (such as logs). You can learn how to take screenshots here.
+
+All Tech Support posts must be help related. If everything is working without issue, then you likely used the wrong flair, please change it to "General Question" or "Discussion".
+
+I am a bot, and this action was performed automatically. Please contact the moderators of this subreddit if you have any questions or concerns.
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+u/Drakkaar avatar
+Drakkaar
+•
+2y ago
+Hello ksparks519,
+
+PLEASE NOTE: I HAVE NOT DONE THIS PERSONALLY, I HAVE NO EXPERIENCE WITH THIS PARTICILAR ISSUE. I simply found a suggestion on SuperUser you could try at your own risk. I feel like the biggest risk is simply breaking the ability to Uninstall a particular program that one of these files might require
+
+You said you've read a few different guides/suggestions on how to resolve the issue, but I completely understand not wanting to run 3rd party software, as you are taking a risk.
+
+I've found a reply on a SuperUser post, where someone has written a Power Shell script that you can simply create yourself, and not have to worry about downloading anything.
+
+Hope this is helpful
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+u/NoReply4930 avatar
+NoReply4930
+•
+2y ago
+Hmm - just checked this here - on a Win 10 PC that has been going non-stop since March 2021 - and my "Installer" folder is only 3.14GB.
+
+Pretty sure this folder plays into uninstalling/reinstalling apps/updates etc. I poked around with some of the most current .msp files and they all relate to apps I recently updated.
+
+I think I can live with that.
+
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+u/ksparks519 avatar
+ksparks519
+OP
+•
+2y ago
+It's definitely not a problem across the board but also not unique to me. Here's a selection of old threads discussing it:
+
+https://answers.microsoft.com/en-us/windows/forum/all/windows-installer-folder/949ce73f-bae9-4114-9891-ae72ba9bf434 | Windows Installer Folder - Microsoft Community
+
+https://answers.microsoft.com/en-us/windows/forum/all/windows-installer-folder-has-occupied-180gb/da3dd6c5-420a-4b12-8388-61989a3968b4 | Windows installer folder has occupied 180gb - Microsoft Community
+
+https://answers.microsoft.com/en-us/windows/forum/all/cleaning-the-windowsinstaller-folder/1942aa06-b2e2-40e1-b791-cd85ae64b3aa | Cleaning the Windows\Installer folder - Microsoft Community
+
+https://answers.microsoft.com/en-us/windows/forum/all/my-windows-installer-folder-is-over-90-gb-does/807eb726-8cf7-4c22-8671-48e7008b57ef | My windows installer folder is over 90 GB. Does Microsoft have a safe - Microsoft Community
+
+https://www.reddit.com/r/Windows10/comments/obj6u2/cwindowsinstaller_is_huge/ | c:\Windows\Installer is huge : r/Windows10
+
+
+Upvote
+2
+
+Downvote
+
+Award
+
+Share
+

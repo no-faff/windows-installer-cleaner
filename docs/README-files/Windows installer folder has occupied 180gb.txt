@@ -1,0 +1,86 @@
+https://learn.microsoft.com/en-us/answers/questions/4238108/windows-installer-folder-has-occupied-180gb?forum=windows-all&referrer=answers
+
+Windows installer folder has occupied 180gb
+
+Anonymous
+Jul 30, 2021, 4:09 PM
+hello,
+
+If anyone could come up with a possible solution for windows installer folder occupying almost the whole hard drive. in my case i have windows 10 with 250gb hard drive with no partition and now it has reached its limit only 700mb is left while windows installer folder has occupied 180gb. i have read on some of the previous threads that its not safe to delete files from installer folder while in my case there are several "tmp" files of more den 1gb each in the installer folder. whats the possible solution. Anyone??
+
+Windows for home | Windows 10 | Files, folders, and storage
+
+Locked Question. This question was migrated from the Microsoft Support Community. You can vote on whether it's helpful, but you can't add comments or replies or follow the question.
+
+I have the same question 
+17
+{count} votes
+4 answers
+
+DaveM121
+847.8K Reputation points• Independent Advisor
+Jul 30, 2021, 4:43 PM
+Hi abbi_123,
+
+I am Dave, I will help you with this.
+
+1
+
+Where is that installer folder is that C:\Windows\Installer?
+
+If so, it is not safe to manually clean that folder yourself, but you can use a free utility named PatchCleaner to safely clear out that folder, it is quite safe to do so, that utility as developers specifically to do that task:
+
+https://sourceforge.net/projects/patchcleaner/
+
+2
+
+To see if there is any more space on your drive that can be cleaned:
+
+Click the link below to download a small free utility called Treesize. Using that tool, you will instantly see where this space is being used
+
+https://www.jam-software.com/treesize_free/
+
+To run TreeSize, right click its icon and choose Run as Administrator.
+
+Please provide a screenshot of your C drive in that TreeSize utility, so I can see your hard drive and work out where that space is being used and if there is an underlying problem.
+
+________________________________________________________
+
+Standard Disclaimer: This is a non-Microsoft website. The page appears to be providing accurate, safe information. Watch out for ads on the site that may advertise products frequently classified as a PUP (Potentially Unwanted Products). Thoroughly research any product advertised on the site before you decide to download and install it.
+
+.
+
+Please sign in to rate this answer.
+
+2 people found this answer helpful.
+
+Anonymous
+Jul 30, 2021, 4:53 PM
+Oh. here is another way to clean up your disk:
+
+Select Start, and then in the Search Programs and Files text box, type Disk cleanup.
+Click the Disk Cleanup icon, and run the Disk Cleanup tool to determine what files you can delete, based on your configuration.
+Removing unused programs will also help.
+
+Please sign in to rate this answer.
+
+
+Anonymous
+Jul 30, 2021, 4:42 PM
+hi Johnny,
+
+Thanks for the prompt reply. yes it windows local disk C with path C:\Windows\Installer . i did clean disk but it only cleared 600mb along with system files.
+
+Please sign in to rate this answer.
+
+
+Anonymous
+Jul 30, 2021, 4:16 PM
+hi there abbi_123
+
+If you mean it is the Windows Local Disk C, then It is not recommended to delete the files, including the "tmp" files. You may look for a file called Windows.old or some similar names. You can find Windows.old or other big files by checking each folder's size one by one in the installer disk to see which one is tacking up all the space. Though it is still not recommended to delete them yourself. Instead, you can run cleaning programs like CCleaner to let it decide and remove backup and tempt files.
+
+You can also look here for more information: Cleaning the Windows\Installer folder - Microsoft Community
+
+Please sign in to rate this answer.
+

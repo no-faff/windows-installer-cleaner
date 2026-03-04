@@ -1,0 +1,729 @@
+https://www.reddit.com/r/sysadmin/comments/1gz8682/just_discovered_appxcleanuporphanpackages_for/
+
+Back
+r/sysadmin icon
+Go to sysadmin
+r/sysadmin
+•
+1y ago
+FittestMembership
+
+Just discovered AppxCleanupOrphanPackages for WindowsApps bloat
+I support a fleet of old Dells with 128GB storage that the client doesn't have the budget to upgrade all at once, but also doesn't have the budget for me to manually keep cleaning out files when users inevitably fill them to the brim.
+
+I've had a few scheduled maintenance tasks that run to help keep a little bit of free space (clearing out temp, cache and serviceworker folders), but one folder that keeps getting bigger every month is Program Files\WindowsApps.
+
+So my googling has just discovered the AppxCleanupOrphanPackages command of the AppxDeploymentClient.dll
+
+Running it is clearing almost 10GB from each PC! That's insane that 10% of the PC storage is just old versions of windows apps it's decided to keep around for no good reason.
+
+Anyway, just thought I'd share in case anyone else is struggling with WindowsApps bloat.
+
+As an aside, some of these PCs with 128GB of storage came with minecraft and candycrush pre-installed. These were Dell Enterprise model PCs, with Windows Enterprise installed. I'd already uninstalled those, but really Microsoft?!
+
+Archived post. New comments cannot be posted and votes cannot be cast.
+
+Upvote
+214
+
+Downvote
+
+39
+Go to comments
+
+
+Share
+Sort by:
+
+Best
+
+Search Comments
+Expand comment search
+Comments Section
+FittestMembership
+OP
+•
+1y ago
+And the actual credit goes to Michael for this article: WindowsApps folder getting out of hand? – Out of Office Hours
+
+
+Upvote
+75
+
+Downvote
+
+Award
+
+Share
+
+u/Entegy avatar
+Entegy
+•
+1y ago
+Profile Badge for the Achievement Top 1% Commenter Top 1% Commenter
+Minecraft and Candy Crush were never pre installed. They were downloaded after the fact by ad tiles in the Start Menu. You can prevent their installation entirely by deploying a custom Start Menu.
+
+
+
+Upvote
+60
+
+Downvote
+
+Award
+
+Share
+
+threedaysatsea
+•
+1y ago
+•
+Edited 1y ago
+Windows / PowerShell / SCCM / Intune
+Better way to disable is the DisableWindowsConsumerFeatures reg key / “Turn off Microsoft consumer experiences” group policy. CSP version of the policy - https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-experience#allowwindowsconsumerfeatures
+
+
+
+Upvote
+22
+
+Downvote
+
+Award
+
+Share
+
+Cgdoosi
+•
+1y ago
+Seems to work for stopping it from showing in start menu and auto downloading, but disabling doesn’t remove the apps already installed unfortunately.
+
+
+
+Upvote
+8
+
+Downvote
+
+Award
+
+Share
+
+threedaysatsea
+•
+1y ago
+Windows / PowerShell / SCCM / Intune
+That's true. It's best to have this policy enabled prior to deploying devices to your users.
+
+
+Upvote
+5
+
+Downvote
+
+Award
+
+Share
+
+u/Entegy avatar
+Entegy
+•
+1y ago
+Profile Badge for the Achievement Top 1% Commenter Top 1% Commenter
+That setting only applies on Enterprise, not Pro.
+
+
+Upvote
+5
+
+Downvote
+
+Award
+
+Share
+
+FittestMembership
+OP
+•
+1y ago
+Good to know! I thought it was odd that they were all the same model, but some had it and some didn't. I have rolled out a standard start menu with a GPO, so hopefully that issue won't come up again.
+
+
+Upvote
+5
+
+Downvote
+
+Award
+
+Share
+
+_-Smoke-_
+•
+1y ago
+Little tricks like this are nice but Windows really needs to be better at cleaning up after itself and in general.
+
+
+
+Upvote
+30
+
+Downvote
+
+Award
+
+Share
+
+javiers
+•
+1y ago
+“48 yo sysadmin smirks” the solution for Microsoft has always been to increase disk requirements as a recommended minimum specs. Optimization is for the poor apparently. This is an issue not exclusive to Microsoft. It will only stop if storage costs and sizes stale.
+
+
+
+Upvote
+9
+
+Downvote
+
+Award
+
+Share
+
+u/jamesaepp avatar
+jamesaepp
+•
+1y ago
+the solution for Microsoft has always been to increase disk requirements as a recommended minimum specs
+
+Until that doesn't actually end up working and they fail to upgrade/patch WinRE against a vulnerability. Great job, MS.
+
+
+Upvote
+2
+
+Downvote
+
+Award
+
+Share
+
+u/kheldorn avatar
+kheldorn
+•
+1y ago
+Depending on when the machine was installed you should give uninsstalling and reinstalling Microsoft Office or Adobe Reader a go.
+
+Windows keeps all updates for those (and all other applications with msi/msp/msu type updates) around in its installer cache which only get removed when you uninstall the product.
+
+Un- and then reinstalling Microsoft Office (including all required updates) easily recovers 20-30gb of disk space for us on older computers. Adobe Reader returns up to 9gb.
+
+
+
+Upvote
+11
+
+Downvote
+
+Award
+
+Share
+
+u/bachi83 avatar
+bachi83
+•
+1y ago
+https://www.homedev.com.au/free/patchcleaner
+
+You can accomplish same or better results without reinstall.
+
+
+
+Upvote
+-3
+
+Downvote
+
+Award
+
+Share
+
+u/kheldorn avatar
+kheldorn
+•
+1y ago
+I ain't running some dodgy freeware "clean-up" software that was last updated in 2016... Next you want me to run CCleaner to clean my registry?
+
+Also, "same or better results"?
+
+Known Issues
+
+Adobe Reader patches are detected incorrectly as orphaned files.
+
+
+
+Upvote
+12
+
+Downvote
+
+Award
+
+Share
+
+u/bachi83 avatar
+bachi83
+•
+1y ago
+No one forces you to do. :)
+
+BTW,
+
+Known Issues
+
+Adobe Reader patches are detected incorrectly as orphaned files. As of verson 1.4, PatchCleaner now has an exclusion filter that allows you to filter out the Adobe Acrobat patch files so they can be excluded from the set of orphaned files. The exclusion filters are configurable
+
+
+Upvote
+-1
+
+Downvote
+
+Award
+
+Share
+
+u/McBlah_ avatar
+McBlah_
+•
+1y ago
+Am I the only one who disabled the App Store and windows apps completely?
+
+
+
+Upvote
+14
+
+Downvote
+
+Award
+
+Share
+
+FittestMembership
+OP
+•
+1y ago
+App/Windows store is disabled, but a bunch of stuff came preinstalled, and not everything in that folder can be uninstalled in settings or with a powershell command. I'm not confident on deleting the whole folder since it's where Edge is installed, plus a whole lot of things that look like system dependencies.
+
+
+
+Upvote
+6
+
+Downvote
+
+Award
+
+Share
+
+u/segagamer avatar
+segagamer
+•
+1y ago
+IT Manager
+Profile Badge for the Achievement Top 1% Poster Top 1% Poster
+So you disable/block updates to notepad, paint and calculator?
+
+Do you disable apt, dnf, brew and the app store completely on other OS's too?
+
+
+
+Upvote
+6
+
+Downvote
+
+Award
+
+Share
+
+Cgdoosi
+•
+1y ago
+We patch those things third party, don’t need the windows store to install windows store apps. Just stops users and auto updates.
+
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+u/needmorebandwidth avatar
+needmorebandwidth
+•
+1y ago
+Would love to hear what tool you’re using to patch store apps without the store being enabled.
+
+
+Upvote
+10
+
+Downvote
+
+Award
+
+Share
+
+u/NoSelf5869 avatar
+NoSelf5869
+•
+1y ago
+Which software you are using which supports patching Store apps without Windows store being enabled?
+
+
+
+Upvote
+7
+
+Downvote
+
+Award
+
+Share
+
+u/pw1111 avatar
+pw1111
+•
+1y ago
+As well as installing apps without the app store being enabled.
+
+
+
+Upvote
+10
+
+Downvote
+
+Award
+
+Share
+
+u/NoSelf5869 avatar
+NoSelf5869
+•
+1y ago
+Somehow I have a feeling we won't be getting a reply.
+
+
+
+Upvote
+9
+
+Downvote
+
+Award
+
+Share
+
+Cgdoosi
+•
+1y ago
+Get-AppXPackage and winget --source msstore both work. On some systems you might also need to install Microsoft’s appx unpacker app, but I forget what it’s called.
+
+
+Upvote
+2
+
+Downvote
+
+Award
+
+Share
+
+Cgdoosi
+•
+1y ago
+We use a few. I thought they did support it, but I’ve checked and they can’t push updates automatically.
+
+Winget can install an update, but doesn’t pick up that there’s a new version without windows store already having flagged it and created the package.
+
+I’ll have to see if a scheduled script can just be forced to install the latest version of the apps whether there’s an update or not.
+
+Thanks for making me double check!
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+u/segagamer avatar
+segagamer
+•
+1y ago
+IT Manager
+Profile Badge for the Achievement Top 1% Poster Top 1% Poster
+Fair enough. Just seems like extra work.
+
+
+Upvote
+2
+
+Downvote
+
+Award
+
+Share
+
+u/AlexisFR avatar
+AlexisFR
+•
+1y ago
+That's a good way to brick your system.
+
+
+Upvote
+2
+
+Downvote
+
+Award
+
+Share
+
+formal-shorts
+•
+1y ago
+Yes because apps like Calculator, Paint, To Do, et al still need to be updated.
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+nascentt
+•
+1y ago
+Nice find. But as the article states:
+
+No big deal on a single-user system (one user profile) but really messy on devices with lots of users who sign in once and then never again.
+Are shared user systems that common anymore? It's been a long time since I've seen one in a workplace, and even then profile cleanup and system cleanup was fairly meticulous.
+
+Even places I've worked with hotdesking, where many people share many desks, are so vdi heavy that they all log into dedicated hosts.
+
+Still useful for anyone still doing multi user physicals.
+
+
+
+Upvote
+5
+
+Downvote
+
+Award
+
+Share
+
+InvisibleTextArea
+•
+1y ago
+•
+Edited 1y ago
+Jack of All Trades
+I work in such an environment. We run FSLogix on our non-persistent VDIs, so a lot of bloat is excluded out of the users profile VHDX. For our endpoints we have the GPO set to deleted inactive local profiles after 90 days. We run Onedrive with known folder sync so we are not to worried about deleting someone's previous files from their Documents or Desktop locally.
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+czj420
+•
+1y ago
+Powercfg -h off
+
+
+Upvote
+8
+
+Downvote
+
+Award
+
+Share
+
+u/blackletum avatar
+blackletum
+•
+1y ago
+Jack of All Trades
+so how have you run it, just like this with a scheduled task? c:\windows\system32\rundll32.exe AppxDeploymentClient.dll,AppxCleanupOrphanPackages
+
+
+
+Upvote
+2
+
+Downvote
+
+Award
+
+Share
+
+FittestMembership
+OP
+•
+1y ago
+That's the command I've run. And a reboot is required to remove from deleted folder.
+
+I haven't scheduled it yet, just testing a bit to make sure it hasn't broken anything before I roll out to every endpoint. They use Action1 to push updates, patches, scheduled maintenance, so I'm planning to use it to run on PCs if they get below 5% storage as part of an automated clean up that already happens.
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+u/ashodhiyavipin avatar
+ashodhiyavipin
+•
+1y ago
+Let's wait till OP finds out that you can actually remove all types of unwanted packages from the machine by using a debloat script and reduce the size of a completely new install much further.
+
+Check out r/SCCM how people are doing it.
+
+
+
+Upvote
+0
+
+Downvote
+
+Award
+
+Share
+
+FittestMembership
+OP
+•
+1y ago
+If only they were new installs. There are some legacy software on there that they need access to for regulatory reasons and some newer windows updates stop it from working, so there's a pool of PCs I can't even touch for updates! The company that made the software stopped existing before the invention of reddit, and the support forums are long offline.
+
+If I wasn't 100% sure debloat scripts would break this and other software I've got no documentation or support for....
+
+But that's for the heads up. If they ever get enough budget I'll be putting in PCs cleaner than.... well, clean.
+
+
+Upvote
+7
+
+Downvote
+
+Award
+
+Share
+
+[deleted]
+•
+1y ago
+Comment deleted by user
+
+
+
+Upvote
+
+Downvote
+
+Reply
+
+Share
+KaitRaven
+•
+1y ago
+Is this a chatbot response?
+
+
+
+Upvote
+23
+
+Downvote
+
+Award
+
+Share
+
+dustojnikhummer
+•
+1y ago
+Profile Badge for the Achievement Top 1% Commenter Top 1% Commenter
+Sounds exactly like something Copilot would say to me, at least the first half
+
+
+Upvote
+6
+
+Downvote
+
+Award
+
+Share
+
+u/blackletum avatar
+blackletum
+•
+1y ago
+Jack of All Trades
+this is the guy they trained the language model off of
+
+
+Upvote
+2
+
+Downvote
+
+Award
+
+Share
+
+u/disclosure5 avatar
+disclosure5
+•
+1y ago
+Profile Badge for the Achievement Top 1% Commenter Top 1% Commenter
+I found it kind of annoying that storage management came back up at one point. Like there was a point in time where everyone had a 1-2TB HDD and noone had to care any more, and then we moved over to SSD's which were 128GB and many modern boxes still tap out at 256GB SSDs.
+
+
+Upvote
+5
+
+Downvote
+
+Award
+
+Share
+

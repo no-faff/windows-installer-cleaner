@@ -1,0 +1,106 @@
+https://oofhours.com/2024/02/14/windowsapps-folder-getting-out-of-hand/
+
+Search
+
+Out of Office Hours
+Out of Office Hours
+Home
+RSS
+Subscribe
+
+Log in
+
+WindowsApps folder getting out of hand?
+Windows 11
+The whole Windows app (UWP) model is weird: apps are installed per user, but the files for those apps are shared between users. That leads to situations where there are several different versions of an app on the system, each of which with its files in C:\Program Files\WindowsApps (a tightly-secured folder that you’re not supposed to mess with), to support each user — eventually those users would get upgraded automatically to the latest version, but only once they log in. No big deal on a single-user system (one user profile) but really messy on devices with lots of users who sign in once and then never again.
+
+I assumed that was the only issue that people were running into on the Windows 10 and Windows 11 systems; I expected that Windows was just keeping files around until no users were using them. But a recent Reddit thread convinced me to look a little closer. I noticed on a couple of devices that there were folders that shouldn’t have been there, e.g. dozens of different Edge folders of different versions. Why weren’t those being cleaned up? In the past I’ve blamed antivirus software (it’s always McAfee somehow), but I’m just running Defender.
+
+I expected a maintenance scheduled task to be responsible for doing this cleanup, but I didn’t see anything obvious in the task scheduler. All I saw was a task to clean up prestaged app content (designed to run once on Windows shortly after the first user signs in, cleaning up app resources for unneeded languages):
+
+
+But that at least pointed me to a DLL, AppxDeploymentClient.dll. Using the Visual Studio “dumpbin.exe” tool, I could check to see if there were any other useful entry points:
+
+
+There are quite a few, but that “AppxCleanupOrphanPackages” entry point sounded interesting. Assuming it doesn’t take any parameters, I ran it using rundll32.exe (just like the scheduled task) from an elevated command prompt (reasonable to assume admin rights are needed):
+
+1
+c:\windows\system32\rundll32.exe AppxDeploymentClient.dll,AppxCleanupOrphanPackages
+There was an event log entry with Event ID 509 created when that completed in the AppxDeploymentServer operational event log:
+
+
+And there were a bunch of Event ID 508 entries for each orphaned folder cleaned up:
+
+
+So that’s looking fairly promising. I could see the Edge folders disappeared from C:\Program Files\WindowsApps — but they weren’t deleted, they just moved to C:\Program Files\WindowsApps\deleted. And there were a bunch of additional folders that were also moved (each of which corresponded to one of the event ID 508 entries). OK great, the command definitely did something. But now how do those “deleted” folders actually get deleted? My first attempt was to reboot the computer to see if that was sufficient. Amazingly, that did the trick: the folders disappeared and the “deleted” folder was then empty.
+
+So how much space was freed up? On my VM, the C:\Program Files\WindowsApps folder started at 2GB (on a reasonably-default Windows 11 install); 300MB of that got moved to the “deleted” folder by the “AppxCleanupOrphanPackages” command, and that 300MB disappeared after the reboot. So all total, 300MB of space savings, with the folder now 1.7GB. What will your result be? It will likely vary based on the number of apps you’ve installed, how long Windows has been installed, how many user profiles are “holding” versions of apps that are otherwise unused, and I guess how poorly Windows is (or isn’t?) doing cleanup itself.
+
+What’s the conclusions around this? First, Windows doesn’t appear to be very good at automatic cleanup — some of these folders were months old. Next, that the AppxCleanupOrphanPackages seems to be a reasonably safe thing to do
+
+What else might you want to do to clean up further? Deleting old user profiles could certainly help, especially on shared computers. The easiest way to do that is to let Windows do it for you, since there is a group policy setting that can enable that in Computer Configuration -> Polices -> Administrative Templates -> System -> User Profiles:
+
+
+Of course that assumes you are using OneDrive or something similar to maintain user’s data, since this would also delete their documents.
+
+And there’s always the option to remove in-box apps that you don’t need or want — since those get updated fairly often, it’s quite likely on devices with multiple users that you’ll have to maintain multiple versions of the app.
+
+Personally, I’ll never understand why Windows implemented per-user installation like this for UWP apps…
+
+Share this:
+
+
+Bluesky
+Threads
+Email
+Simpan
+Mastodon
+
+Discover more from Out of Office Hours
+Subscribe to get the latest posts sent to your email.
+
+Type your email…
+Type your email…
+
+Subscribe
+
+5 responses to “WindowsApps folder getting out of hand?”
+carpetbomberz Avatar
+carpetbomberz
+February 14, 2024 at 3:59 pm
+As always Mike, thanks. Tried this out and got an HP Support Assistant and Spotify UWP (I didn’t know I had). It’s something! And it works. Can only imagine how big a benefit this might be to folks if they knew it existed.
+
+Like
+
+Confidential Blogger Avatar
+Confidential Blogger
+February 15, 2024 at 2:48 am
+Hello.
+
+Would you mind sharing the Reddit thread that convinced you to investigate the issue?
+
+Also, I have an unrelated question. It’s pure curiosity, so if you don’t feel like answering, I won’t mind. I noted some strange words in your article. Do you work for Microsoft?
+
+Like
+
+Michael Niehaus Avatar
+Michael Niehaus
+February 15, 2024 at 1:46 pm
+It’s nearly impossible to get a URL to a Reddit thread on my phone, always launches the app. It was on /r/PowerShell and was about trying to recursively deleting folders from WindowsApps. (I used to work for MS.)
+
+Like
+
+Rajiv Ranjan Patel Avatar
+Rajiv Ranjan Patel
+February 15, 2024 at 7:40 pm
+Finally! Someone took it up and as always thanks to Mighty Michael who cracked it. We had opened a call with Microsoft support from last 3 months and they could not provide anything to resolve it.
+At last I had to create a Powershell script to group these installed versions and remove them except the highest version.
+Thanks Michael.
+
+Like
+
+Amir Joseph Sayes Avatar
+Amir Joseph Sayes
+February 20, 2024 at 8:57 am
+Great article Michael as always, we had a similar issue where orphaned apps became vulnerable. Auto deleting old profiles via GPO is too risky in our case, so we got creative with Powershell and remediation script. I have a write-up about it here if you fancy having a look. https://amirsayes.co.uk/2023/12/24/microsoft-store-uwp-apps-removing-vulnerable-apps-using-intune-remediations-and-powershell/
+

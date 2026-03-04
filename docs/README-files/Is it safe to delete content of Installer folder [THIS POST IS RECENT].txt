@@ -1,0 +1,300 @@
+https://www.reddit.com/r/techsupport/comments/1kx0po8/is_it_safe_to_delete_content_of_installer_folder/
+
+Back
+r/techsupport icon
+Go to techsupport
+r/techsupport
+•
+9mo ago
+ArtIndustry
+
+Is it safe to delete content of Installer folder?
+Open | Software
+Hi guys,
+
+Is it safe to delete, C:\Windows\Installer ?
+
+I'm trying to free up space. It amounted to 5GB. And I'm really tight on space
+
+Windows 10
+
+I'd appreciate any help. Thanks!
+
+
+Upvote
+1
+
+Downvote
+
+15
+Go to comments
+
+
+Share
+Join the conversation
+Sort by:
+
+Best
+
+Search Comments
+Expand comment search
+Comments Section
+discgman
+•
+9mo ago
+No, it can have uninstaller information in that folder. Use the disk cleanup tool first.
+
+
+Upvote
+3
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+solianhelix
+•
+9mo ago
+If you remove that folder, you may be deleting files that Windows is still trying to use which will cause you problems down the line.
+
+It's better to use the Disk Cleanup tool and let it find + remove any/all cached files that *can* be removed safely
+
+
+Upvote
+3
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+colemov
+•
+9mo ago
+I’m not sure about your specific question but try using the disk cleanup tool first. Then maybe clear out your downloads.
+
+
+
+Upvote
+2
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+nuHmey
+•
+9mo ago
+This on top of turning Hibernate off if it is on.
+
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/ArtIndustry avatar
+ArtIndustry
+OP
+•
+9mo ago
+Did that already. It takes so much space.
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+RaffScallionn
+•
+2mo ago
+Saved like <1GB, my Installer folder is 18GB!
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/Valuable_Fly8362 avatar
+Valuable_Fly8362
+•
+9mo ago
+Use clearmgr to clear up space in folders managed by Windows.
+
+
+Upvote
+2
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+petiejoe83
+•
+9mo ago
+I would generally stay out of c:\Windows unless you know what you're doing. There are many disk cleanup tools - I would start with ones made/recommended by Microsoft like https://support.microsoft.com/en-us/windows/free-up-drive-space-in-windows-85529ccb-c365-490d-b548-831022bc9b32 before moving to other trusted sources.
+
+
+
+Upvote
+2
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/ArtIndustry avatar
+ArtIndustry
+OP
+•
+9mo ago
+Good advice! Cheers!
+
+
+Upvote
+2
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+tlasan1
+•
+9mo ago
+No. Never safe to delete things in the windows folder.
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+dtod
+•
+2mo ago
+Adobe Acrobat updates leave a lot of stray files in this folder, which tools like PatchCleaner intentionally have to avoid removing. Uninstalling Acrobat, and reinstalling it will remove those files. I recently recovered over 22GB of space just by doing this!
+
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/ArtIndustry avatar
+ArtIndustry
+OP
+•
+2mo ago
+Interesting, thank you. Mind me asking was your Acrobat installed on the default location?
+
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+dtod
+•
+2mo ago
+Yes. Through Creative Cloud automatic updates.
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/yapper604 avatar
+yapper604
+•
+2mo ago
+just freed up 14gb uninstalling the free Adobe Acrobat. Wow, what a trash ass patch management process by Adobe. Thanks.
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+RaffScallionn
+•
+2mo ago
+Mine is 18GB and Disk Cleanup doesn't touch it
+
+

@@ -1,0 +1,15 @@
+DrDan21
+•
+6mo ago
+•
+Edited 6mo ago
+That contains copies of installed msi and msp packages
+
+If you remove them you will need to somehow reobtain them to uninstall the software and windows updates. Additionally without the corresponding msi and msp chain new msp’s will fail to install which will break some of your windows updates. You’re basically screwing yourself down the road for a small space gain
+
+Uninstalling those apps and patches will usually remove the copy in that folder on its own, though there’s cases where it will fail to do so. There are some third party tools that try to clean up those orphans, but again you’re risking issues for little benefit
+
+The official Microsoft stance is leave it the hell alone
+
+Far safer to just use the built in windows disk cleanup utility and see how far that gets you. The patch file cleanup is usually a decent chunk of space if your really struggling that much over a couple of gigs
+

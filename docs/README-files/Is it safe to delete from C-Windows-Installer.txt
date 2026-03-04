@@ -1,0 +1,314 @@
+https://superuser.com/questions/23479/is-it-safe-to-delete-from-c-windows-installer
+
+Is it safe to delete from C:\Windows\Installer?
+Asked 16 years, 6 months ago
+Modified 5 years, 10 months ago
+Viewed 205k times
+148
+
+I've been looking on an XP machine what is using all that diskspace, and it turns out C:\Windows\Installer is high up there on the list of directories that use the most diskspace.
+
+It seems to contain a cache of msi and msp files.
+
+Is it safe to delete those? To save diskspace, I've been deleting the "$KB...$" directories for ages without any problems. I want my Windows Updates in my system, why you would want to uninstall them is something that I have never understood. (Except when you're on an update revision board professionally or something of that order.)
+
+windows-7windowswindows-10windows-xpdisk-space
+Share
+Improve this question
+Follow
+edited Jan 9, 2019 at 16:17
+Run5k's user avatar
+Run5k
+16.5k2424 gold badges5454 silver badges6767 bronze badges
+asked Aug 16, 2009 at 21:29
+Stijn Sanders's user avatar
+Stijn Sanders
+2,50633 gold badges2626 silver badges2525 bronze badges
+7
+Compress it if you use NTFS (which you should be by now) – 
+Chris Marisic
+ CommentedAug 17, 2009 at 1:56
+1
+It's useful to uninstall Windows Updates if they break your system. – 
+Caltor
+ CommentedOct 22, 2013 at 15:28
+@Caltor, If they break your system, they have already failed. What if uninstalling windows updates breaks our system? Should Windows add another mechanism to undo uninstall in case uninstall fails? – 
+Pacerier
+ CommentedNov 13, 2014 at 3:28 
+I recently came across this one again: blog.seattlepi.com/microsoft/2008/06/24/… and it's there also: in hindsight, Windows Updates should have gotten a separate treatment, not include them with the installed packages. – 
+Stijn Sanders
+ CommentedNov 13, 2014 at 9:49
+1
+@Pacerier I presume you're being sarcastic. Just because something breaks in one way doesn't mean we give up on it entirely, otherwise we might as well dispense with just about every safety device ever invented. I had a very real scenario where a windows update broke some of my VBA ADO code and uninstalling the windows update was the workaround whilst I rewrote the code. P.S. The mechanism to undo an uninstall is Windows System Restore. – 
+Caltor
+ CommentedNov 17, 2014 at 10:45
+Show 2 more comments
+9 Answers
+Sorted by:
+
+Highest score (default)
+96
+
+No, it's not. Windows Installer uses that to cache installation files for anything installed on the machine using Windows Installer. At a minimum, you could lose the ability to add or remove programs, at the worst, you may lose the ability to run some programs.
+
+Since Windows Update can also deploy Windows Installer patches, you could also prevent your machine from receiving Windows and Office updates.
+
+Share
+Improve this answer
+Follow
+answered Aug 16, 2009 at 21:39
+jasonh's user avatar
+jasonh
+3,10722 gold badges3030 silver badges3030 bronze badges
+8
+jasonh speaks true. Some applications "advertise" features by showing icons and commands for them, but do not actually install the feature until you first use it. Deleting installers will make such applications unusable. Don't do it. – 
+Dour High Arch
+ CommentedAug 17, 2009 at 3:48
+3
+I haven't seen one of those in a long time.... – 
+RCIX
+ CommentedAug 19, 2009 at 2:13
+8
+His main concern is to free up disk space, so a yes/no answer doesn't quite help here. – 
+deddebme
+ CommentedAug 22, 2009 at 16:28
+1
+@RCIX: Do you use Office? Office uses advertised shortcuts. If you right click on the shortcut and bring up the properties and try to look at the target, it will be grayed out. That's an advertised shortcut. – 
+jasonh
+ CommentedAug 23, 2009 at 21:14
+2
+@deddebme: It wasn't a yes/no thing, I said it's not OK to do it and listed the range of things that could be broken by doing it. – 
+jasonh
+ CommentedAug 23, 2009 at 21:17
+Show 1 more comment
+75
+
+You most likely need the content of the installer folder when you try to uninstall programs (e.g. microsoft office will complain some random named .msi/.mcp files when you try to remove it)
+
+But if disk space is concern to you, compress the installer folder through NTFS! I do so in my ASUS Eeepc901 netbook, since it has a horrible 4G primary partition only.
+
+Right click the folder "Installer"->properties->advanced->check "Compress contents to save disk space."->"OK"->"OK" again.
+
+You'll be surprised by the space it saved.
+
+Share
+Improve this answer
+Follow
+edited Aug 22, 2009 at 16:31
+answered Aug 22, 2009 at 5:43
+deddebme's user avatar
+deddebme
+3,82955 gold badges3131 silver badges2929 bronze badges
+6
++1 for compressing the installer folder. 5.07 GB to 3.44 GB! – 
+Leftium
+ CommentedOct 18, 2011 at 23:14
+How do you click the installer folder? It's a hidden system file, I can't get it to show in Explorer. I've only been able to use the command line 'Compact' command instead. – 
+Slaggg
+ CommentedMar 3, 2012 at 20:08
+2
+Open the folder by Start > Run > "c:\windows\installer", then right-clicking on the empty space (which is the same as the folder itself). – 
+Patrick Szalapski
+ CommentedDec 8, 2014 at 15:05 
+@Slaggg Just enable hidden files to be seen in explorer. It allows you to spot viruses on USB drives as well. – 
+Tomáš Zato
+ CommentedNov 5, 2015 at 15:07
+Add a comment
+11
+
+As others have said, there are definite contraindications for removing files from that directory structure. I would also recommend against it.
+
+However, if you are determined to proceed anyways, you can more properly do so using the Windows Installer CleanUp Utility. This will clean things up better than simply deleting files. This tool is, however, generally used for removing installation files that have become corrupt thus preventing you from uninstalling something the normal way.
+
+The Windows Installer CleanUp Utility actually uses the MSIZAP.EXE command-line utility to perform the work.
+
+Share
+Improve this answer
+Follow
+edited Aug 17, 2009 at 1:51
+answered Aug 17, 2009 at 1:23
+Gregyski's user avatar
+Gregyski
+35922 silver badges77 bronze badges
+1
+I think compressing that folder is safer than deleting the contents of it. – 
+deddebme
+ CommentedAug 22, 2009 at 5:44
+2
+Agreed, the first thing I did was recommended against deleting. But because the question was about the safety of deleting, it makes sense to point out the safest way to go about that, even if it's not a good practice. – 
+Gregyski
+ CommentedAug 22, 2009 at 17:34
+Add a comment
+9
+
+Make a junction! [1][2]
+
+Start a command prompt as administrator. [3]
+Take ownership of installer directory and all its files:
+
+takeown /f "C:\Windows\Installer"
+takeown /f "C:\Windows\Installer\*"
+Move C:\Windows\Installer to a new spacious drive, let's say E:. For convenience, it's better to create a subfolder to gather all the future junctions in one place, e.g. E:\Win7-Junctions, so the new path will be E:\Win7-Junctions\Installer. Cut-paste from Windows Explorer should be enough to move the installer folder.
+Make sure that C:\Windows\Installer is really gone and that all files have been moved to E:\Win7-Junctions\Installer.
+Create the junction:
+
+mklink /j "C:\Windows\Installer" "E:\Win7-Junctions\Installer"
+The syntax is:
+
+mklink /j [destination] [source]
+Verify that the junction works by creating a small text file in E:\Win7-Junctions\Installer and seeing it materializing in C:\Windows\Installer as well.
+
+Done. Check within "Add or remove programs" that installers are still working (Office is a good candidate to start with).
+A word of warn, as stated in this Microsoft answer:
+
+It is never suggested to move the operating system core components and files to a drive other than the operating system drive. Because they will cause instabilities in the operating system files.
+
+Run this commands on your risk, Microsoft cannot guarantee any problems resulting from this can be solved.
+
+Given that having constantly 0 bytes of disk space was indeed causing instabilities to the OS (and its users) and that Microsoft couldn't guarantee that any ordinary problem they created could be solved at all in a reasonable way, I went on with this procedure and found no significant drawbacks until now.
+
+Share
+Improve this answer
+Follow
+edited Mar 20, 2017 at 10:17
+Community's user avatar
+CommunityBot
+1
+answered Dec 31, 2015 at 0:27
+Avio's user avatar
+Avio
+96722 gold badges1313 silver badges1818 bronze badges
+1
+I've done this on a couple of old Windows 2003 servers without problem. – 
+David
+ CommentedDec 31, 2015 at 1:10
+1
+I’ll have to strongly advice against doing this. Should Windows (caused by an update or whatnot) ever decide to restore the directory, things will probably be fubared and you’ll have to reinstall Windows. At least it won’t kill Windows outright. – 
+user219095
+ CommentedDec 31, 2015 at 1:54
+1
+@DanielB: Do you have any evidence that a Windows update should bother checking if C:\Windows\Installer is a junction, then wipe its whole content for no apparent reason and create a blank directory or you're just generally scared about the lack of transparency and "common sense" about the processes happening internally inside Windows OSes that make people think "hey, it can strike anywhere, it's better if I don't mess with obscure components (many) and let minor problems alone"? – 
+Avio
+ CommentedDec 31, 2015 at 12:56
+No. I once moved Visual Studio to another partition using a junction. An update then somehow deleted that junction and put an (incomplete) directory in its place. Then, I had to reinstall Windows, because this could not be repaired. Incidentally, the VS installer is a MSI installer. – 
+user219095
+ CommentedDec 31, 2015 at 14:41
+Add a comment
+7
+
+No, it's not safe to delete the whole dir.
+
+But there are ways to remove the unused .msp files by running WICleanup.
+
+Share
+Improve this answer
+Follow
+edited Mar 2, 2015 at 21:17
+Kevin Panko's user avatar
+Kevin Panko
+7,5172323 gold badges4747 silver badges5454 bronze badges
+answered Sep 24, 2013 at 4:21
+Terry Shi's user avatar
+Terry Shi
+29022 silver badges88 bronze badges
+1
+I just tested WICleanup. It offers to delete all .msi files in c:\Windows\installer. What is the benefit of WICleanup over deleting the files myself (which is unsafe according to all the answers here) ? I have 10 .msi files in this directory and WICLeanup offers to delete all 10 files. I ran PatchCleaner from answer here superuser.com/a/1544283 and it shows that all 10 files are in use by the Windows system (and thus should not be deleted). – 
+summerrain
+ CommentedFeb 8, 2024 at 15:15
+Add a comment
+4
+
+As other answers state, it is not safe to delete the Windows Installer folder completely. But here are some popular practical solutions to safely move or shrink it:
+
+How can I free up drive space from the Windows installer folder without killing Windows?
+
+Personally I used PatchCleaner that helped me to knowingly reduce Windows\Installer size from 23 to 3 Gb by moving orphaned packages (mostly M$ Office 2016 updates).
+
+Share
+Improve this answer
+Follow
+edited Apr 21, 2020 at 20:23
+answered Apr 21, 2020 at 19:51
+Vadzim's user avatar
+Vadzim
+1,3621414 silver badges1919 bronze badges
+You really should be flagging this as a duplicate, if you believe the answers to that question, actually answer the author's question. – 
+Ramhound
+ CommentedApr 21, 2020 at 20:23
+@Ramhound, these two questions differ in stated goal to be linked as exact duplicates. And comments above were too crowded for giving a noticable link that may help to many visitors searching for solution like me. So I had to give a separate answer in hope it would pop up to more eyes. I've also just edited it to be more helpful. – 
+Vadzim
+ CommentedApr 21, 2020 at 20:33 
+Add a comment
+3
+
+If you delete this folder, you will experience issues later when you attempt to repair, uninstall, upgrade, reinstall, etc.
+
+The way MSI installers work is they run themselves whenever a patch must be rolledback, something uninstalled, etc.
+
+Future Windows Updates may need the contents of this folder.
+
+MSI installers are the devil :() Don't toy with them.
+
+Share
+Improve this answer
+Follow
+edited Mar 2, 2015 at 21:16
+Kevin Panko's user avatar
+Kevin Panko
+7,5172323 gold badges4747 silver badges5454 bronze badges
+answered Aug 16, 2009 at 23:22
+AaronLS's user avatar
+AaronLS
+2,30344 gold badges2727 silver badges2727 bronze badges
+I don't think Windows Updates touches the Installer folder that folder (or at all), since windows updates usually save the uninstall information in "$KB...$" directories, which I always delete when I see them. – 
+deddebme
+ CommentedAug 22, 2009 at 5:47
+Some Windows Updates are MSI based. – 
+AaronLS
+ CommentedAug 24, 2009 at 19:39
+Add a comment
+2
+
+When disk space is running out on a system disk, may it be on a server or a client, there are certain things to clean out. One of them being the %SYSTEMDRIVE%\Windows\Installer folder. You cannot under any circumstances delete files from this folder manually as this not only may but most likely will break software that is installed using MSI files, or Windows Installer files.
+
+The %SYSTEMDRIVE%\Windows\Installer folder is a cache for installation files and patches (MSP files) and removing those will cause you to not being able to repair or uninstall applications, and in some cases not removing patches or applying new patches to software. In the event when you actually did delete this cache you can rebuild the files you need manually by extracting the files from original installation media, from patch packages etc but this is a time consuming and not that easy task to accomplish.
+
+Andreas Stenhall, MVP Windows Expert ITPRO Ref.: http://www.theexperienceblog.com/2009/05/16/how-to-clean-out-windowsinstaller-folder-correctly/
+
+You may try to make some SAFE cleaup with this MS Fix It utility: Diagnose and fix program installing and uninstalling problems automatically
+
+Share
+Improve this answer
+Follow
+edited Jun 12, 2020 at 13:48
+Community's user avatar
+CommunityBot
+1
+answered Feb 6, 2012 at 18:11
+climenole's user avatar
+climenole
+3,51611 gold badge2323 silver badges3030 bronze badges
+Add a comment
+-3
+
+You an always use a program like CCleaner to clean up the system.
+
+I just reclaimed over a gig of disk space!
+
+Share
+Improve this answer
+Follow
+edited May 16, 2014 at 15:35
+g t's user avatar
+g t
+12588 bronze badges
+answered Aug 16, 2009 at 21:58
+JFV's user avatar
+JFV
+1,0251010 silver badges1616 bronze badges
+4
+This is true but irrelevant. – 
+Tomáš Zato
+ CommentedNov 5, 2015 at 15:11
+Add a comment
+

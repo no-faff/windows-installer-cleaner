@@ -1,0 +1,375 @@
+https://www.reddit.com/r/techsupport/comments/1hw4suq/my_windows_installer_folder_is_like_60gb_so_i/
+
+r/techsupport icon
+Go to techsupport
+r/techsupport
+•
+1y ago
+The-tridents-fate
+
+my windows installer folder is like 60gb so I wanna clean it but I seem to have run into some problems....
+Open | Windows
+my windows installer folder is like 60gb so I wanna clean it, and it seems like patch-cleaner (PatchCleaner _1.4.2.0.exe)is my only option... but virus total flagged it as 4/72, so I don't wanna take that risk... what should I do? is it a FP?
+https://imgur.com/a/KBPzFGW
+
+
+Upvote
+1
+
+Downvote
+
+19
+Go to comments
+
+
+Share
+Join the conversation
+Sort by:
+
+Best
+
+Search Comments
+Expand comment search
+Comments Section
+
+AutoModerator
+MOD
+•
+1y ago
+•
+Stickied comment
+u/CanadianTimeWaster avatar
+CanadianTimeWaster
+•
+1y ago
+don't mess with it.
+
+
+
+Upvote
+7
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/The-tridents-fate avatar
+The-tridents-fate
+OP
+•
+1y ago
+what should I do then?
+
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/CanadianTimeWaster avatar
+CanadianTimeWaster
+•
+1y ago
+I just told you.
+
+
+
+Upvote
+3
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/The-tridents-fate avatar
+The-tridents-fate
+OP
+•
+1y ago
+wdym? I can't just leave it there... that folder should not be 60Gb, and it's taking space... alot of space
+
+
+
+Upvote
+-3
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+MadisonDissariya
+•
+1y ago
+what, exactly, makes you think the windows operating system shouldn't take up 60 gigs of storage
+also, 60 gigs of storage should be basically nothing on any hard drive nowadays, how much capacity is your drive rated for?
+
+
+
+Upvote
+4
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/The-tridents-fate avatar
+The-tridents-fate
+OP
+•
+1y ago
+windows usually needs 32Gb, and I am talking about one folder in windows using 60G.... with the other parts of windows the whole windows folder is around 90Gb.... don't be a fool.....
+
+
+
+Upvote
+0
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+MadisonDissariya
+•
+1y ago
+That was true 10 years ago. The minimum storage for Windows 11 is 64GB. Between the OS, hiberfile, swapfile, and updates, 60GB is fine and again it should not be concerning you, you need more storage, not to mess with Windows. "Don't be a fool." Jesus.
+
+
+
+Upvote
+0
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/The-tridents-fate avatar
+The-tridents-fate
+OP
+•
+1y ago
+I am using windwos 10. and it's not the windows folder it's the installer folder, it really shouldn't be 60Gb....
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/Ogga6165 avatar
+Ogga6165
+•
+1y ago
+how big do you think a whole operating system is??? don't touch it or you will most likely brick you're os
+
+
+
+Upvote
+2
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/The-tridents-fate avatar
+The-tridents-fate
+OP
+•
+1y ago
+•
+Edited 1y ago
+I am talking about one folder in windows using 60G.... with the other parts of windows the whole windows folder is around 90Gb.... don't be a fool..... the windows folder should be around 32Gb.... I have a whole lot of orphaned installer files, I just don't want to delete randomly as it's dangerous ...
+
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/Ogga6165 avatar
+Ogga6165
+•
+1y ago
+sure..... reinstall windows then
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+Th4tBriti5hGuy
+•
+1y ago
+Define your Windows Installer Folder.
+
+C:\Windows?
+
+C:\Program Files?
+
+Either folder you shouldn't mess with but if you really want to clear out your PC if you're running low on space. Go to your Apps & Features. Categorize by Size (greatest to lowest) and then uninstall programs you don't need.
+
+I've never heard of PatchCleaner but I wouldn't recommend it. Sounds like a CCleaner rip-off which doesn't do much anyway.
+
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/The-tridents-fate avatar
+The-tridents-fate
+OP
+•
+1y ago
+C:\Windows\Installer I am aware that I shouldn't mess with it but I do need to clean it up as my windows 10 folder is already like 90Gb in size cuz of this folder taking up 60Gb... that's why I am asking ... as I don't wanna use patchcleaner which was made for this job since it's 3rd party or some bs and I don't trust it
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/ErnestoGrimes avatar
+ErnestoGrimes
+•
+1y ago
+have you tried running cleanmgr as admin?
+
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/The-tridents-fate avatar
+The-tridents-fate
+OP
+•
+1y ago
+it only removed like 4Gb when I ran it as admin, I still have like 56Gb in the installer dir...
+
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/ErnestoGrimes avatar
+ErnestoGrimes
+•
+1y ago
+what options did you choose? usually the big one is "windows update cleanup"
+
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/The-tridents-fate avatar
+The-tridents-fate
+OP
+•
+1y ago
+yeah, it only got like 2 Gb...
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+

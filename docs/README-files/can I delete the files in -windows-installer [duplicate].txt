@@ -1,0 +1,67 @@
+https://superuser.com/questions/105686/can-i-delete-the-files-in-windows-installer
+
+can I delete the files in /windows/installer? [duplicate]
+
+can I delete the files in /windows/installer? [duplicate]
+Asked 16 years ago
+Modified 16 years ago
+Viewed 554 times
+1
+
+This question already has answers here:
+Closed 16 years ago.
+Possible Duplicate:
+Is it safe to delete from C:\Windows\Installer?
+
+Is the /windows/installer folder for files used during installation, and were not deleted for some reason?
+
+Can I delete them?
+
+(windows xp laptop)
+
+windowscleaning
+Share
+Improve this question
+Follow
+edited Mar 20, 2017 at 10:17
+Community's user avatar
+CommunityBot
+1
+asked Feb 6, 2010 at 22:03
+user27449's user avatar
+user27449
+7,2582525 gold badges6969 silver badges9292 bronze badges
+dupe: superuser.com/questions/23479/… – 
+fretje
+ CommentedFeb 6, 2010 at 22:39
+Add a comment
+2 Answers
+Sorted by:
+
+Highest score (default)
+3
+
+Windows needs those files if you want to Uninstall your programs later.
+
+While you can delete them and your program will still work, the Uninstall/Reinstall options from Add/Remove programs will not work.
+
+Share
+Improve this answer
+Follow
+answered Feb 6, 2010 at 22:07
+Dan McGrath's user avatar
+Dan McGrath
+3,0262424 silver badges2020 bronze badges
+Add a comment
+0
+
+Yes you can. This article may help. You will need a Microsoft utility to do so. As I understand. And, ideologically, programs, when installed, may recreate this directory. http://www.techspot.com/vb/topic109060.html
+
+Share
+Improve this answer
+Follow
+answered Feb 6, 2010 at 22:12
+benjamin239's user avatar
+benjamin239
+11166 bronze badges
+Add a comment

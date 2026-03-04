@@ -1,0 +1,132 @@
+https://superuser.com/questions/1050417/how-to-clean-windows-installer-folder-in-windows-10
+
+How to clean Windows\Installer folder in Windows 10? [duplicate]
+Asked 9 years, 11 months ago
+Modified 7 years, 11 months ago
+Viewed 237k times
+59
+
+This question already has answers here:
+How can I free up drive space from the Windows installer folder without killing Windows? (8 answers)
+Closed 9 years ago.
+My C:\Windows\Installer folder is huge: 14 GB. My understanding is that this is where failed updates go to die, and it should not be this big. What is the correct way to clean it on Windows 10?
+
+windows-10disk-space
+Share
+Improve this question
+Follow
+edited Mar 24, 2018 at 8:00
+Dmitry Grigoryev's user avatar
+Dmitry Grigoryev
+9,92044 gold badges5151 silver badges9292 bronze badges
+asked Mar 9, 2016 at 3:03
+fbo's user avatar
+fbo
+95322 gold badges99 silver badges77 bronze badges
+The only safe method is to use the Cleanup Tool – 
+Ramhound
+ CommentedMar 9, 2016 at 3:04
+10
+The utility "Disk Cleanup" does not find these files. – 
+fbo
+ CommentedMar 9, 2016 at 3:11
+12
+Possible duplicate of How can I free up drive space from the Windows installer folder without killing Windows 8.1?, or Is it safe to delete from C:\Windows\Installer?, etc. – 
+Ƭᴇcʜιᴇ007
+ CommentedMar 9, 2016 at 4:11 
+have you tried the tool from my answer? – 
+magicandre1981
+ CommentedJun 4, 2016 at 19:32
+1
+I disagree about this being the same question as "Is it safe to delete from C:\Windows\Installer?" because that question refers to Windows XP. WinXP solutions often do not work on Win8 & Win10. – 
+fbo
+ CommentedJun 17, 2016 at 3:37
+Show 1 more comment
+1 Answer
+Sorted by:
+
+Highest score (default)
+91
+
+There is a relatively new tool called PatchCleaner which detects and can delete old MSI/MSP files.
+
+PatchCleaner Screenshot
+
+From the PatchCleaner page:
+
+Windows Installer Directory When applications are installed and updated on the Windows Operating System a hidden directory "c:\Windows\Installer" is used to store the installer (.msi) files and the patch (.msp) files.
+
+Generally these files are important as during updating, patching or uninstalling software it will use the .msi/.msp files. If you blanketly delete all the files in this folder, you will find yourself needing to rebuild windows.
+
+Over time as your computer is patched and patched again, these installer files become outdated and orphaned. They are no longer required, but they can take up many gigabytes of data.
+
+PatchCleaner PatchCleaner identifies these redundant/orphaned files and allows you to either:
+
+(Recommended) Move them to another location. If you want to play it safe, just move them to another location, and you can always copy them back. Delete them.
+
+First use the move option and wait a few days before you delete the moved files.
+
+Share
+Improve this answer
+Follow
+edited Feb 9, 2017 at 16:18
+answered Mar 9, 2016 at 5:43
+magicandre1981's user avatar
+magicandre1981
+99.9k3131 gold badges186186 silver badges254254 bronze badges
+3
+Excellent recommendation, I just used this tool myself. I feel a lot more better than running something else that says "delete everything in your Installer folder". – 
+gcode
+ CommentedJun 14, 2016 at 18:13
+Well, I was wary about trying this -- but I am running Win10 on a 8yr old laptop, and my storage problem has gotten so bad that if it continues I will have to buy a new HD. So I bit the bullet. I ran the PatchCleaner (1.4.2.0) It did a quick scan and it told me it needed to keep 6 GB of files and could remove 12 GB. It allowed me to do nothing, or move the files, or delete them. It moved them to a different folder for me, and I am now copying them to external storage instead. I have restarted since running PatchCleaner; seems okay. Easy to use, seems to work, does not seem to break my PC. – 
+fbo
+ CommentedJun 17, 2016 at 3:20
+Quick note: I downloaded 1.4.2.0 from CNET and it didn't work. Got the installer from Softpedia instead and that works. – 
+Mark Rendle
+ CommentedJun 30, 2016 at 12:41
+7
+@MarkRendle I always download the setup from the developer page and not from a 3rd party hoster – 
+magicandre1981
+ CommentedJun 30, 2016 at 16:05
+20 gigs of files still in use, 6 gigs of files getting moved. At least it's something – 
+Sam I am says Reinstate Monica
+ CommentedJul 21, 2016 at 20:38
+Does anyone know about a portable version? I've tried to just copy out the program files from the program directory, and start it up on another machine from a pendrive, but it crashed with "VBScript engine not found" error. – 
+Zoltán Tamási
+ CommentedSep 26, 2016 at 16:52
+Ask this the developer of the tool – 
+magicandre1981
+ CommentedSep 26, 2016 at 19:56
+4
+I am planning on making a portable version as I have had a few requests for this recently, but in the meantime if you prefer to run this from a usb drive, once installed you can just copy the installation folder c:\Program Files (x86)\HomeDev\PatchCleaner to your USB Key and it seems to run fine. Glad to hear it is working for people. Last few days some people (2) reporting issues with a recent MS silverlight patch, I am looking at this and a few minor changes for the next version. Cheers. – 
+jcrawfor74
+ CommentedNov 8, 2016 at 14:22 
+2
+This worked well for me on a client PC with a seriously full HD. Moved 12GB with no ill effects. Thanks to the developer for making this, it was sorely needed. – 
+colmob
+ CommentedNov 22, 2016 at 2:32
+@jcrawfor74 do you also plan to clean the folder C:\ProgramData\Package Cache where the MSI/MSP files are stored which are created with new WIX tools: wixtoolset.org/news – 
+magicandre1981
+ CommentedJan 24, 2017 at 19:06
+Lol, I thought that it would work like Ccleaner. First a scan of files and note how much space you can win and then the actual action (removal). Appears to start removing stuff when you launch the application... Could have used a better warning. – 
+JP Hellemons
+ CommentedFeb 28, 2017 at 14:58
+As followup on my previous comment. It did not auto delete stuff on app launch! I could manually make a backup and saved almost 38gb of the original 44gb!! i.imgur.com/UXcGNwY.png – 
+JP Hellemons
+ CommentedMar 1, 2017 at 10:21 
+1
+Wow. I'd been struggling to maintain adequate space on my 128Gb surface pro 1 with the Windows folder taking up 72Gb. PatchCleaner just clawed back 32Gb in unrequired patches. That's not only amazing but means I don't have to find thousands of dollars to buy a new mobile development environment. Awesome. – 
+Zodman
+ CommentedApr 25, 2017 at 12:18
+3
+It is a shame what Microsoft is doing with the Installer directory! This solution even works on XenServer for Windows VM. On a virtualization platform it is sometimes not that trivial to raise the HDD space. – 
+Peter VARGA
+ CommentedAug 10, 2017 at 17:57 
+2
+Thankfully the know-it-all mod jagoffs here didn't delete this question! It's literally the only helpful answer to this question I have ever found! – 
+SamAndrew81
+ CommentedAug 23, 2017 at 2:32
+PatchCleaner has not been updated in several years and more recent reports indicate it is no longer as accurate as it once was at correctly identifying no-longer-required patches. – 
+music2myear
+ CommentedApr 13, 2021 at 18:10
+Add a comment

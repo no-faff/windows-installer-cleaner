@@ -1,0 +1,226 @@
+https://www.reddit.com/r/Windows10/comments/1gf9q0m/windows_update_eating_my_storage/
+
+Back
+r/Windows10 icon
+Go to Windows10
+r/Windows10
+•
+1y ago
+Hour_Celery7242
+
+Windows update eating my storage
+Feature
+Just made an account to post a problem i'm having and couldn't find how to solve, my computer has bascially no storage at all, the max i can have is around 31GB if i delete all i have, still, windows update while i was sleeping took 20 Gb, and doesn't show an option to delete those 20gb files of an update i didn't want
+
+r/Windows10 - Windows update eating my storage
+r/Windows10 - Windows update eating my storage
+Locked post. New comments cannot be posted.
+Archived post. New comments cannot be posted and votes cannot be cast.
+
+Upvote
+15
+
+Downvote
+
+15
+Go to comments
+
+
+Share
+Sort by:
+
+Best
+
+Search Comments
+Expand comment search
+Comments Section
+u/OkMany3232 avatar
+OkMany3232
+•
+1y ago
+Use treesize free, wiztree, space sniffer, and/or windirstat, to find find it it is using the space( make sure you run them as administrator).
+
+
+Upvote
+8
+
+Downvote
+
+Award
+
+Share
+
+
+[deleted]
+•
+1y ago
+u/act-of-reason avatar
+act-of-reason
+•
+1y ago
+Disk Cleanup, Clean up system files button.
+
+Also, disable reserved storage.
+
+
+Upvote
+2
+
+Downvote
+
+Award
+
+Share
+
+brutum-fulmen
+•
+1y ago
+Try running Disk Cleanup (make sure you select "Clean up system files") and then, after that's done, check out this article on how to clean up WinSxS (the Dism.exe method described in the article is probably the easiest to do).
+
+
+
+Upvote
+2
+
+Downvote
+
+Award
+
+Share
+
+CodenameFlux
+•
+1y ago
+The second step (involving DISM) is unnecessary. Disk Cleanup already does it when you check the "Windows Update Cleanup" box. If you look at Task Manager, you see that Disk Cleanup is running DismHost.exe.
+
+Comment Image
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+MazerTee
+•
+1y ago
+I used a program called patch cleaner (downloaded from cnet website)
+
+It cleans up the windows installer folder.
+
+
+
+Upvote
+0
+
+Downvote
+
+Award
+
+Share
+
+Liquidignition
+•
+1y ago
+You realise windows does that automatically and you trigger a clean up manually 😞
+
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+MazerTee
+•
+1y ago
+Nope tried all the usual cleanup windows options, only this app cleaned up an extra 20GB
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+CodenameFlux
+•
+1y ago
+PatchCleaner's area is not the kind of patches you have in mind.
+
+Of course, that means PatchCleaner isn't related to this topic.
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+u/Rockclimber88 avatar
+Rockclimber88
+•
+1y ago
+from admin cmd
+dism.exe /Online /Cleanup-Image /StartComponentCleanup /ResetBase
+
+
+
+Upvote
+0
+
+Downvote
+
+Award
+
+Share
+
+
+[deleted]
+•
+1y ago
+u/h2vhacker avatar
+h2vhacker
+•
+1y ago
+Use CCleaner it will remove junk that shouldn't be on your PC it will clean 10gb or more
+
+
+
+Upvote
+-2
+
+Downvote
+
+Award
+
+Share
+
+CodenameFlux
+•
+1y ago
+I wouldn't go anywhere near CCleaner because of their privacy policy. The company reserves itself the rights to collect your "name, postal and email address, phone number, and online or indirect identifiers such as login account, login password, marketing preferences, social media account, and/or IP address."
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+

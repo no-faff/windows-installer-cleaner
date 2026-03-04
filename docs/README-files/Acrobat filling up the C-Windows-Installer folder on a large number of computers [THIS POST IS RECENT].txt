@@ -1,0 +1,958 @@
+https://www.reddit.com/r/sysadmin/comments/1oxcrmh/acrobat_filling_up_the_cwindowsinstaller_folder/
+
+r/sysadmin icon
+Go to sysadmin
+r/sysadmin
+•
+4mo ago
+Loof27
+
+Acrobat filling up the C:\Windows\Installer folder on a large number of computers?
+Question
+I've had this issue on countless computers. The drive is full, I check what is taking up the space, and its always a 50GB+ C:\Windows\Installer folder, sometimes in the 100s
+
+All I have to do is uninstall Acrobat and instantly the folder goes down to ~5GB
+
+Anybody else have a similar problem?
+
+
+Upvote
+87
+
+Downvote
+
+47
+Go to comments
+
+
+Share
+Join the conversation
+Sort by:
+
+Best
+
+Search Comments
+Expand comment search
+Comments Section
+tjone270
+•
+4mo ago
+I think it’s because they decided that updates are delivered via MSI patch files instead of subsequent MSI installer files (like everyone else does) - Windows Installer would want to retain each of the .msp files tacked on to an existing .msi installation in order to refer to them when uninstalling/rolling back an installation.
+
+
+
+Upvote
+83
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+Jtrickz
+•
+4mo ago
+This explains so much.
+
+
+Upvote
+18
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/vic-traill avatar
+vic-traill
+•
+4mo ago
+Senior Bartender
+I'm just surmising here, but I suspect Adobe MSPs are the reason that Adobe Acrobat Reader updates return 3010, requiring a reboot to complete.
+
+This for an app that views files with the odd annotation and save.
+
+
+Upvote
+4
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/MrReed_06 avatar
+MrReed_06
+•
+4mo ago
+Too many hats - Can't see the sun anymore
+This.
+
+My Acrobat update workflow includes a script which removes all previous versions before installing the newest, just because of this.
+
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+Jtrickz
+•
+3mo ago
+Care to share it or atleast what you’re doing to hit the previous versions? You looking at specific versions or just hammer everything?
+
+I have a mixture of versions right now is the problem
+
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/MrReed_06 avatar
+MrReed_06
+•
+3mo ago
+Too many hats - Can't see the sun anymore
+they all use the same MSI GUID just msiexec /x {guid} the thing out of existence in your scripts before installing the new version
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+tjone270
+•
+4mo ago
+Always enraged by the 1.1GB .msp patch files there! Why, Adobe! Why!!!
+
+
+Upvote
+22
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/mrmattipants avatar
+mrmattipants
+•
+4mo ago
+•
+Edited 4mo ago
+It sounds like laziness on behalf of Adobe Developers, as update utilities should be cleaning up after themselves, yet this doesn't appear to be the case.
+
+https://community.adobe.com/t5/acrobat-discussions/windows-11-installer-folder-size/td-p/15522804
+
+I wrote a PowerShell Script a couple years back, for the purpose of hunting down the left over msi installers, in the "C:\Windows\Installers" Directory (by searching the MSI File "Details" and/or Values in the "Property" Table of the MSI Database).
+
+That being said, I'll try to find some time, this weekend, to sit down and re-purpose the aforementioned script.
+
+Of course, I'll need to investigate the associated MSI & MSP Files, using Orca, to determine if it's even practical.
+
+Otherwise, another option may to acquire a recent Acrobat Installer and simply try Uninstalling/Reinstalling Acrobat, from scratch.
+
+
+
+Upvote
+21
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+Loof27
+OP
+•
+4mo ago
+I know something like this exists already called PatchCleaner, but it specifically has a filter to ignore all Acrobat files since they were incorrectly identified as orphaned
+
+
+
+Upvote
+7
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/mrmattipants avatar
+mrmattipants
+•
+4mo ago
+•
+Edited 4mo ago
+Interestingly, I was actually just looking into PatchCleaner. :)
+
+It doesn't look like it has been under active development for nearly a decade. Yet, to be realistic, there may be good reason why PatchCleaner (and other similar cleanup utilities) ignore Acrobay MSI/MSP Files, etc.
+
+
+
+Upvote
+3
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+coolbop32
+•
+4mo ago
+I used in recent weeks had computer that managed to get over 270gb in adobe files in its windows installer files
+
+
+
+Upvote
+4
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/mrmattipants avatar
+mrmattipants
+•
+4mo ago
+Thanks for the update. If it works, then by all means, use it. :)
+
+I only included the tidbit, regarding PatchCleaner no longer being under development, merely as a warning. While researching, I came across several posts, stating that PatchCleaner had been responsible for breaking various programs/installations.
+
+Of course, as long as you do your due diligence, you should be okay. It's recommended that you first move the cached MSI/MSP Files to another directory or drive, using the /m argument, as follows.
+
+patchcleaner /m C:\Path\To\Backup\Folder
+
+From there, you can test the application(s), in question, and once you confirm that everything is working correctly, you can delete the files from the Backup Drive/Directory.
+
+In most cases, this should be fine. Personally, I prefer the fine-grained control that PS Scripts afford me.
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+Kurgan_IT
+•
+4mo ago
+Linux Admin
+Adobe, enough said.
+
+
+Upvote
+6
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/SAL10000 avatar
+SAL10000
+•
+4mo ago
+•
+Edited 4mo ago
+Doesn't appear to be preventable with msi based Adobe apps.
+
+Creative cloud 2022+ uses a different installer and not msi packages.
+
+
+Upvote
+5
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/bno000 avatar
+bno000
+•
+4mo ago
+Yup it’s a combination of how Windows Installer works, and Adobe’s pig headedness on how they deliver software updates. The last Reader MSI was delivered like 5 years ago. They only give you .MSP’s. They suck.
+
+
+Upvote
+5
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/Gakamor avatar
+Gakamor
+•
+4mo ago
+If it helps, I created a PowerShell script for cleaning up the Installer directory. https://github.com/gakamor/public-scripts/blob/main/Cleanup-WindowsInstallerDirectory.ps1
+
+Like PatchCleaner, I filter out Adobe products by default but you can remove that from $excludedProducts. Test thoroughly and I recommend using "Move" instead of "Delete" until you are certain removing the Adobe patches doesn't break anything.
+
+
+Upvote
+4
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/nattyicebrah avatar
+nattyicebrah
+•
+4mo ago
+I solve this by never installing Acrobat. If you absolutely must use this bloated PoS then do it in the browser. At least when you’re done with whatever PDF business you have you can just close the tab instead of hunting down the 8000 instances of auto-update and other completely unnecessary processes Adobe loves to run in the background. Installing Adobe anything is basically like going to your doctor and being like “I would like one cancer please.”
+
+
+
+Upvote
+6
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/Sillent_Screams avatar
+Sillent_Screams
+•
+4mo ago
+This is not possible in a Corporate/Government setting.
+
+
+Upvote
+7
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+bl8demast3r
+•
+4mo ago
+THIS! It's been driving me absolutely insane. Why Adobe? WHY?
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/ITjoeschmo avatar
+ITjoeschmo
+•
+4mo ago
+I would check if they support admin installation. It's supposed to cache a less hefty amount of data in the installer cache.
+
+
+Upvote
+-1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/aguynamedbrand avatar
+aguynamedbrand
+•
+4mo ago
+Systems Engineer
+This seems more helpdesk related than sysadmin related.
+
+
+Upvote
+-1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/Rough_Doughnut_5525 avatar
+Rough_Doughnut_5525
+•
+4mo ago
+I’ve had this issue constantly and have found that it has happened with an older version of Adobe. After uninstalling and installing the latest version, the issue has sometimes fixed itself. However, on other occasions I have to manually delete all those files in the installer folder (218.3mb each)
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+Gorilla-P
+•
+3mo ago
+Yeah, we had to create a script to clean these up without removing necessary .MSP files.
+
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/RemoveGlass1782 avatar
+RemoveGlass1782
+•
+3mo ago
+can you share your script? these are a troublesome matter on one computer and any help would be great.
+
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+Gorilla-P
+•
+3mo ago
+Check messages
+
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+Jtrickz
+•
+3mo ago
+Care to share with me?
+
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+Gorilla-P
+•
+3mo ago
+Sent
+
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/Nearby_Sink7122 avatar
+Nearby_Sink7122
+•
+2mo ago
+can i get it as well
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/grunzt avatar
+grunzt
+•
+2mo ago
+Would you mind sharing it, as the author didn't provide it to all requesters?
+
+u/Jtrickz u/RemoveGlass1782
+
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+Dereksversion
+•
+1mo ago
+any word on getting it?
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/sysadm145 avatar
+sysadm145
+•
+3mo ago
+Mind sending it my way?
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/grunzt avatar
+grunzt
+•
+3mo ago
+I'd also love to receive the script :-)
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/OutrageousAnteater38 avatar
+OutrageousAnteater38
+•
+3mo ago
+I would also love to get a copy of this please
+
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/Correct_Substance261 avatar
+Correct_Substance261
+•
+2mo ago
+Same, I have a 100GB windows\installer folder and would love the script as well, if possible.
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/Klownicle avatar
+Klownicle
+•
+1mo ago
+Hi, may I have the script? Please and Thank You!
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/RecentPromotion210 avatar
+RecentPromotion210
+•
+1mo ago
+Do you mind sharing for me as well? Thanks
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/fancy-caboodle avatar
+fancy-caboodle
+•
+1mo ago
+Could I also get a copy of this script? How can you determine what is a necessary .MSP through powershell? Just curious.
+
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/ABlanks avatar
+ABlanks
+•
+1mo ago
+# Delete only Adobe patches from Windows Installer
+
+$installer = New-Object -ComObject WindowsInstaller.Installer
+
+$totalRecovered = 0
+
+Get-ChildItem "C:\Windows\Installer\*.msp" | ForEach-Object {
+
+try {
+
+$db = $installer.OpenDatabase($_.FullName, 32)
+
+$view = $db.OpenView("SELECT Value FROM MsiPatchMetadata WHERE Property='ManufacturerName'")
+
+$view.Execute()
+
+$record = $view.Fetch()
+
+$manufacturer = if ($record) { $record.StringData(1) } else { "" }
+
+if ($manufacturer -like "*Adobe*") {
+
+$sizeGB = [math]::Round($_.Length/1GB, 2)
+
+$totalRecovered += $sizeGB
+
+Remove-Item $_.FullName -Force
+
+Write-Host "Deleted: $($_.Name) ($sizeGB GB)" -ForegroundColor Green
+
+}
+
+} catch {}
+
+}
+
+Write-Host ""
+
+Write-Host "Total recovered: $totalRecovered GB" -ForegroundColor Cyan
+
+
+
+Upvote
+2
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/fancy-caboodle avatar
+fancy-caboodle
+•
+1mo ago
+Thanks! I will try this!
+
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/National-Praline-822 avatar
+National-Praline-822
+•
+26d ago
+Will this not break dependancies for updates?
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/ABlanks avatar
+ABlanks
+•
+26d ago
+This one works better. The last one was locking the files, causing the deletion to fail. Also, make sure you uninstall Adobe before running this script, as it will cause problems if it's actively installed. Just reinstall once complete.
+
+# Pass 1: Identify Adobe patches
+$installer = New-Object -ComObject WindowsInstaller.Installer
+$adobeFiles = @()
+
+Get-ChildItem "C:\Windows\Installer\*.msp" | ForEach-Object {
+    try {
+        $db = $installer.OpenDatabase($_.FullName, 32)
+        $view = $db.OpenView("SELECT Value FROM MsiPatchMetadata WHERE Property='ManufacturerName'")
+        $view.Execute()
+        $record = $view.Fetch()
+        $manufacturer = if ($record) { $record.StringData(1) } else { "" }
+        
+        if ($manufacturer -like "*Adobe*") {
+            $adobeFiles += $_.FullName
+        }
+        
+        # Clean up COM references
+        if ($record) { [System.Runtime.InteropServices.Marshal]::ReleaseComObject($record) | Out-Null }
+        [System.Runtime.InteropServices.Marshal]::ReleaseComObject($view) | Out-Null
+        [System.Runtime.InteropServices.Marshal]::ReleaseComObject($db) | Out-Null
+    } catch {}
+}
+
+# Release the installer COM object entirely
+[System.Runtime.InteropServices.Marshal]::ReleaseComObject($installer) | Out-Null
+[System.GC]::Collect()
+[System.GC]::WaitForPendingFinalizers()
+
+# Pass 2: Delete
+$totalRecovered = 0
+foreach ($file in $adobeFiles) {
+    try {
+        $sizeGB = [math]::Round((Get-Item $file).Length/1GB, 2)
+        Remove-Item $file -Force -ErrorAction Stop
+        $totalRecovered += $sizeGB
+        Write-Host "Deleted: $(Split-Path $file -Leaf) ($sizeGB GB)" -ForegroundColor Green
+    } catch {
+        Write-Host "FAILED: $(Split-Path $file -Leaf) - $($_.Exception.Message)" -ForegroundColor Red
+    }
+}
+
+Write-Host "`nTotal recovered: $totalRecovered GB" -ForegroundColor Cyan
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/National-Praline-822 avatar
+National-Praline-822
+•
+25d ago
+Cheers, I've dumped Adobe, Ran this and it seems to do the trick.
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+Gorilla-P
+•
+26d ago
+Sent to those who requested.
+
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+dogcatchersito86
+•
+11h ago
+Can I get a copy as well?
+
+
+Upvote
+Vote
+Downvote
+
+Reply
+
+Award
+
+Share
+

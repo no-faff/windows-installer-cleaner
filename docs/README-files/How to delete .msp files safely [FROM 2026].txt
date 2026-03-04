@@ -1,0 +1,134 @@
+https://www.reddit.com/r/techsupport/comments/1qc4tcf/how_to_delete_msp_files_safely/
+
+Back
+r/techsupport icon
+Go to techsupport
+r/techsupport
+•
+2mo ago
+HeatherBunny1111
+
+How to delete .msp files safely?
+Open | Software
+I want to delete things that are taking a lot of space on my PC (using Windows 11).
+
+WinDirStat is showing me that I've got 30GB worth of .msp files.
+
+I know I'm not supposed to delete these files apparently as they're good for updating softwares and making them work properly or something like that? But surely, 30GB of this isn't right. I've downloaded Patchcleaner to delete the orphaned .msp files, but apparently this would only free up 250MB of space. 29GB of the files are "excluded by filters", so Patchcleaner doesn't seem to help. I've also tried the Disk Clean-up app on Windows 11 but too that barely removed anything.
+
+How do I know which .msp I can and can't delete? The names of the files are not even comprehensible, so I can't even see what apps they are for. My PC is already so full, I don't want to download anything until I've gotten rid of a bunch of things for space.
+
+Any ideas/advice?
+
+
+Upvote
+2
+
+Downvote
+
+6
+Go to comments
+
+
+Share
+Join the conversation
+Sort by:
+
+Best
+
+Search Comments
+Expand comment search
+Comments Section
+
+AutoModerator
+MOD
+•
+2mo ago
+•
+Stickied comment
+SavannahPharaoh
+•
+2mo ago
+Move them to a different folder. If you don’t have any issues after a few days, delete them.
+
+
+Upvote
+2
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/SomeEngineer999 avatar
+SomeEngineer999
+•
+2mo ago
+Profile Badge for the Achievement Top 1% Commenter Top 1% Commenter
+It depends which directory they're located in. If they're in the windows\softwaredistribution\download you can safely delete that whole directory. Same with temp folders. But many others you do not want to touch.
+
+When running disk cleanup, make sure you click the "clean up system files" option as that will find more stuff.
+
+But in reality, if you're desperate for 30 gigs, your drive is too small. Assuming it is an SSD, you want it below 90% usage all the time, and ideally below 80. If you're that short on space, this will be a constant battle and it is harming your performance.
+
+
+Upvote
+2
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+GeekOnDemand007
+•
+2mo ago
+Do you have Adobe software?
+
+Used PatchCleaner yesterday to move 52GB of Adobe files to another drive.
+
+Click the gear icon and delete the "Acrobat" entry.
+
+Checked every Adobe app and they all appear to remain functional, but going to keep them on backup drive for a little longer.
+
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+GeekOnDemand007
+•
+2mo ago
+Also if your system is stable cleanup Microsoft update history by running the following in order inside an elevated command prompt (run as admin)
+
+DISM.exe /online /Cleanup-Image /StartComponentCleanup
+Followed by:
+
+DISM.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
+This removes your ability to uninstall Windows updates, but can save many GBs of storage by not retaining old stuff.
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share

@@ -1,0 +1,279 @@
+https://www.reddit.com/r/sysadmin/comments/9rzb79/windows_patch_cleanup_alternative_to_patchcleaner/
+
+Back
+r/sysadmin icon
+Go to sysadmin
+r/sysadmin
+•
+7y ago
+WordsByCampbell
+Jack of All Trades
+
+Windows patch cleanup alternative to PATCHCLEANER
+
+Great freeware product (http://www.homedev.com.au/Free/PatchCleaner) but few updates lately and it's closed source from what i can tell. Prefer to have something with code open to inspection or a powershell solution.
+
+
+Anyone have suggestions?
+
+
+Fleet of 7k win7 machines that occasionally bloat with patches and we see a safe 15-40gb cleanup using the above tool. Just not comfortable using an unsigned/closed/abandonware program.
+
+Archived post. New comments cannot be posted and votes cannot be cast.
+
+Upvote
+34
+
+Downvote
+
+13
+Go to comments
+
+
+Share
+Sort by:
+
+Best
+Comments Section
+raynorpat
+•
+7y ago
+I wrote this to do a basic cleanup in powershell:
+
+https://github.com/raynorpat/ps_scripts/blob/master/DiskCleanup-PowerShell/DiskCleanup.ps1
+
+
+
+Upvote
+14
+
+Downvote
+
+Award
+
+Share
+
+u/segagamer avatar
+segagamer
+•
+7y ago
+IT Manager
+Profile Badge for the Achievement Top 1% Poster Top 1% Poster
+Patch Cleaner is not what DiskCleanup does and doesn't do anything that script runs. Patch Cleaner goes the extra step to delete orphaned MSI's. I would only recommend using it if your WinSXS folder is getting ridiculously massive (+20GB). I've used it a few times around the office but avoid when possible. Sticking to regular Disk Clean up for the most part is fine.
+
+NOTE: This can potentially cause problems when trying to uninstall or upgrade an application in the future. Use at your own risk.
+
+
+Upvote
+5
+
+Downvote
+
+Award
+
+Share
+
+WordsByCampbell
+OP
+•
+7y ago
+•
+Edited 2y ago
+Jack of All Trades
+automatic weary worm nine doll outgoing nippy north marvelous subtract
+
+This post was mass deleted and anonymized with Redact
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+rgsteele
+•
+7y ago
+Windows Admin
+I’ve used this utility a couple times. I seem to recall that if you look in its program folder, you’ll find a Microsoft-authored .vbs script that the program uses to perform the actual cleanup. You could probably use something like Procmon to figure out how the utility uses it and replicate that with your own frontend.
+
+
+Upvote
+5
+
+Downvote
+
+Award
+
+Share
+
+Betabotx
+•
+7y ago
+I came across this issue awhile back as well and found a .vbs that runs to identify what you don't need.
+
+https://blogs.msdn.microsoft.com/heaths/2007/02/01/how-to-safely-delete-orphaned-patches/
+
+I took this and created more scripts to get the whole process functioning. Currently 5 individual scripts but haven't had the chance to slim down to one.
+
+
+Upvote
+3
+
+Downvote
+
+Award
+
+Share
+
+Pvt-Snafu
+•
+7y ago
+Storage Admin
+>NOTE: This can potentially cause problems when trying to uninstall or upgrade an application in the future. Use at your own risk.
+
+
+That's true, unfortunately I've seen this in past.
+
+
+Upvote
+2
+
+Downvote
+
+Award
+
+Share
+
+skydiveguy
+•
+7y ago
+Sysadmin
+At my work, we were constantly having issues with disk space getting eaten up and I discovered this program.
+
+It works like a charm.
+
+I usually install it, run it, delete it because I dont trust freeware.
+
+On average, Im seeing 20-30GB of orphaned files getting removed.
+
+
+Upvote
+2
+
+Downvote
+
+Award
+
+Share
+
+u/canadian_sysadmin avatar
+canadian_sysadmin
+•
+7y ago
+IT Director
+I once worked at a place that ran a WU cleanup script and is caused a ton of problems. Nobody could ever actually explain why they started doing it. So I would wonder why you're bothering in the first place...? I get it's a space savings, but are your hard drives on these win7 machines so full that saving 30GB is actually needed?
+
+This sounds completely unnecessary.
+
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+rgomez8731
+•
+7y ago
+When is needed now, it is necessary.
+
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+u/canadian_sysadmin avatar
+canadian_sysadmin
+•
+7y ago
+IT Director
+So you have a bunch of Windows 7 machines who's hard drives are all filling up? What size of hard drives did these things have? Even 6-7 years ago a workstation was coming with at least 250GB. How is it that these machines are down to <50GB free. And so many that it's a problem that you need to fix en masse?
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+WordsByCampbell
+OP
+•
+7y ago
+•
+Edited 2y ago
+Jack of All Trades
+party offbeat thought uppity chunky plough crawl reach shocking foolish
+
+This post was mass deleted and anonymized with Redact
+
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+u/canadian_sysadmin avatar
+canadian_sysadmin
+•
+7y ago
+IT Director
+Ugh, 100GB. Yikes. Yeah, I can see this being a thing then.
+
+
+Upvote
+2
+
+Downvote
+
+Award
+
+Share
+
+siulas
+•
+7y ago
+https://www.reddit.com/r/TronScript/
+
+
+Upvote
+-1
+
+Downvote
+
+Award
+
+Share
+

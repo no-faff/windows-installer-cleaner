@@ -1,0 +1,211 @@
+https://superuser.com/questions/835026/can-i-safely-remove-msi-and-msp-files-that-are-in-c-windows-installer-but-a
+
+Can I safely remove *.msi and *.msp files that are in C:\Windows\Installer but are not the mentioned in the registry?
+Asked 11 years, 4 months ago
+Modified 8 days ago
+Viewed 205k times
+41
+
+My C:\Windows\Installer folder has grown over 10 GB. I noticed that some *.msi and *.msp files are in C:\Windows\Installer but not the mentioned in the registry (e.g. I can see a file named "104a0288.msi" in C:\Windows\Installer but searching for "104a0288.msi" in the registry editor doesn't bring any results). Can I safely remove those files?
+
+I use Windows 7 SP1 x64 Ultimate.
+
+windows-7windows-registrywindows-installer
+Share
+Improve this question
+Follow
+asked Nov 2, 2014 at 18:32
+Franck Dernoncourt's user avatar
+Franck Dernoncourt
+26.2k6969 gold badges247247 silver badges424424 bronze badges
+Add a comment
+7 Answers
+Sorted by:
+
+Highest score (default)
+27
+
+The article below shows different ways to delete unused Microsoft Installer/Patch files from the Installer folder. It is a very good and descriptive article.
+
+3 Ways to Safely Delete Unused MSI and MSP Files from Windows Installer Folder
+
+In summary, these are the 3 ways:
+
+Use MsiZap (by Microsoft) This is an old Microsoft utility. Unfortunately not supported any more but still used by people. Because it is not supported any more you use this tool at your own risk. It can be found here.
+
+Use a tool called WICleanup (by KZTechs) This is the option I used and it cleared 15Gb of data for me and I haven't had any problems since. There are a few notes I would add to the article on its use;
+
+First, I had trouble with the download link, so I found the utility downloadable here.
+
+Then, when deleting files using the UI you have to confirm each delete followed by a confirmation prompt. I.e. "Are you sure you want to delete? Yes/No?" followed by "The file has been deleted. OK". I had hundreds of files and this was not something I wanted to do for each.
+
+The zip download has a UI executable and also a command line executable. To use the command line version, make sure you open a command prompt as administrator. Then navigate to where the exe is located and execute the following command wicleanupc -s The "s" makes the deletion of the files silent and no need to confirm.
+
+Manual deletion (not recommended) The last option is largely manual but not recommended. To figure out if a file can be deleted, it should NOT exist in the registry. There may be some useful scripts available to guide you to files that can or cannot be deleted, but the actual deletion is manual and therefore prone to error or deletions by mistake.
+Share
+Improve this answer
+Follow
+edited Mar 12, 2015 at 12:19
+answered Mar 12, 2015 at 8:24
+PostureOfLearning's user avatar
+PostureOfLearning
+37133 silver badges33 bronze badges
+2
+While this link may answer the question, it is better to include the essential parts of the answer here and provide the link for reference. Link-only answers can become invalid if the linked page changes. – 
+G-Man Says 'Reinstate Monica'
+ CommentedMar 12, 2015 at 9:58
+Thanks for the comment @G-Man, I've added more detail and some personal notes from experience using one of the options. Hope it pleases :) – 
+PostureOfLearning
+ CommentedMar 12, 2015 at 12:20
+Well looks like there are plenty of answers here, I wont add another one. Practically the very safe way: support.microsoft.com/default.aspx?scid=kb;en-us;290301 - windows installer cleanup untiliy. The other way: delete .. It works, I've tested this. My /installer/ is empty without affecting anything. – 
+Overmind
+ CommentedMar 12, 2015 at 12:59
+The page mentioned by Overmind above does no longer exist. However I've used WiCleanup and it worked great on Windows 7. Thank you very much for the tip. – 
+Banzai
+ CommentedApr 20, 2016 at 10:30
+Use of WiCleanup screencast.com/t/hO6XW5F7XWIN – 
+Igor Golodnitsky
+ CommentedSep 28, 2018 at 10:03
+Show 1 more comment
+13
+
+MsiZap only discovered one orphaned msi for a whopping savings of 100 MB. After that I tried PatchCleaner and cleaned up 20 GB.
+
+PatchCleaner took about 20 minutes to parse the 30 GB of Windows Installer cache (seriously, MSFT, wtf) and then with one click was able to free up 20 GB.
+
+Bravo.
+
+Share
+Improve this answer
+Follow
+answered Aug 5, 2017 at 21:13
+GraehamF's user avatar
+GraehamF
+29933 silver badges55 bronze badges
+2
+PatchCleaner did the trick for me as well, deleting more than half. – 
+AnthonyVO
+ CommentedMar 24, 2020 at 18:30
+Add a comment
+7
+
+C:\Windows\Installer is where Windows Installer stores cached copies of the setup packages (.msi) and setup patches (.msp) used for your currently installed programs. These files are required if you want to update, modify, or uninstall a program on your computer. Do not delete them blindly.
+
+Sometimes you can end up with orphaned .msi or .msp files in this directory that do not get cleaned up appropriately. This typically happens when an installation fails. These can be removed with a tool called Msizap, but be aware it is not supported by Microsoft anymore.
+
+Msizap can only be downloaded as a part of the Windows SDK Components for Windows Installer Developers that gets installed with the Microsoft Windows SDK. Once installed, you can remove orphaned installers from C:\Windows\Installer with the following command:
+
+"%PROGRAMFILES%\Windows Installer Cleanup\msizap.exe" !g
+
+Here is the usage information for more details: http://msdn.microsoft.com/en-us/library/windows/desktop/aa370523%28v=vs.85%29.aspx
+
+I would honestly not worry about 10gb of installers sitting in there unless you are critical on hard drive space. It is more likely a sign that it's time to reinstall Windows again to get your computer running as fast as it did on the day you bought it. 10gb is pretty typical for a 2+yr old install of Windows.
+
+Share
+Improve this answer
+Follow
+edited Dec 21, 2014 at 18:12
+answered Dec 21, 2014 at 18:06
+user387876
+6
+Unfortunately, my C:\Windows\Installer takes ~32GB. Microsoft should think about keeping the Windows folder clean. I am not talking about GAC, WinSXS, and .Net installation folders. They usually grow like agent Smith in Matrix :) – 
+Aram Paronikyan
+ CommentedNov 8, 2015 at 23:16
+8
+Typical approach of the average Windows user to OS problems. Throw more hardware at them or reinstall. – 
+Avio
+ CommentedDec 30, 2015 at 21:33
+Add a comment
+6
+
+Myself, I am too cautious to actually delete even "unregistered" installer files. However, I thought I would share what I put together (based on this and similar postings) for a co-worker, who was looking to tidy up some machines.
+
+$Registered = Get-ItemPropertyValue -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Patches\* -Name LocalPackage
+$Found = Get-ChildItem "$env:WINDIR\Installer\*" -Include *.msp,*.msi -Recurse | Select-Object -ExpandProperty FullName
+
+# Show difference
+Compare-Object $Registered $Found
+
+
+$Unregistered = $Found | Where-Object {$_ -notin $Registered}
+
+# Total Bytes unregistered
+$Unregistered | Get-ChildItem | Measure-Object -Sum -Property Length
+
+# Remove unregistered installers
+$Unregistered | Remove-Item -WhatIf
+Share
+Improve this answer
+Follow
+edited Nov 11, 2022 at 3:55
+answered Nov 29, 2017 at 16:18
+Nathan Hartley's user avatar
+Nathan Hartley
+16711 silver badge66 bronze badges
+1
+Thanks, ran the first part to do a quick check to see how much would be deleted and decided it was not worth the risk. – 
+AnthonyVO
+ CommentedMar 24, 2020 at 17:58
+1
+FYI, the script, as written, has typos in the 3rd line of code. The variables referenced there are $InstallersFound and $InstallersRegistered, instead of $Found and $Registered. – 
+mmseng
+ CommentedNov 10, 2022 at 23:11 
+1
+Thanks @mmseng . Those typos have been there a long time. – 
+Nathan Hartley
+ CommentedNov 11, 2022 at 3:56 
+1
+@NathanHartley Thanks for sharing the code. I'm always hesitant to trust the 3rd party tools for this task, and this helped me make a decision when I didn't really want to commit to deleting the files. The code also makes it obvious exactly what logic is being applied to determine what "orphaned" or "unregistered" files are. That's something I never really understood before, which is another reason I've always been hesitant to muck around here. – 
+mmseng
+ CommentedNov 12, 2022 at 0:09
+Add a comment
+2
+
+If you have Adobe Reader installed, removing and reinstalling it can save a significant amount of space.
+
+I tried GraehamF's suggestion of using PatchCleaner, but it couldn't remove anything worthwhile. It did, however, find 14Gb of Adobe patches that wouldn't remove, I think because Adobe handles .msp files in a nonstandard way. Uninstalling and reinstalling Adobe Reader and freed up about 13Gb for me.
+
+Share
+Improve this answer
+Follow
+answered Feb 22 at 11:55
+David Richerby's user avatar
+David Richerby
+1,92133 gold badges1818 silver badges1616 bronze badges
+Add a comment
+-1
+
+Just run this script. The following VBS script uninstalls MSP, MSI patches marked as superseded.
+
+https://forums.mydigitallife.net/threads/presenting%E2%80%A6-startcomponentcleanup-for-msi-including-office.77708/
+
+Share
+Improve this answer
+Follow
+answered Jun 17, 2020 at 22:01
+gvp9000's user avatar
+gvp9000
+1111 gold badge11 silver badge22 bronze badges
+Add a comment
+-5
+
+You should be able to delete those files without any risc. The *.msi files are only used during installation of a program or an update. In a perfect world the installer would have cleaned them out automatically. If you can delete them, then do. - I'm pretty sure Windows will tell you, if they are still in use.
+Share
+Improve this answer
+Follow
+answered Nov 3, 2014 at 0:50
+Eman's user avatar
+Eman
+3744 bronze badges
+Thanks, aren't some of those files used for uninstalling too? – 
+Franck Dernoncourt
+ CommentedNov 3, 2014 at 1:24 
+Ok, Franck, - maybe I misunderstood some of your question. - I was only referring to the *.msi files. - You should not delete the uninstallers in the subfolders. – 
+Eman
+ CommentedNov 3, 2014 at 2:08
+Good to know, thanks, sorry I thought that some .msi files in the root folder were also used to uninstall programs. – 
+Franck Dernoncourt
+ CommentedNov 3, 2014 at 2:12 
+You are right, they could be used for uninstaling, but they are not essential and the system doesn't crash if they are missing. Most of the *.msi and *.msp files are ment for uninstalling the Windows updates, if needed ... ? – 
+Eman
+ CommentedNov 3, 2014 at 2:42

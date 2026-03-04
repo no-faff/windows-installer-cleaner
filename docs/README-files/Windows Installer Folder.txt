@@ -1,0 +1,86 @@
+https://learn.microsoft.com/en-us/answers/questions/4237106/windows-installer-folder
+
+Windows Installer Folder
+
+Anonymous
+Jul 29, 2021, 12:19 PM
+Hi
+
+In my c drive I've found that windows \ Installer is occupying the lot the storage. nearly it occupied 35 GB of Storage. how to clear that folder, please guide me
+
+Windows for home | Windows 10 | Files, folders, and storage
+
+Locked Question. This question was migrated from the Microsoft Support Community. You can vote on whether it's helpful, but you can't add comments or replies or follow the question.
+
+I have the same question 
+9
+{count} votes
+3 answers
+
+Anonymous
+Jul 29, 2021, 12:58 PM
+Hi,
+
+You can run advanced clean up by following the steps below
+
+press the windows key and search for Disk cleanup
+Right click and select open as Administrator
+Confirm C drive as clean up drive
+In option for 'Files to delete", select all the check box
+Click ok to start cleanup process
+Please sign in to rate this answer.
+
+13 people found this answer helpful.
+
+Anonymous
+Jul 29, 2021, 12:52 PM
+It is not safe to delete the Installer folder (which is why this and other 'protected' system files are hidden by default).
+
+It would be difficult for others to determine which files in that folder can be deleted safely,
+
+but 35GB is much larger than it should be. 35GB is the total size of my Windows folder atm.
+
+I believe it is generally around 12GB (mine is 12.7GB).
+
+Have you run Windows Disk Cleanup (Start menu > Windows admin tools) using the Cleanup System Files option ?
+
+This may help reduce the folder size.
+
+The reasons it is not safe to delete are explained in the article below.... https://superuser.com/questions/1392087/is-it-safe-to-delete-c-windows-installer-on-windows-10
+Please sign in to rate this answer.
+
+6 people found this answer helpful.
+
+Anonymous
+Jul 29, 2021, 12:53 PM
+Good Day Vvsatishvarma,
+
+My name is Carlo, I'm an Independent Advisor and community member like you.
+
+I am also using Windows 10 pc. Let us work together to sort this out.
+
+You can use the tool called Treesize to check what are the apps or files taking most of your storage space.
+
+Here's the link to download.
+
+https://www.jam-software.com/treesize_free
+
+Once downloaded and installed, open the app and identify what are the apps or files taking most of your storage space.
+
+Check the things you don't need, right click on it and hit "Delete" to free up space.
+
+Once done restart your computer and check.
+
+I hope the information above helps. Please let me know how it goes.
+
+Have a wonderful day ahead and stay safe.
+
+Sincerely,
+
+Carlo T.
+
+Standard Disclaimer: This is a non-Microsoft website. The page appears to be providing accurate, safe information. Watch out for ads on the site that may advertise products frequently classified as a PUP (Potentially Unwanted Products). Thoroughly research any product advertised on the site before you decide to download and install it.
+
+Please sign in to rate this answer.
+
+1 person found this answer helpful.

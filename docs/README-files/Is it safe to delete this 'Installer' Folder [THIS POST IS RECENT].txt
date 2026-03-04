@@ -1,0 +1,184 @@
+https://www.reddit.com/r/WindowsHelp/comments/1myhnaf/is_it_safe_to_delete_this_installer_folder/
+
+Back
+r/WindowsHelp icon
+Go to WindowsHelp
+r/WindowsHelp
+•
+6mo ago
+g19mm
+
+Is it safe to delete this "Installer" Folder?
+Windows 11
+r/WindowsHelp - Is it safe to delete this "Installer" Folder?
+i just wanna clear some storage space, and i wonder if its safe to delete this since idk about computers that much.
+
+Archived post. New comments cannot be posted and votes cannot be cast.
+
+Upvote
+3
+
+Downvote
+
+10
+Go to comments
+
+
+Share
+Sort by:
+
+Best
+
+Search Comments
+Expand comment search
+Comments Section
+DrDan21
+•
+6mo ago
+•
+Edited 6mo ago
+That contains copies of installed msi and msp packages
+
+If you remove them you will need to somehow reobtain them to uninstall the software and windows updates. Additionally without the corresponding msi and msp chain new msp’s will fail to install which will break some of your windows updates. You’re basically screwing yourself down the road for a small space gain
+
+Uninstalling those apps and patches will usually remove the copy in that folder on its own, though there’s cases where it will fail to do so. There are some third party tools that try to clean up those orphans, but again you’re risking issues for little benefit
+
+The official Microsoft stance is leave it the hell alone
+
+Far safer to just use the built in windows disk cleanup utility and see how far that gets you. The patch file cleanup is usually a decent chunk of space if your really struggling that much over a couple of gigs
+
+
+Upvote
+7
+
+Downvote
+
+Award
+
+Share
+
+u/TheWatchers666 avatar
+TheWatchers666
+•
+6mo ago
+Disk cleanup and Revo Uninstaller for a general clean and tidy sock drawer 😉
+
+
+Upvote
+2
+
+Downvote
+
+Award
+
+Share
+
+u/Big_Reflection_2176 avatar
+Big_Reflection_2176
+•
+6mo ago
+Do not remove files from C:\Windows\Installer. This contains cached MSIs and other package updates. In case you want to repair/uninstall an app, this will be needed and you will probably not know how to get that MSI again.
+
+
+Upvote
+2
+
+Downvote
+
+Award
+
+Share
+
+
+[deleted]
+•
+6mo ago
+u/AutoModerator avatar
+AutoModerator
+MOD
+•
+6mo ago
+Hello u/g19mm, your post body appears to have less than 250 characters, which means it likely has insufficent information and is likely to be removed by the moderators. Please either edit your submmission or add more details in a comment. The other Automoderator comment on this post has details on what kind of information we are looking for. Thank you.
+
+I am a bot, and this action was performed automatically. Please contact the moderators of this subreddit if you have any questions or concerns.
+
+
+Upvote
+0
+
+Downvote
+
+Award
+
+Share
+
+u/Awkward-Candle-4977 avatar
+Awkward-Candle-4977
+•
+6mo ago
+Use windows disk cleanup and microsoft pc manager. Much less headache
+
+
+Upvote
+0
+
+Downvote
+
+Award
+
+Share
+
+u/AutoModerator avatar
+AutoModerator
+MOD
+•
+6mo ago
+•
+Hi u/g19mm, thanks for posting to r/WindowsHelp! Your post might be listed as pending moderation, if so, try and include as much of the following as you can to improve the likelyhood of approval. Posts with insufficient details might be removed at the moderator's discretion.
+
+Model of your computer - For example: "HP Spectre X360 14-EA0023DX"
+
+Your Windows and device specifications - You can find them by going to go to Settings > "System" > "About"
+
+What troubleshooting steps you have performed - Even sharing little things you tried (like rebooting) can help us find a better solution!
+
+Any error messages you have encountered - Those long error codes are not gibberish to us!
+
+Any screenshots or logs of the issue - You can upload screenshots other useful information in your post or comment, and use Pastebin for text (such as logs). You can learn how to take screenshots here.
+
+All posts must be help/support related. If everything is working without issue, then this probably is not the subreddit for you, so you should also post on a discussion focused subreddit like r/Windows.
+
+Lastly, if someone does help and resolves your issue, please don't delete your post! Someone in the future with the same issue may stumble upon this thread, and same solution may help! Good luck!
+
+As a reminder, this is a help subreddit, all comments must be a sincere attempt to help the OP or otherwise positively contribute. This is not a subreddit for jokes and satirical advice. These comments may be removed and can result in a ban.
+
+I am a bot, and this action was performed automatically. Please contact the moderators of this subreddit if you have any questions or concerns.
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+CodenameFlux
+•
+6mo ago
+Frequently Helpful Contributor
+The answer is "No." Do not delete that folder.
+
+However, you could try HomeDev PatchCleaner, which specializes in cleaning that folder. Still, the app is very conservative. Your saving may or may not amount to much.
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+

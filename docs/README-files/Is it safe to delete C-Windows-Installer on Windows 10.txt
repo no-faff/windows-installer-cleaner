@@ -1,0 +1,107 @@
+
+
+Is it safe to delete C:\Windows\Installer on Windows 10? [duplicate]
+Asked 7 years, 1 month ago
+Modified 3 years, 6 months ago
+Viewed 135k times
+35
+
+This question already has answers here:
+Is it safe to delete from C:\Windows\Installer? (9 answers)
+Closed 7 years ago.
+Is it safe to delete C:\Windows\Installer on Windows 10?
+
+installer
+
+windows-10
+Share
+Improve this question
+Follow
+edited Jan 9, 2019 at 5:13
+Community's user avatar
+CommunityBot
+1
+asked Jan 9, 2019 at 1:05
+Christian Burgos's user avatar
+Christian Burgos
+47711 gold badge44 silver badges66 bronze badges
+7
+No; Those files should not be deleted – 
+Ramhound
+ CommentedJan 9, 2019 at 1:10
+2
+Wordings such as "is it safe" are not too good, you may want to specify what's "safe" for you. As it stands, one could very well answer "Yes, sure" as it is perfectly safe to delete this folder. Only just, uninstalling some software (if that is needed) gets a bit tedious later. Updating, surprisingly, works fine for most programs, TortoiseSVN being one notable exception (ask how I know). If "WTF, I'll just delete stuff manually" which includes deleting a few reg keys is a workable approach for you, then there's absolutely no problem. – 
+Damon
+ CommentedJan 9, 2019 at 10:07
+The folder is the same and the answer is the same. However, the best answer here is better than the accepted answer there, though they do say the same thing. – 
+music2myear
+ CommentedJan 9, 2019 at 17:59
+1
+@PimpJuiceIT, your answer is great, as usual. Obviously, I was the person who edited the canonical question tags, because when you cut through our mildly subjective interpretations it essentially is the same question, regardless of the specific OS version. In fairness, even your very high-quality answer is based upon a TechNet blog from 2012, which easily predates the existence of Windows 10. – 
+Run5k
+ CommentedJan 9, 2019 at 18:07
+1
+@PimpJuiceIT, no worries, good sir. If anything, I admire your enthusiasm and passion for doing what is best for the Super User community as a whole! Thanks for the feedback. – 
+Run5k
+ CommentedJan 9, 2019 at 18:48
+Show 1 more comment
+2 Answers
+Sorted by:
+
+Highest score (default)
+34
+
+According to Microsoft employee joscon in the Microsoft Technet post "Can you safely delete files in the %windir%\Installer directory?", it is not safe to delete C:\windows\installer or any files within it, and the post explains why as well.
+
+I've referenced and quoted the relevant portions of the post below:
+
+Can you safely delete files in the %windir%\Installer directory?
+The answer is flatly: "No".
+
+Let's talk about why this is a bad idea:
+
+First, it is not supported. If you remove files from this directory and have issues, you may need to reinstall the application to get back to a good state.
+
+This particular directory's job is to act as a cache location for Windows installer based applications. It holds stripped down versions of the Windows installer data files. During application install, update of the application or application removal, this directory is used by the application to confirm the existence of previously installed items to determine the next steps the installer needs to take.
+
+The files are different from machine to machine, so if you expect to delete the files in the directory and then copy them over from another machine, that would be incorrect. Removing items from here could cause you to have application crashes, or worse, require the re-installation and patching of the application.
+The overall idea that you really should not remove items in the Windows directory. We build and test our software based on the existence of specific files and directories. When those files and directories don't exist, bad things can and will happen. However, that is a generalization that usually upsets many people so let's be more specific.
+
+The proper way to alleviate space pressure in this directory is to uninstall any unneeded applications.
+
+source
+
+Share
+Improve this answer
+Follow
+edited Aug 27, 2022 at 7:42
+éclairevoyant's user avatar
+éclairevoyant
+48044 silver badges1313 bronze badges
+answered Jan 9, 2019 at 3:23
+Vomit IT - Chunky Mess Style's user avatar
+Vomit IT - Chunky Mess Style
+43.2k2828 gold badges102102 silver badges130130 bronze badges
+11
+More specifically, deleting these files could make it impossible to later update/uninstall some applications. Been there, done that, would not recommend. – 
+Bob
+ CommentedJan 9, 2019 at 6:58 
+1
+I know this is old, but you can safely pick and choose items to delete. For instance, I'm working on a PC right now that has a couple MSI files in that folder over 1GB. If you right click and select properties then go to the Details tab you can see what software the installer is for. In my case, the two extremely large files were for a piece of software that was no longer installed. – 
+THE JOATMON
+ CommentedApr 18, 2024 at 19:06
+Add a comment
+8
+
+The C:\Windows\Installer folder is where some but not all applications uninstall files and folders are stored.
+
+If you want to remove applications, use the Control Panel Programs and Features to uninstall them. It is also possible to run Disk Cleanup (cleanmgr.exe) in elevated mode to help free up space.
+
+Share
+Improve this answer
+Follow
+answered Jan 9, 2019 at 3:01
+qi SONG's user avatar
+qi SONG
+30211 silver badge22 bronze badges
+Add a comment

@@ -1,0 +1,246 @@
+https://www.reddit.com/r/Windows11/comments/1c8h4yh/what_can_i_delete_to_clean_out_pc/
+
+r/Windows11 icon
+Go to Windows11
+r/Windows11
+•
+2y ago
+[deleted]
+
+What can I delete to clean out PC?
+General Question
+I already erase the history and cache files. Prefetch, temp, and %temp%. Are there any others? Or anything else I can do? I use CCleaner delete whatever else I tell it too. (Never had a problem either). Just wanna have as much storage space as I can.
+
+Locked post. New comments cannot be posted.
+Archived post. New comments cannot be posted and votes cannot be cast.
+
+Upvote
+0
+
+Downvote
+
+14
+Go to comments
+
+
+Share
+Sort by:
+
+Best
+
+Search Comments
+Expand comment search
+Comments Section
+u/ItsThe50sAudrey avatar
+ItsThe50sAudrey
+•
+2y ago
+Why not use the storage cleaner within in settings ? It reveals a lot of things that could be removed.
+
+
+
+Upvote
+11
+
+Downvote
+
+Award
+
+Share
+
+
+[deleted]
+OP
+•
+2y ago
+u/AbdullahMRiad avatar
+AbdullahMRiad
+•
+2y ago
+emoji:insider: Insider Beta Channel
+Profile Badge for the Achievement Top 1% Commenter Top 1% Commenter
+Why do I always have to read it as CC cleaner?
+
+
+
+Upvote
+9
+
+Downvote
+
+Award
+
+Share
+
+ZBR02
+•
+2y ago
+I feel you bro i didnt even know it was CCleaner i always thought it was CC cleaner for like 2 years before i realized lol
+
+
+Upvote
+4
+
+Downvote
+
+Award
+
+Share
+
+gbroon
+•
+2y ago
+I stopped bothering with clearing cache and temp files etc years ago. Most of the time programs just recreate this stuff right away anyway.
+
+Prefetch afaik shouldn't generally be touched, can slow windows down and is a tiny saving anyway.
+
+Unless my drives getting full I just keep auto starting apps disabled if I don't need them and ignore these "deletable files".
+
+
+Upvote
+5
+
+Downvote
+
+Award
+
+Share
+
+cyrkie
+•
+2y ago
+If you are using Outlook disable cache mode for your account and remove ost file from %localappdata%\Microsoft\Outlook
+
+If some programs are crashing constantly go tou %localappdata%\crashdumps
+
+If you play games with a lot of mods a very big log data can be generated. Try to search for all .log files using wiztree.
+
+Wiztree is amazing for Displaying which files take up how much space.
+
+
+Upvote
+2
+
+Downvote
+
+Award
+
+Share
+
+u/catfishman avatar
+catfishman
+•
+2y ago
+CCleaner is no longer someting I would suggest anyone use. Start with that if you're looking at things you can dump from your system.
+
+
+
+Upvote
+2
+
+Downvote
+
+Award
+
+Share
+
+[deleted]
+OP
+•
+2y ago
+As I said, I have no problems with it and have been using it for years.
+
+
+Upvote
+-2
+
+Downvote
+
+Award
+
+Share
+
+[deleted]
+•
+2y ago
+You can delete anything you want to. Stuff just might not work anymore.
+
+A ton of software these days that uses online services goes hard on local caches of data to give you good performance because “storage is cheap.” This is mostly a good thing, right until you run out. If you’re not out of space, you!re not going to prove a whole lot. If you are out, sort your apps by size on the uninstaller and you may be in for a shock at how big some of your stuff actually is.
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+N0bleC
+•
+2y ago
+You can Delete C:\Windows\SoftwareDistribution , that contains downloaded Windows Updates (you might need to stop Windows Update Service for this). Also C:\Windows.old if it exists, and you are not planning to revert the latest Version Upgrade. You can also use the cleanmgr Tool (just run from CMD) which will also do cleanup those folders amongst other things.
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+jmvannoy
+•
+2y ago
+the Windows Disk Cleanup app does a good job of getting rid of old/unneeded files. I run it periodically and it will sometimes clean up multiple gigabytes.
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+[deleted]
+•
+2y ago
+I occasionally run a program called patchcleaner, it cleans orphaned files from the installer directory. Its available here... https://www.homedev.com.au/Free/PatchCleaner
+
+I also run this from a admin powershell  dism /online /cleanup-image /analyzecomponentstore
+
+If it recommends a cleanup then i type
+
+dism /online /cleanup-image /startcomponentcleanup
+
+
+Upvote
+0
+
+Downvote
+
+Award
+
+Share
+
+u/Shot_Swing9488 avatar
+Shot_Swing9488
+•
+2y ago
+I use Reg Organizer. It allows you to clear cache, temporary files, mis-linked shortcuts and more. It also allows you to uninstall the program along with all the "traces" it leaves in the system.
+
+
+Upvote
+0
+
+Downvote
+
+Award
+
+Share
+

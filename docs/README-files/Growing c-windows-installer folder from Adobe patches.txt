@@ -1,0 +1,341 @@
+https://www.reddit.com/r/SCCM/comments/1grvzfg/growing_cwindowsinstaller_folder_from_adobe/
+
+Back
+r/SCCM icon
+Go to SCCM
+r/SCCM
+•
+1y ago
+Xento88
+
+Growing c:\windows\installer folder from Adobe patches
+Hello together, Does anybody notice, that the c:\windows\installer folder is growing because of Adobe Reader patches deployed by MECM? I had one client where the patches used more than 13Gb in that folder. I removed Adobe Reader and the patches have been cleaned up. So how to shrink that folder without breaking anything? I think I will deploy an up to date application of Adobe Reader which reinstalls it completely.
+
+
+Upvote
+9
+
+Downvote
+
+16
+Go to comments
+
+
+Share
+Join the conversation
+Sort by:
+
+Best
+
+Search Comments
+Expand comment search
+Comments Section
+vawlk
+•
+1y ago
+i've been cleaning up windows installer files using the patchcleaner app. There is a portable version at the link below. I had some machines with over 30GB installer folders. The app can just delete files or move them to a different location.
+
+https://sourceforge.net/projects/patchcleaner/files/PatchCleaner_Portable/v1.4.2.0/
+
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/ziro12345 avatar
+ziro12345
+•
+10mo ago
+these apps typically break the msi database
+
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/Papierhaubitze2000 avatar
+Papierhaubitze2000
+•
+4mo ago
+Das Patch-Management von Adobe richtet hier mehr Schaden an. Für ein inkrementelles Update hat der Adobe Patcher ein und dieselbe Datei (1,16GByte!) SECHSZEHN mal heruntergeladen, immer mit anderem Dateinamen. Und nach dem Patch wurden diese nicht einmal gelöscht, d.h. es gab mehrere dieser Patch-Dateien die zigfach im Installer-Ordner landeten.
+
+Patch-Cleaner hat hier bereits unzählige Male geholfen, ohne irgendeinen Schaden anzurichten.
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+Xento88
+OP
+•
+1y ago
+Yeah I found this tool, too but it says it excludes adobe installer.
+
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+wnootwyy
+•
+1y ago
+Im experiencing this same issue now, did you ever find a solution to this?
+
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+NumptyNuggets
+•
+1y ago
+This is something I use to clear up massive installer files at work. I am still trying to find the root cause as to what Adobe is doing, with no luck.
+
+But if you're using the PatchCleaner app, you can click the cog in the bottom right, click on Adobe below the text box, and then click the X button to the right of the text box, it will remove the Adobe exemption. Hit save, and when back on the first screen, hit refresh and it will rescan all files and you will see the "excluded by filters" drop significantly.
+
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+[deleted]
+•
+1y ago
+Any issues?
+
+I'm sure the author of the program placed it there for a reason. I am experiencing similar issues with Adobe installers taking up over 30 GB of storage with the installers.
+
+Part of me just wants to nuke the program from this computer. Not sure why it's installed here in the first place considering it's a god damn server.
+
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+TheHolsh
+•
+1y ago
+The answer is to stop patching it, thus stop doing incremental updates and use the supersedence feature in SCCM to replace the install.
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+NumptyNuggets
+•
+1y ago
+We personally have not had any issues with it, but that’s not to say you won’t. I did have a couple end of life machines I tested in a month in advance, and since I cleared those files, the end users haven’t complained of any loss of functionality or anything of the sort.
+
+I think the author did place it there for a reason, but I also don’t know what the reason would be. It specifically scans for orphaned files, and I can’t think of any reason deleting an orphaned file would mess with any program’s functionality. Maybe they have it in there in the event the cleaner flags a file as orphaned when it isn’t?
+
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+[deleted]
+•
+1y ago
+Yeah, I am not sure myself either and just wondering if you had any idea. I ultimately uninstalled Adobe Reader after the software vendor advised it was not needed.
+
+I don't use Adobe Reader, I don't understand the popularity either if it is just reading. Some people use the browser, others die by Adobe Reader.
+
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/Papierhaubitze2000 avatar
+Papierhaubitze2000
+•
+4mo ago
+Der Reader ist beim Drucken um Welten besser, als alles, was Windows nativ anbietet. Die Microsoft-Implementation der Druckvorschau ist mehr als unterirdisch.
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/Xanta91 avatar
+Xanta91
+•
+8d ago
+Found this under "known issues" of the software:
+
+Adobe Reader patches are detected incorrectly as orphaned files. As of verson 1.4, PatchCleaner now has an exclusion filter that allows you to filter out the Adobe Acrobat patch files so they can be excluded from the set of orphaned files. The exclusion filters are configurable
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+rlbigfish
+•
+10mo ago
+I cleaned up 100gb of Adobe msp files using this and did, in fact, have issues afterwards. Default PDF app kept changing from Acrobat to Edge. I ended up having to uninstall and reinstall (Continuous license, not subscription).
+
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/Hot-Revolution1640 avatar
+Hot-Revolution1640
+•
+9mo ago
+patchcleaner刚刚用了，清理了很多孤立的安装文件，清理了起码5GB以上的C盘空间，acrobat目前使用下来正常（我是订阅adobe cc）
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/Worldly_Chocolate369 avatar
+Worldly_Chocolate369
+•
+4mo ago
+That's not Patch Cleaner, that problem affects our users a few times a month without PatchCleaner.
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/Worldly_Chocolate369 avatar
+Worldly_Chocolate369
+•
+4mo ago
+•
+Edited 4mo ago
+Gonna risk it all for those 20GB on this 100GB VM. Fuck Acrobat.
+
+Acrobat can always be reinstalled. Not the end of the world if it breaks.
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+

@@ -1,0 +1,56 @@
+https://www.reddit.com/r/WindowsHelp/comments/1rdiow1/cwindowsinstaller_windows_installer_patch_files/
+
+Back
+r/WindowsHelp icon
+Go to WindowsHelp
+r/WindowsHelp
+•
+8d ago
+Particular_Wish6133
+
+C:\Windows\Installer Windows Installer Patch files
+Windows 11
+A client of mine has almost 215GB of patch files in this folder (Each file is about 1.2 gigs) and it is taking up most of her hard drive space. Patch cleaner says they are not orphaned. I ran some scripts to grab the names of the apps that are referencing the files. I deleted them since the client no longer needed them (She didnt even know what they were). Patch cleaner still says they are not orphaned. Used disk cleanup and ran DISM, CHKDSK, SFC, etc. I dont want to just delete them because I know it could / will cause issues down the road. My theory is that an app update or windows update from an old MSP kept failing, retrying, and putting these files here.
+
+Anyone have any ideas?
+
+r/WindowsHelp - C:\Windows\Installer Windows Installer Patch files
+r/WindowsHelp - C:\Windows\Installer Windows Installer Patch files
+r/WindowsHelp - C:\Windows\Installer Windows Installer Patch files
+
+Upvote
+1
+
+Downvote
+
+1
+Go to comments
+
+
+Share
+Join the conversation
+Sort by:
+
+Best
+
+Search Comments
+Expand comment search
+Comments Section
+u/AutoModerator avatar
+AutoModerator
+MOD
+•
+8d ago
+•
+Hi u/Particular_Wish6133, thanks for posting to r/WindowsHelp! If your post is listed as removed it may still be pending moderation, try to include as much of the following information as possible (in text or in a screenshot) to improve the likelihood of approval:
+
+Your Windows and device specifications — You can find them by pressing Win + X then clicking on “System”
+
+Any messages and error codes encountered — They're actually not gibberish or anything catastrophic. It may even hint the solution!
+
+Previous troubleshooting steps — It might prevent you headaches from getting the same solution that didn't work
+
+As a reminder, we would also like to say that if someone manages to solve your issue, DON'T DELETE YOUR POST! Someone else (in the future) might have the same issue as you, and the received support may also help their case. Good luck, and I hope you have a nice day!
+
+I am a bot, and this action was performed automatically. Please contact the moderators of this subreddit if you have any questions or concerns.
+

@@ -1,0 +1,413 @@
+https://www.reddit.com/r/Windows10/comments/obj6u2/cwindowsinstaller_is_huge/
+
+Back
+r/Windows10 icon
+Go to Windows10
+r/Windows10
+•
+5y ago
+and69
+
+c:\Windows\Installer is huge
+Discussion
+This is mostly a rant, I am pissed because I want to update Windows, but I have no space left for it.
+I have a 256 GB SSD harddisk which I use for Windows OS. I noticed that I have less and less space available, so I made some investigation, and it turns out that c:\windows\Installer folder uses 55GB, which is 20% of my disk.
+
+Adding to this, additional 65 GB are used by my Users folder, of which 40GB are AppData, and the rest are probably useful files.
+
+Both Program Files folders use 66GB of space, which is acceptable historically speaking, and on top of it, there's the ProgramData on top using another 21GB.
+
+I don't know what Microsoft is planning with windows 11, snap grid and beautiful UI and Teams and virtual desktops are nice, but to have 100GB of an SSD used by nothing, this is unacceptable. Please fix this, or make it more transparent. Why are there 60 GB used by AppData? Which app is using what? I want to uninstall whatever app is wasting my space.
+
+Why is Windows\Installer using 55 GB? I would really want to know. I have internet, I can download everything that is needed. Is it really. really that critical, or is it lazy programming? Can we know the reasons? Feedback like "The C:\Windows\Installer folder contains Windows installer cache, it's used to store important files for applications installed using the Windows Installer technology and should not be deleted." is not giving any information, it is rude and shows a lack of empathy for the customer.
+
+-- EDIT: I ran different tools, like CCleaner, Windows Disk Cleanup and so on, they manage to remove a total of 1 GB of space, none of it from these folders.
+
+Archived post. New comments cannot be posted and votes cannot be cast.
+
+Upvote
+8
+
+Downvote
+
+29
+Go to comments
+
+
+Share
+Sort by:
+
+Best
+
+Search Comments
+Expand comment search
+Comments Section
+Demysted
+•
+5y ago
+Try running Disk Cleanup as administrator and seeing if it lets you clear out stuff like Windows Update. That might clear out the C:\Windows\Installer folder.
+
+
+
+Upvote
+8
+
+Downvote
+
+Award
+
+Share
+
+and69
+OP
+•
+5y ago
+I edited my post, they don't cleanup anything from there.
+
+
+
+Upvote
+3
+
+Downvote
+
+Award
+
+Share
+
+Demysted
+•
+5y ago
+Even in admin mode? Damn. I know that folder can grow in size over time, but I'm not sure how one would go about cleaning it out, as it is correct that the folder is used as Windows Installer cache.
+
+
+Upvote
+5
+
+Downvote
+
+Award
+
+Share
+
+u/CAZelda avatar
+CAZelda
+•
+5y ago
+That's concerning.
+
+
+Upvote
+3
+
+Downvote
+
+Award
+
+Share
+
+u/AutoModerator avatar
+AutoModerator
+MOD
+•
+5y ago
+Be sure to check out our sister subreddit r/Windows11 for more news, information, and discussions about Windows 11. At the moment we are still allowing posts about Windows 11 on this subreddit, but soon they will need to be posted on either r/Windows or r/Windows11.
+
+I am a bot, and this action was performed automatically. Please contact the moderators of this subreddit if you have any questions or concerns.
+
+
+Upvote
+2
+
+Downvote
+
+Award
+
+Share
+
+[deleted]
+•
+5y ago
+Run cleanmgr.exe and select the clean up system files option. This will take a while but it will remove the update back up files that are likely the biggest hogs on your drive. This can be run from the prompt or the start menu.
+
+
+Upvote
+2
+
+Downvote
+
+Award
+
+Share
+
+akza07
+•
+5y ago
+•
+Edited 5y ago
+Windows is a mysterious OS. It works in ways one can't comprehend is unique to each user. You need cosmic brain to figure out the relationship between what you changed and it's consequences in somewhere completely unrelated.
+
+Most of the time, Disk Clean-up and recycle bin Clean-up helps me. If that doesn't work, then I use some Disk usage analysis utilities and figure out what's taking up the space. Often it can't find whats taking the space even if it search through hidden files. Other times, I handle it by reinstalling it once it get too huge and I can't find the reason for it.
+
+I keep the C:\ drive away from my games and other important installations because you never know when something may go wrong with next update. And I'm happy that I have dual boot setup with Linux just incase something goes wrong.
+
+Edit : So I'm adding this bit of details just to flex and irritate you. 20.4 GiB in my C:\Windows (Win 10 ofc ).
+
+Now seriously thinking, I think it has to do with the Windows Store ( Assuming You're on Windows 11 ) and broken Clean-up tool that still only looks at old Windows 10 directories. And they don't really expect an average user to Install Wondows 11 as of now. It's still a developer build afterall.
+
+
+
+Upvote
+0
+
+Downvote
+
+Award
+
+Share
+
+and69
+OP
+•
+5y ago
+That's my main complain, that while most apps have acceptable behavior, but Microsoft just doesn't care and just dumps 100GB like it's nothing.
+
+I also have only OS and Programs on my C drive, everything is quite organized, but for no fault of mine, I see a lot of space wasted.
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+Reasonable-Tip-8390
+•
+5y ago
+There is one out there called patchcleaner that might help the windowsinstaller folder.
+
+The APPDATA folder contains things like your browser cache and so on, as well as I know software like PLEX can store its metadata in there I think.
+
+I would recommend using TreeSizeFree to see exactly what programs are the biggest in those folders.
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+u/Joe2030 avatar
+Joe2030
+•
+5y ago
+Why is Windows\Installer using 55 GB? I would really want to know.
+
+Idk. Go in, look for the biggest file(s) properties, then look at Details tab and read some info here. This way you can identify what was the source of this file.
+
+You can even delete them or move to HDD, these files are usually only needed for uninstalling or reinstalling programs and drivers.
+
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+and69
+OP
+•
+5y ago
+in my original post there's a quote from Microsoft stating that this folder contains important files that should not be deleted.
+
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+u/Joe2030 avatar
+Joe2030
+•
+5y ago
+Well it is up to you, especially if you are not an experienced user. You wont broke your Windows with these files because they lie dormant until you need them (to reinstall something).
+
+I just told you how to identify problem files and get your space back. Cya!
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+Dovias
+•
+5y ago
+Type "cleanup" into Settings, you can get windows to remove some of that stuff.
+
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+and69
+OP
+•
+5y ago
+Cleanup only does minimal cleanup, like 1 GB of the 100
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+u/ZeSchnail avatar
+ZeSchnail
+•
+5y ago
+When I have no luck with Windows Disk Cleanup I often use TreeSize from Jam Software to quickly scan all C: Drive folders, and highlight which are taking up the most space. It's often hidden Temp folders or broken Windows Updates downloaded, games like Minecraft, historical iPhone backups or old Outlook PST files.
+
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+and69
+OP
+•
+5y ago
+That's exactly what I did. I ended up with a small number of folders which consume a lot of space, BUT the documentation states these should not be deleted.
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+elvisesau
+•
+5y ago
+When you go into disk cleanup and then into windows files, it doesnt show you previous versions you could delete? I managed to delete 4gb worth of old updates.
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+dustojnikhummer
+•
+5y ago
+I don't even have a Windows/Installer folder
+
+Why are there 60 GB used by AppData?
+
+Maybe look for yourself before asking?
+
+https://diskanalyzer.com/
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+[deleted]
+•
+5y ago
+Comment removed by moderator
+
+
+
+Upvote
+0
+
+Downvote
+
+Share
+
+u/Root4789 avatar
+Root4789
+•
+5y ago
+its a hidden folder you would need to go into folder options and check show hidden folders
+
+
+
+Upvote
+2
+
+Downvote
+
+Award
+
+Share
+
+
+[deleted]
+•
+5y ago
+u/Joe2030 avatar
+Joe2030
+•
+5y ago
+This is a hidden system folder.
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+

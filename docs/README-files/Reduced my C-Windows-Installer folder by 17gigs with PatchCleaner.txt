@@ -1,0 +1,337 @@
+https://www.reddit.com/r/Windows10/comments/67e2c7/reduced_my_cwindowsinstaller_folder_by_17gigs/
+
+Back
+r/Windows10 icon
+Go to Windows10
+r/Windows10
+•
+9y ago
+Sunny2456
+
+Reduced my C:\Windows\Installer folder by 17gigs with PatchCleaner.
+Tip
+The tool has been out for a long time but after watching my Windows installation grow to 49 GB on my 240 GB SSD, I starting looking around in WinDirStat for which folders take up the most space. I found the Installer folder filled with tmp installer folders from months ago.
+
+After letting PatchCleaner analyze Windows and setting the backup location to another hard drive, the folder went from taking up 29gigs to 12gigs. The computer is running fine with no issues.
+
+Here's the link to the program, hope it finds you the same success =) http://www.homedev.com.au/Free/PatchCleaner
+
+Archived post. New comments cannot be posted and votes cannot be cast.
+
+Upvote
+6
+
+Downvote
+
+18
+Go to comments
+
+
+Share
+Sort by:
+
+Best
+Comments Section
+[deleted]
+•
+9y ago
+Sounds good but I'm scared to mess with things I don't understand.
+
+
+
+Upvote
+7
+
+Downvote
+
+Award
+
+Share
+
+[deleted]
+•
+9y ago
+Make an image backup first. It is a good tool - it is not dangerous like CCleaner.
+
+
+
+Upvote
+2
+
+Downvote
+
+Award
+
+Share
+
+[deleted]
+•
+9y ago
+What worries me is breaking something so that everything seems to work until much later something mysteriously fails and I don't know why. A few gigs is not a big sacrifice for me for not wasting hours later on mysterious Windows problems.
+
+
+
+Upvote
+3
+
+Downvote
+
+Award
+
+Share
+
+[deleted]
+•
+9y ago
+All patchcleaner does is remove old installation files. It gives you the option to make backup of those files but I never bother personally.
+
+As I said make a full system image backup and you can safely try it.
+
+
+
+Upvote
+5
+
+Downvote
+
+Award
+
+Share
+
+[deleted]
+•
+9y ago
+I could imagine inability to uninstall some program or inability to install some update happening in the future.
+
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+[deleted]
+•
+9y ago
+It only removes redundant files. However, if you do not wish to risk it, I would not presume to criticise your caution.
+
+
+Upvote
+4
+
+Downvote
+
+Award
+
+Share
+
+SurfaceDockGuy
+•
+9y ago
+•
+Edited 9y ago
+Yeah that tool is great. Cleans so much more than disk cleanup in admin mode. More tips in my post here: https://www.reddit.com/r/Surface/comments/5h0zpe/save_up_to_9gb_on_ssd_clean_up_cwindowsinstaller/
+
+Hint: Try the sxs clean next.
+
+Don't expect the tool to find much if you've recently installed creators update - this tool is most useful after many hotfixes/monthly updates have been applied to an OS install.
+
+
+Upvote
+2
+
+Downvote
+
+Award
+
+Share
+
+puppy2016
+•
+9y ago
+Your installations are broken by this. Any diff update will crash.
+
+
+
+Upvote
+4
+
+Downvote
+
+Award
+
+Share
+
+SurfaceDockGuy
+•
+9y ago
+Perhaps y'all are mistaking how the tool works. It doesn't blindly delete everything in the \installer folder but instead analyses which patches have superseded others and only deletes the ones that are no longer needed. Read the FAQ on the tool's website for more info.
+
+If you patch ntos 7 times over the course of the year, why keep all 7 msi files? No future update will diff against 5 versions back. My understanding was that after fiascos in WinXP gold, WU doesn't make assumptions like that any more.
+
+
+
+Upvote
+4
+
+Downvote
+
+Award
+
+Share
+
+puppy2016
+•
+9y ago
+This is what Disk cleanup (System) do without any other damage.
+
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+SurfaceDockGuy
+•
+9y ago
+•
+Edited 9y ago
+The system option in disk cleanup does not remove all the superseded msi in \installer nor does it consistently remove superseded bits from \winsxs - hence the purpose of these threads.
+
+The whole point is that these tools compliment the built-in disk cleaner tool. Its always great to see 3rd-party tools and plugins that build upon the MS offering - proof that Windows ain't dead yet :)
+
+
+Upvote
+5
+
+Downvote
+
+Award
+
+Share
+
+ffiresnake
+•
+9y ago
+the windows installer is fundamentally broken, too.
+
+why do linux apps update or uninstall just fine without taking huge space in /var/cache/apt or /var/lib/dpkg?
+
+(just ranting, I know you will break the installer if you clean as op described)
+
+
+
+Upvote
+2
+
+Downvote
+
+Award
+
+Share
+
+u/Froggypwns avatar
+Froggypwns
+•
+9y ago
+emoji:insider: Windows Insider MVP / Moderator
+That is one of the things that Microsoft fixed with the UWP/Store apps. One click install/uninstall, no garbage left behind.
+
+
+Upvote
+2
+
+Downvote
+
+Award
+
+Share
+
+puppy2016
+•
+9y ago
+Windows Installer is fine and has full transaction support in contrast of EXE setup-style unreliable installers. It gets broken by crap tools like that PatchCleaner only.
+
+
+
+Upvote
+3
+
+Downvote
+
+Award
+
+Share
+
+ffiresnake
+•
+9y ago
+oh is fine, but with the side effect of placing 20gb of useless data
+
+
+
+Upvote
+2
+
+Downvote
+
+Award
+
+Share
+
+puppy2016
+•
+9y ago
+I don't have such issues while have huge installations like Visual Studio.
+
+
+Upvote
+2
+
+Downvote
+
+Award
+
+Share
+
+[deleted]
+•
+9y ago
+Cleaned up a grand total of 2MB
+
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+
+u/Adam302 avatar
+Adam302
+•
+9y ago
+offered to clean a 5MB msi, i'll pass. I use disk cleanup in system mode.
+
+
+Upvote
+1
+
+Downvote
+
+Award
+
+Share
+

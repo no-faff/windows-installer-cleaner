@@ -1,0 +1,28 @@
+Your job is to decide how many examples we can use, and how we do so - quote/screenshot provided by the reddit poster/screesnhot of the reddit or MS post/or a combination of them
+
+I haven't read anythung here (usually) apart from the OP, but I want you to read it all.
+
+I think we want to particularly focus on authorative-sounding people giving confident wrong (at least, you claim it's wrong, claude) to never touch the Installer folder and that Disk Cleanuop is all you need and any others that you can find.
+
+YOU've got to get at least a draft README down on paper before the conversation compacts, beacsue I think you've learnt things that you won't have the same feeling for in a new conversation.
+
+---
+Random note from me:
+
+One of the reddit repliers said: "I stopped bothering with clearing cache and temp files etc years ago. Most of the time programs just recreate this stuff right away anyway." But we could answer that and say "happily our won't get put back"
+
+=========================================================================
+And I just want to emphasise this. This is one of the reddit post titles:
+
+**"What can I delete to clean out PC?"**
+
+Now, claude, we have been focusing on people who want to clean this folder - but I honestly can't think of a better place to start if you need to recover space on your windows machine that with this folder (and therefore InstallerClean).
+
+I mean where else are you going to find GB of files that can just be blitzed/vapourised/destroyed/wiped/killed/banished with impunity.
+
+So I think we should make that a big part of it. IT's kind of aimed at two people: laypeople who just want more space and don't even know the Installer folder exists (was me!) and then techy people or just more knowledgable people or anyway people who are curious about the Installer folder and want a definitive answer on whether it's safe to delete anything in there.
+
+aND i MEAN, NOW THAT i KNOW About PatchCleaner and obviouslt InstallerClean, if I wanted to free up space, I would do this before even bothering to look at treesize free, wiztree, space sniffer, and/or windirsat
+
+---
+And basically, there's a lot of infor I've given you. Clearly we're not going to use it all - but you nevere know I might have a whole page of exaples on my netlify site later or even split thiongs into different parts, so i'M HOPING you can make a sort of curated collection. don't know what I'm takling abiotg reaklly, there;s jyust a lot here that I don't want to go to wwaste after you've cherry picked what you wan t to use.
