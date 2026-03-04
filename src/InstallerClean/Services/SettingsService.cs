@@ -36,7 +36,7 @@ public sealed class SettingsService : ISettingsService
             var json = File.ReadAllText(_settingsFile);
             return JsonSerializer.Deserialize<AppSettings>(json, JsonOptions) ?? new AppSettings();
         }
-        catch
+        catch (Exception)
         {
             return new AppSettings();
         }

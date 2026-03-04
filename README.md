@@ -1,8 +1,8 @@
 [![Licence: MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](LICENSE)
 [![.NET 8](https://img.shields.io/badge/.NET-8.0-purple.svg)](https://dotnet.microsoft.com/download/dotnet/8.0)
-[![Windows 10/11](https://img.shields.io/badge/Windows-10%20%7C%2011-0078D4.svg)](https://github.com/no-faff/windows-installer-cleaner/releases)
+[![Windows 10/11](https://img.shields.io/badge/Windows-10%20%7C%2011-0078D4.svg)](https://github.com/no-faff/InstallerClean/releases)
 [![VirusTotal](https://img.shields.io/badge/VirusTotal-1%2F70-brightgreen.svg)](https://www.virustotal.com/gui/file/c21b9777a5f13d12a08002cfa4e00dc7122ffb4c7ef8ba3b5dc4af46277cb68d)
-<!-- [![GitHub Release](https://img.shields.io/github/v/release/no-faff/windows-installer-cleaner)](https://github.com/no-faff/windows-installer-cleaner/releases/latest) -->
+<!-- [![GitHub Release](https://img.shields.io/github/v/release/no-faff/InstallerClean)](https://github.com/no-faff/InstallerClean/releases/latest) -->
 
 # InstallerClean
 

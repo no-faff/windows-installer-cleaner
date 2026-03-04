@@ -44,10 +44,6 @@
                         HorizontalAlignment="Left" Width="0"
                         Background="#4f46e5"/>
             </Border>
-            <!-- Hidden ProgressBar for code-behind compatibility -->
-            <ProgressBar x:Name="SplashProgress" Visibility="Collapsed"
-                         Minimum="0" Maximum="100" Value="0"/>
-
             <!-- Step text -->
             <TextBlock Grid.Row="7"
                        x:Name="StepText"

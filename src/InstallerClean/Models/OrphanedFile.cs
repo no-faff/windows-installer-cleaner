@@ -23,6 +23,4 @@ public record OrphanedFile(
     /// <summary>Human-readable file size (e.g. "14.2 MB").</summary>
     public string SizeDisplay => DisplayHelpers.FormatSize(SizeBytes);
 
-    /// <summary>File type label: ".msp" for patches, ".msi" for installer packages.</summary>
-    public string TypeLabel => IsPatch ? ".msp" : ".msi";
 }

@@ -73,7 +73,6 @@ public partial class App : Application
             splash = new SplashWindow();
             splash.Show();
 
-            // Step 1: construct services
             splash.UpdateStep("Step 1/5: Initialising...", 10);
 
             var settingsService = new SettingsService();
@@ -88,12 +87,10 @@ public partial class App : Application
                 scanService, moveService, deleteService,
                 settingsService, rebootService, msiInfoService);
 
-            // Step 2: the actual scan (this is where the time is spent)
             splash.UpdateStep("Step 2/5: Scanning installed products...", 20);
             var scanTask = viewModel.ScanWithProgressAsync(null);
             await Task.WhenAll(scanTask, Task.Delay(400));
 
-            // Steps 3–5: post-scan, blaze through visibly
             splash.UpdateStep("Step 3/5: Enumerating patches...", 50);
             await Task.Delay(400);
 

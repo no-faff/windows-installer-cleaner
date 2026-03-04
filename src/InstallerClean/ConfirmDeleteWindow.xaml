@@ -28,7 +28,7 @@
                            TextWrapping="Wrap" VerticalAlignment="Center"/>
             </StackPanel>
 
-            <TextBlock x:Name="RecycleBinNote"
+            <TextBlock
                        Text="Files will be sent to the Recycle Bin. Use Move instead if you'd like to keep backup copies."
                        Foreground="#94a3b8" FontSize="12" TextWrapping="Wrap"
                        Margin="0,0,0,20"/>
@@ -40,7 +40,7 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Style="{StaticResource PrimaryPill}" Content="Cancel"
                         Click="OnCancel" Margin="0,0,8,0"/>
-                <Button x:Name="DeleteButton" Content="Delete" Click="OnDelete"
+                <Button Content="Delete" Click="OnDelete"
                         Foreground="#f8fafc" FontSize="14" FontWeight="Medium"
                         Padding="28,8" Height="40" MinWidth="120" Cursor="Hand">
                     <Button.Template>

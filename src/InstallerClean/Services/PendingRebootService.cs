@@ -22,7 +22,7 @@ public sealed class PendingRebootService : IPendingRebootService
 
             return false;
         }
-        catch
+        catch (Exception)
         {
             return false; // fail open — don't block the user
         }

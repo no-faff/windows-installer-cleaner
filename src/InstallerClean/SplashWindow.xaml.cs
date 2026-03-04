@@ -15,7 +15,6 @@ public partial class SplashWindow : Window
     public void UpdateStep(string message, double progressPercent)
     {
         StepText.Text = message;
-        SplashProgress.Value = progressPercent;
 
         // Animate the custom gradient progress bar
         var container = SplashProgressBorder.Parent as FrameworkElement;

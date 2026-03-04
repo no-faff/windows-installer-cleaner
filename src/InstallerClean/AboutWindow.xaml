@@ -22,39 +22,39 @@
     </Window.Resources>
 
     <Grid Margin="24">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="6"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="4"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="4"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="6"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="4"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="4"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Text="InstallerClean"
-                       Foreground="#f8fafc" FontSize="20" FontWeight="SemiBold" TextWrapping="Wrap"/>
-            <TextBlock Grid.Row="2" x:Name="VersionText"
-                       Foreground="#cbd5e1" FontSize="12"/>
-            <TextBlock Grid.Row="4" Foreground="#94a3b8" FontSize="12">
-                <Hyperlink NavigateUri="https://github.com/no-faff/windows-installer-cleaner/blob/main/LICENSE"
-                           Click="Hyperlink_Click"
-                           Style="{StaticResource SubtleLink}">MIT licence</Hyperlink>
-            </TextBlock>
-            <TextBlock Grid.Row="6" Foreground="#94a3b8" FontSize="12">
-                <Hyperlink NavigateUri="https://github.com/no-faff"
-                           Click="Hyperlink_Click"
-                           Style="{StaticResource SubtleLink}">github.com/no-faff</Hyperlink>
-            </TextBlock>
-            <Button Grid.Row="8" Style="{StaticResource PrimaryPill}"
-                    Content="Close" IsCancel="True" HorizontalAlignment="Right"/>
-            <TextBlock Grid.Row="8" HorizontalAlignment="Left"
-                       VerticalAlignment="Center" Foreground="#94a3b8" FontSize="12">
-                <Hyperlink NavigateUri="https://github.com/no-faff/windows-installer-cleaner/discussions"
-                           Click="Hyperlink_Click"
-                           Style="{StaticResource SubtleLink}">Send feedback</Hyperlink>
-            </TextBlock>
+        <TextBlock Grid.Row="0" Text="InstallerClean"
+                   Foreground="#f8fafc" FontSize="20" FontWeight="SemiBold" TextWrapping="Wrap"/>
+        <TextBlock Grid.Row="2" x:Name="VersionText"
+                   Foreground="#cbd5e1" FontSize="12"/>
+        <TextBlock Grid.Row="4" Foreground="#94a3b8" FontSize="12">
+            <Hyperlink NavigateUri="https://github.com/no-faff/windows-installer-cleaner/blob/main/LICENSE"
+                       Click="Hyperlink_Click"
+                       Style="{StaticResource SubtleLink}">MIT licence</Hyperlink>
+        </TextBlock>
+        <TextBlock Grid.Row="6" Foreground="#94a3b8" FontSize="12">
+            <Hyperlink NavigateUri="https://github.com/no-faff"
+                       Click="Hyperlink_Click"
+                       Style="{StaticResource SubtleLink}">github.com/no-faff</Hyperlink>
+        </TextBlock>
+        <Button Grid.Row="8" Style="{StaticResource PrimaryPill}"
+                Content="Close" IsCancel="True" HorizontalAlignment="Right"/>
+        <TextBlock Grid.Row="8" HorizontalAlignment="Left"
+                   VerticalAlignment="Center" Foreground="#94a3b8" FontSize="12">
+            <Hyperlink NavigateUri="https://github.com/no-faff/windows-installer-cleaner/discussions"
+                       Click="Hyperlink_Click"
+                       Style="{StaticResource SubtleLink}">Send feedback</Hyperlink>
+        </TextBlock>
     </Grid>
 </Window>

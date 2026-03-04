@@ -451,7 +451,7 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private void StarOnGitHub()
     {
-        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+        Process.Start(new ProcessStartInfo
         {
             FileName = "https://github.com/no-faff/windows-installer-cleaner",
             UseShellExecute = true
@@ -461,7 +461,7 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private void Donate()
     {
-        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+        Process.Start(new ProcessStartInfo
         {
             FileName = "https://ko-fi.com/nofaff",
             UseShellExecute = true
