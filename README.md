@@ -80,8 +80,8 @@ Yes. We query the same database Windows itself uses to track what's installed. I
 
 ## Getting started
 
-1. Download the latest release from the [releases page](../../releases/latest)
-2. Run the exe. Windows will prompt for administrator access
+1. Download **InstallerClean.exe** from the [releases page](../../releases/latest)
+2. Run it. Windows will prompt for administrator access
 3. The app scans automatically on startup
 4. Review the results, then click **Delete** or **Move**
 
@@ -152,6 +152,7 @@ We never call `Win32_Product`. That WMI class triggers MSI consistency checks on
 - Windows 10 or 11
 - Administrator privileges (to access `C:\Windows\Installer`)
 - Self-contained — everything is bundled into one file, no .NET runtime install needed. The download is around 160 MB because it includes the runtime. There's nothing to install: just download and run (and delete it when you're done, if you like)
+- Already have .NET 8 Desktop Runtime? Grab **InstallerClean-framework-dependent.exe** (8 MB) from the releases page instead
 
 ## Building from source
 
