@@ -8,7 +8,7 @@
 
 **Safely clean up `C:\Windows\Installer`, the hidden Windows folder that quietly eats your disk space.**
 
-![Screenshot of InstallerClean](docs/screenshot.png)
+![Screenshot of InstallerClean](docs/InstallerClean-done.png)
 
 - **What:** Finds and removes unneeded files from `C:\Windows\Installer`, the hidden folder Windows never cleans up.
 - **How much space:** Depends on your software. People report 20-50 GB; with Adobe Acrobat it can pass 100 GB.
