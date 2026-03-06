@@ -78,7 +78,8 @@
                             <Border x:Name="Bg" Background="#4f46e5" CornerRadius="20"
                                     Padding="{TemplateBinding Padding}"
                                     Height="{TemplateBinding Height}">
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                  RecognizesAccessKey="True"/>
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
@@ -111,7 +112,8 @@
                             <Border x:Name="Bg" Background="#334155" CornerRadius="20"
                                     Padding="{TemplateBinding Padding}"
                                     Height="{TemplateBinding Height}">
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                  RecognizesAccessKey="True"/>
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
@@ -144,7 +146,8 @@
                             <Border x:Name="Bg" Background="Transparent" CornerRadius="20"
                                     Padding="{TemplateBinding Padding}"
                                     Height="{TemplateBinding Height}">
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                  RecognizesAccessKey="True"/>
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
