@@ -54,8 +54,8 @@
 
         <TextBlock Grid.Row="1" Text="InstallerClean"
                    Foreground="#f8fafc" FontSize="20" FontWeight="SemiBold" TextWrapping="Wrap"/>
-        <TextBlock Grid.Row="3" x:Name="VersionText"
-                   Foreground="#cbd5e1" FontSize="12"/>
+        <TextBox Grid.Row="3" x:Name="VersionText"
+                 Style="{StaticResource SelectableText}" Foreground="#cbd5e1" FontSize="12"/>
         <TextBlock Grid.Row="5" Foreground="#94a3b8" FontSize="12">
             <Hyperlink NavigateUri="https://github.com/no-faff/InstallerClean/blob/main/LICENSE"
                        Click="Hyperlink_Click"

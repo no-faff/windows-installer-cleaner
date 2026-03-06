@@ -287,12 +287,9 @@
                                TextWrapping="Wrap" Margin="0,0,0,24"/>
 
                     <!-- Error details (only visible when there are errors) -->
-                    <TextBlock Text="{Binding CompletionErrors}"
-                               Foreground="#f59e0b" FontSize="11"
-                               TextWrapping="Wrap" Margin="0,0,0,24"
-                               MaxHeight="80">
-                        <TextBlock.Style>
-                            <Style TargetType="TextBlock">
+                    <Border Margin="0,0,0,24" MaxHeight="80">
+                        <Border.Style>
+                            <Style TargetType="Border">
                                 <Setter Property="Visibility" Value="Visible"/>
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding CompletionErrors}" Value="">
@@ -300,8 +297,12 @@
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
+                        </Border.Style>
+                        <TextBox Text="{Binding CompletionErrors, Mode=OneWay}"
+                                 Style="{StaticResource SelectableText}"
+                                 Foreground="#f59e0b" FontSize="11"
+                                 TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+                    </Border>
 
                     <!-- Close button -->
                     <Button x:Name="CompletionCloseButton" Style="{StaticResource AccentPill}"

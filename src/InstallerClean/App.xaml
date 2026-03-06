@@ -18,6 +18,23 @@
                 <Setter Property="FontFamily" Value="{StaticResource Poppins}"/>
             </Style>
 
+            <!-- Read-only TextBox that looks like a TextBlock but is selectable -->
+            <Style x:Key="SelectableText" TargetType="TextBox">
+                <Setter Property="IsReadOnly" Value="True"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="FontFamily" Value="{StaticResource Poppins}"/>
+                <Setter Property="IsTabStop" Value="False"/>
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu>
+                            <MenuItem Header="Copy" Command="ApplicationCommands.Copy"/>
+                        </ContextMenu>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
             <!-- Upscayl palette (from tailwind.config.js daisyui theme) -->
             <SolidColorBrush x:Key="Base300" Color="#020617"/>   <!-- deepest background -->
             <SolidColorBrush x:Key="Base200" Color="#0f172a"/>   <!-- card / elevated surface -->

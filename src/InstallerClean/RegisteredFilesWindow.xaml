@@ -191,17 +191,17 @@
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Author" Foreground="#64748b" FontSize="11"/>
-                                <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding SelectedDetails.Author}" Foreground="#f8fafc" FontSize="12" TextWrapping="Wrap"/>
+                                <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding SelectedDetails.Author, Mode=OneWay}" Style="{StaticResource SelectableText}" Foreground="#f8fafc" FontSize="12" TextWrapping="Wrap"/>
                                 <TextBlock Grid.Row="2" Grid.Column="0" Text="Title" Foreground="#64748b" FontSize="11"/>
-                                <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding SelectedDetails.Title}" Foreground="#f8fafc" FontSize="12" TextWrapping="Wrap"/>
+                                <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding SelectedDetails.Title, Mode=OneWay}" Style="{StaticResource SelectableText}" Foreground="#f8fafc" FontSize="12" TextWrapping="Wrap"/>
                                 <TextBlock Grid.Row="4" Grid.Column="0" Text="Subject" Foreground="#64748b" FontSize="11"/>
-                                <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding SelectedDetails.Subject}" Foreground="#f8fafc" FontSize="12" TextWrapping="Wrap"/>
+                                <TextBox Grid.Row="4" Grid.Column="2" Text="{Binding SelectedDetails.Subject, Mode=OneWay}" Style="{StaticResource SelectableText}" Foreground="#f8fafc" FontSize="12" TextWrapping="Wrap"/>
                                 <TextBlock Grid.Row="6" Grid.Column="0" Text="Digital signature" Foreground="#64748b" FontSize="11"/>
-                                <TextBlock Grid.Row="6" Grid.Column="2" Text="{Binding SelectedDetails.DigitalSignature, Converter={StaticResource CommaToNewline}}" Foreground="#f8fafc" FontSize="12" TextWrapping="Wrap"/>
+                                <TextBox Grid.Row="6" Grid.Column="2" Text="{Binding SelectedDetails.DigitalSignature, Converter={StaticResource CommaToNewline}, Mode=OneWay}" Style="{StaticResource SelectableText}" Foreground="#f8fafc" FontSize="12" TextWrapping="Wrap"/>
                                 <TextBlock Grid.Row="8" Grid.Column="0" Text="File size" Foreground="#64748b" FontSize="11"/>
-                                <TextBlock Grid.Row="8" Grid.Column="2" Text="{Binding SelectedProduct.SizeDisplay}" Foreground="#f8fafc" FontSize="12"/>
+                                <TextBox Grid.Row="8" Grid.Column="2" Text="{Binding SelectedProduct.SizeDisplay, Mode=OneWay}" Style="{StaticResource SelectableText}" Foreground="#f8fafc" FontSize="12"/>
                                 <TextBlock Grid.Row="10" Grid.Column="0" Text="Comment" Foreground="#64748b" FontSize="11"/>
-                                <TextBlock Grid.Row="10" Grid.Column="2" Text="{Binding SelectedDetails.Comments}" Foreground="#f8fafc" FontSize="12" TextWrapping="Wrap"/>
+                                <TextBox Grid.Row="10" Grid.Column="2" Text="{Binding SelectedDetails.Comments, Mode=OneWay}" Style="{StaticResource SelectableText}" Foreground="#f8fafc" FontSize="12" TextWrapping="Wrap"/>
                             </Grid>
                         </ScrollViewer>
                     </Grid>
