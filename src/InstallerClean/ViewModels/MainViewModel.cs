@@ -147,6 +147,7 @@ public partial class MainViewModel : ObservableObject
 
             sw.Stop();
             ScanProgress = $"Scan complete ({sw.Elapsed.TotalSeconds:F1}s)";
+            OperationProgress = ScanProgress;
 
             // Show "all clear" when no orphaned files and not mid-operation
             if (OrphanedFileCount == 0 && !IsOperating)
