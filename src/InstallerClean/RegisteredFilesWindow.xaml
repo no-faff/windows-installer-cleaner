@@ -45,6 +45,7 @@
 
         <Border Grid.Row="3" Style="{StaticResource CardNoPad}" ClipToBounds="True">
             <ListView x:Name="ProductsList" ItemsSource="{Binding Products}"
+                      GridViewColumnHeader.Click="ColumnHeader_Click"
                       SelectedItem="{Binding SelectedProduct, Mode=TwoWay}"
                       BorderThickness="0" Background="Transparent"
                       Padding="0" Margin="0,-1,0,-6"
