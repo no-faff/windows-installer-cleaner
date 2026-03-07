@@ -32,7 +32,7 @@ ClickFinish=Click Finish to close setup.
 Source: "..\publish\self-contained\InstallerClean.exe"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
-Name: "{group}\InstallerClean"; Filename: "{app}\InstallerClean.exe"
+Name: "{group}\InstallerClean"; Filename: "{app}\InstallerClean.exe"; IconFilename: "{app}\InstallerClean.exe"
 Name: "{group}\Uninstall InstallerClean"; Filename: "{uninstallexe}"
 
 [Run]
