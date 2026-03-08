@@ -87,13 +87,7 @@ public partial class App : Application
                 scanService, moveService, deleteService,
                 settingsService, rebootService, msiInfoService);
 
-            int messageCount = 0;
-            var splashProgress = new Progress<string>(msg =>
-            {
-                messageCount++;
-                var percent = 10 + 80.0 * messageCount / (messageCount + 15);
-                splash.UpdateStep(msg, percent);
-            });
+            var splashProgress = new Progress<string>(splash.OnScanProgress);
             var scanTask = viewModel.ScanWithProgressAsync(splashProgress);
             await Task.WhenAll(scanTask, Task.Delay(800));
             splash.UpdateStep("Done", 100);

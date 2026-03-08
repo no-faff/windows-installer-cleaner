@@ -6,21 +6,28 @@ namespace InstallerClean;
 
 public partial class SplashWindow : Window
 {
+    private int _progressMessageCount;
+
     public SplashWindow()
     {
         InitializeComponent();
         VersionText.Text = DisplayHelpers.GetVersionString();
     }
 
+    public void OnScanProgress(string message)
+    {
+        _progressMessageCount++;
+        var percent = 10 + 80.0 * _progressMessageCount / (_progressMessageCount + 15);
+        UpdateStep(message, percent);
+    }
+
     public void UpdateStep(string message, double progressPercent)
     {
         StepText.Text = message;
 
-        // Animate the custom gradient progress bar
         var container = SplashProgressBorder.Parent as FrameworkElement;
         if (container == null) return;
 
-        // Need to wait for layout if container hasn't been measured yet
         container.UpdateLayout();
         var targetWidth = container.ActualWidth * (progressPercent / 100.0);
 
