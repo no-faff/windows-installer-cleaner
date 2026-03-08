@@ -74,9 +74,7 @@ Yes. We query the same database Windows itself uses to track what's installed. I
 - **Move** copies files to a location you choose first, if you'd rather be cautious
 - Nothing is touched until you click Delete or Move and confirm
 - The app warns you if Windows has pending updates that could affect results
-- Every line of code is on GitHub. Read it, build it, audit it
-
-- [VirusTotal scan](https://www.virustotal.com/gui/file/60b78cc2ee1273e8a617212558c511b7d1b285650035e29c0cb483a413b2e658): 0/70 detections.
+- [VirusTotal scan](https://www.virustotal.com/gui/file/60b78cc2ee1273e8a617212558c511b7d1b285650035e29c0cb483a413b2e658): 0/70 detections. Source code is all on GitHub
 
 ## Getting started
 
