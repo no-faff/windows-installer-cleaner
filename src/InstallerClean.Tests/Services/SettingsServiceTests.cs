@@ -26,7 +26,6 @@ public class SettingsServiceTests : IDisposable
         var settings = svc.Load();
 
         Assert.Equal(string.Empty, settings.MoveDestination);
-        Assert.Empty(settings.ExclusionFilters);
     }
 
     [Fact]
@@ -35,15 +34,13 @@ public class SettingsServiceTests : IDisposable
         var svc = new SettingsService(_tempFile);
         var original = new AppSettings
         {
-            MoveDestination = @"D:\Backup",
-            ExclusionFilters = new List<string> { "Acrobat", "Norton" }
+            MoveDestination = @"D:\Backup"
         };
 
         svc.Save(original);
         var loaded = svc.Load();
 
         Assert.Equal(@"D:\Backup", loaded.MoveDestination);
-        Assert.Equal(new[] { "Acrobat", "Norton" }, loaded.ExclusionFilters);
     }
 
     [Fact]
@@ -55,6 +52,5 @@ public class SettingsServiceTests : IDisposable
         var settings = svc.Load();
 
         Assert.Equal(string.Empty, settings.MoveDestination);
-        Assert.Empty(settings.ExclusionFilters);
     }
 }
