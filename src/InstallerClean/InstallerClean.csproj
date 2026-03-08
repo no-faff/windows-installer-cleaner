@@ -10,7 +10,7 @@
     <RootNamespace>InstallerClean</RootNamespace>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AssemblyName>InstallerClean</AssemblyName>
-    <Version>1.2.0</Version>
+    <Version>1.3.0</Version>
     <ApplicationIcon>Assets\app.ico</ApplicationIcon>
   </PropertyGroup>
 

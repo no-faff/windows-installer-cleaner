@@ -125,7 +125,7 @@ public partial class App : Application
         AttachConsole(ATTACH_PARENT_PROCESS);
 
         var arg = args[0].ToLowerInvariant();
-        if (arg is not "/d" and not "/m" and not "--help" and not "/?" and not "-h")
+        if (arg is not "/d" and not "/m" and not "/s" and not "--help" and not "/?" and not "-h")
         {
             Console.WriteLine($"Unknown argument: {args[0]}");
             Console.WriteLine();
@@ -143,8 +143,6 @@ public partial class App : Application
 
         try
         {
-            var settingsService = new SettingsService();
-            var settings = settingsService.Load();
             var queryService = new InstallerQueryService();
             var scanService = new FileSystemScanService(queryService);
 
@@ -158,6 +156,15 @@ public partial class App : Application
             if (count == 0)
             {
                 Console.WriteLine("Nothing to do.");
+                Shutdown(0);
+                return;
+            }
+
+            if (arg == "/s")
+            {
+                Console.WriteLine(string.Join(Environment.NewLine,
+                    scanResult.RemovableFiles.Select(f =>
+                        $"  {f.FileName}  ({f.SizeDisplay}, {f.Reason})")));
                 Shutdown(0);
                 return;
             }
@@ -180,6 +187,8 @@ public partial class App : Application
             }
             else if (arg == "/m")
             {
+                var settingsService = new SettingsService();
+                var settings = settingsService.Load();
                 var dest = args.Length > 1 ? args[1] : settings.MoveDestination;
                 if (string.IsNullOrWhiteSpace(dest))
                 {
@@ -219,6 +228,7 @@ public partial class App : Application
         Console.WriteLine();
         Console.WriteLine("Usage:");
         Console.WriteLine("  InstallerClean.exe          Launch the GUI");
+        Console.WriteLine("  InstallerClean.exe /s       Scan only — list removable files");
         Console.WriteLine("  InstallerClean.exe /d       Delete removable files (Recycle Bin)");
         Console.WriteLine("  InstallerClean.exe /m       Move to saved default location");
         Console.WriteLine("  InstallerClean.exe /m PATH  Move to specified path");

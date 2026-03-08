@@ -1,7 +1,7 @@
 [![Licence: MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](LICENSE)
 [![.NET 8](https://img.shields.io/badge/.NET-8.0-purple.svg)](https://dotnet.microsoft.com/download/dotnet/8.0)
 [![Windows 10/11](https://img.shields.io/badge/Windows-10%20%7C%2011-0078D4.svg)](https://github.com/no-faff/InstallerClean/releases)
-[![VirusTotal](https://img.shields.io/badge/VirusTotal-0%2F70-brightgreen.svg)](https://www.virustotal.com/gui/file/0c619f4a10bdd1d6bd6827af06361a56bdc09a1fc6ca1fdc8a309d5216919aaf)
+[![VirusTotal](https://img.shields.io/badge/VirusTotal-0%2F71-brightgreen.svg)](https://www.virustotal.com/gui/file/7d24afbe4350438b914261e96490dd9af3ef8f6194bbbf16fb522639dffb49ed)
 [![GitHub Release](https://img.shields.io/github/v/release/no-faff/InstallerClean)](https://github.com/no-faff/InstallerClean/releases/latest)
 
 # InstallerClean
@@ -76,7 +76,7 @@ Yes. We query the same database Windows itself uses to track what's installed. I
 - The app warns you if Windows has pending updates that could affect results
 - Every line of code is on GitHub. Read it, build it, audit it
 
-- [VirusTotal scan](https://www.virustotal.com/gui/file/0c619f4a10bdd1d6bd6827af06361a56bdc09a1fc6ca1fdc8a309d5216919aaf): 0/70 detections.
+- [VirusTotal scan](https://www.virustotal.com/gui/file/7d24afbe4350438b914261e96490dd9af3ef8f6194bbbf16fb522639dffb49ed): 0/71 detections.
 
 ## Getting started
 
@@ -117,12 +117,19 @@ InstallerClean — clean up C:\Windows\Installer
 
 Usage:
   InstallerClean.exe          Launch the GUI
+  InstallerClean.exe /s       Scan only — list removable files
   InstallerClean.exe /d       Delete removable files (Recycle Bin)
   InstallerClean.exe /m       Move to saved default location
   InstallerClean.exe /m PATH  Move to specified path
 ```
 
 Also accepts `--help`, `/?` and `-h`.
+
+`/s` is a dry run: it scans, lists what it would remove with filenames and sizes, then exits. Useful for auditing before cleanup. Exit code is always 0. All files are in `C:\Windows\Installer`.
+
+`/d` and `/m` scan and then act. `/d` sends removable files to the Recycle Bin. `/m` moves them to a folder — either one you specify on the command line, or the default saved from the GUI. Exit code is 0 on success, 1 if any files failed.
+
+All three require an elevated (administrator) command prompt.
 
 ## Features
 
@@ -131,7 +138,7 @@ Also accepts `--help`, `/?` and `-h`.
 - **Detail views.** Inspect individual files with product name, size, reason and digital signature.
 - **Pending reboot detection.** Warns if pending updates might affect scan results.
 - **Subfolder cleanup.** Prunes empty subfolders left behind by old installer operations.
-- **Command line mode.** `/d`, `/m` and `/m PATH` for scripting and automation.
+- **Command line mode.** `/s` to scan, `/d` to delete, `/m` to move — for scripting and automation.
 - **No installer needed.** Download, run, done.
 - **No data collection.** Doesn't phone home, collect data or require an account.
 
