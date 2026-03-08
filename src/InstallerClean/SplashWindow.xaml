@@ -47,7 +47,7 @@
             <!-- Step text -->
             <TextBlock Grid.Row="7"
                        x:Name="StepText"
-                       Text="Step 1/5: Checking system status..."
+                       Text="Scanning..."
                        Foreground="#cbd5e1"
                        FontSize="12"
                        HorizontalAlignment="Center"/>

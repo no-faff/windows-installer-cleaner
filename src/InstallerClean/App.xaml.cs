@@ -73,7 +73,7 @@ public partial class App : Application
             splash = new SplashWindow();
             splash.Show();
 
-            splash.UpdateStep("Step 1/5: Initialising...", 10);
+            splash.UpdateStep("Scanning...", 10);
 
             var settingsService = new SettingsService();
             var queryService = new InstallerQueryService();
@@ -87,18 +87,17 @@ public partial class App : Application
                 scanService, moveService, deleteService,
                 settingsService, rebootService, msiInfoService);
 
-            splash.UpdateStep("Step 2/5: Scanning installed products...", 20);
-            var scanTask = viewModel.ScanWithProgressAsync(null);
-            await Task.WhenAll(scanTask, Task.Delay(400));
-
-            splash.UpdateStep("Step 3/5: Enumerating patches...", 50);
-            await Task.Delay(400);
-
-            splash.UpdateStep("Step 4/5: Finding installation files...", 70);
-            await Task.Delay(400);
-
-            splash.UpdateStep("Step 5/5: Calculating results...", 90);
-            await Task.Delay(400);
+            int messageCount = 0;
+            var splashProgress = new Progress<string>(msg =>
+            {
+                messageCount++;
+                var percent = 10 + 80.0 * messageCount / (messageCount + 15);
+                splash.UpdateStep(msg, percent);
+            });
+            var scanTask = viewModel.ScanWithProgressAsync(splashProgress);
+            await Task.WhenAll(scanTask, Task.Delay(800));
+            splash.UpdateStep("Done", 100);
+            await Task.Delay(200);
 
             var window = new MainWindow(viewModel);
             Application.Current.MainWindow = window;
