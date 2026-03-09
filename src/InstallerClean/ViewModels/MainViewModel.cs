@@ -16,6 +16,7 @@ public partial class MainViewModel : ObservableObject
     private readonly ISettingsService _settingsService;
     private readonly IPendingRebootService _rebootService;
     private readonly IMsiFileInfoService _msiInfoService;
+    private readonly Action<string, string, MessageBoxButton, MessageBoxImage> _showMessage;
 
     // Scan state
     [ObservableProperty] private bool _isScanning;
@@ -68,7 +69,8 @@ public partial class MainViewModel : ObservableObject
         IDeleteFilesService deleteService,
         ISettingsService settingsService,
         IPendingRebootService rebootService,
-        IMsiFileInfoService msiInfoService)
+        IMsiFileInfoService msiInfoService,
+        Action<string, string, MessageBoxButton, MessageBoxImage>? showMessage = null)
     {
         _scanService = scanService;
         _moveService = moveService;
@@ -76,6 +78,7 @@ public partial class MainViewModel : ObservableObject
         _settingsService = settingsService;
         _rebootService = rebootService;
         _msiInfoService = msiInfoService;
+        _showMessage = showMessage ?? ((msg, title, btn, icon) => MessageBox.Show(msg, title, btn, icon));
 
         _settings = settingsService.Load();
         MoveDestination = _settings.MoveDestination;
@@ -161,7 +164,7 @@ public partial class MainViewModel : ObservableObject
         }
         catch (UnauthorizedAccessException)
         {
-            MessageBox.Show(
+            _showMessage(
                 "This app requires administrator privileges.\n\nPlease right-click and choose 'Run as administrator'.",
                 "Administrator rights required",
                 MessageBoxButton.OK,
@@ -196,7 +199,7 @@ public partial class MainViewModel : ObservableObject
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
+                _showMessage(
                     $"Could not save settings: {ex.Message}",
                     "Settings",
                     MessageBoxButton.OK,
@@ -222,7 +225,7 @@ public partial class MainViewModel : ObservableObject
         if (dest.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
             .Equals(InstallerFolder.TrimEnd(Path.DirectorySeparatorChar), StringComparison.OrdinalIgnoreCase))
         {
-            MessageBox.Show(
+            _showMessage(
                 "The destination cannot be the Windows Installer folder itself.",
                 "Invalid destination", MessageBoxButton.OK, MessageBoxImage.Warning);
             return;
@@ -238,7 +241,7 @@ public partial class MainViewModel : ObservableObject
         }
         catch (Exception ex)
         {
-            MessageBox.Show(
+            _showMessage(
                 $"Cannot write to {dest}:\n{ex.Message}",
                 "Invalid destination", MessageBoxButton.OK, MessageBoxImage.Warning);
             return;
@@ -254,7 +257,7 @@ public partial class MainViewModel : ObservableObject
         var driveInfo = new DriveInfo(Path.GetPathRoot(dest)!);
         if (driveInfo.AvailableFreeSpace < totalBytes)
         {
-            MessageBox.Show(
+            _showMessage(
                 $"Not enough space on {driveInfo.Name}\n\n" +
                 $"Required: {DisplayHelpers.FormatSize(totalBytes)}\n" +
                 $"Available: {DisplayHelpers.FormatSize(driveInfo.AvailableFreeSpace)}",
