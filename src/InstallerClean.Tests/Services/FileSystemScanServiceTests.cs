@@ -1,4 +1,4 @@
-using Moq;
+using NSubstitute;
 using InstallerClean.Models;
 using InstallerClean.Services;
 
@@ -20,10 +20,10 @@ public class FileSystemScanServiceTests
             Registered(@"C:\Windows\Installer\aaa.msi"),
         };
 
-        var mockQuery = new Mock<IInstallerQueryService>();
+        var mockQuery = Substitute.For<IInstallerQueryService>();
         mockQuery
-            .Setup(s => s.GetRegisteredPackagesAsync(It.IsAny<IProgress<string>?>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(registered.AsReadOnly());
+            .GetRegisteredPackagesAsync(Arg.Any<IProgress<string>?>(), Arg.Any<CancellationToken>())
+            .Returns(registered.AsReadOnly());
 
         var fakeFiles = new[]
         {
@@ -31,7 +31,7 @@ public class FileSystemScanServiceTests
             @"C:\Windows\Installer\bbb.msi",   // orphaned — should appear
         };
 
-        var svc = new FileSystemScanService(mockQuery.Object, fakeFiles);
+        var svc = new FileSystemScanService(mockQuery, fakeFiles);
 
         var result = await svc.ScanAsync();
 
@@ -47,14 +47,14 @@ public class FileSystemScanServiceTests
             Registered(@"C:\Windows\Installer\AAA.MSI"),
         };
 
-        var mockQuery = new Mock<IInstallerQueryService>();
+        var mockQuery = Substitute.For<IInstallerQueryService>();
         mockQuery
-            .Setup(s => s.GetRegisteredPackagesAsync(It.IsAny<IProgress<string>?>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(registered.AsReadOnly());
+            .GetRegisteredPackagesAsync(Arg.Any<IProgress<string>?>(), Arg.Any<CancellationToken>())
+            .Returns(registered.AsReadOnly());
 
         var fakeFiles = new[] { @"C:\Windows\Installer\aaa.msi" };
 
-        var svc = new FileSystemScanService(mockQuery.Object, fakeFiles);
+        var svc = new FileSystemScanService(mockQuery, fakeFiles);
         var result = await svc.ScanAsync();
 
         Assert.Empty(result.RemovableFiles);
@@ -70,14 +70,14 @@ public class FileSystemScanServiceTests
             Registered(@"C:\Windows\Installer\bbb.msi"),
         };
 
-        var mockQuery = new Mock<IInstallerQueryService>();
+        var mockQuery = Substitute.For<IInstallerQueryService>();
         mockQuery
-            .Setup(s => s.GetRegisteredPackagesAsync(It.IsAny<IProgress<string>?>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(registered.AsReadOnly());
+            .GetRegisteredPackagesAsync(Arg.Any<IProgress<string>?>(), Arg.Any<CancellationToken>())
+            .Returns(registered.AsReadOnly());
 
         var fakeFiles = new[] { @"C:\Windows\Installer\ccc.msi" }; // orphan
 
-        var svc = new FileSystemScanService(mockQuery.Object, fakeFiles);
+        var svc = new FileSystemScanService(mockQuery, fakeFiles);
         var result = await svc.ScanAsync();
 
         // All API packages are included regardless of disk presence.
@@ -96,15 +96,15 @@ public class FileSystemScanServiceTests
             Superseded(@"C:\Windows\Installer\superseded.msp"),
         };
 
-        var mockQuery = new Mock<IInstallerQueryService>();
+        var mockQuery = Substitute.For<IInstallerQueryService>();
         mockQuery
-            .Setup(s => s.GetRegisteredPackagesAsync(It.IsAny<IProgress<string>?>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(registered.AsReadOnly());
+            .GetRegisteredPackagesAsync(Arg.Any<IProgress<string>?>(), Arg.Any<CancellationToken>())
+            .Returns(registered.AsReadOnly());
 
         // No orphaned files on disk — only the registered ones
         var fakeFiles = Array.Empty<string>();
 
-        var svc = new FileSystemScanService(mockQuery.Object, fakeFiles);
+        var svc = new FileSystemScanService(mockQuery, fakeFiles);
         var result = await svc.ScanAsync();
 
         // The superseded patch should appear in RemovableFiles with Reason="Superseded"
@@ -124,14 +124,14 @@ public class FileSystemScanServiceTests
             new(@"C:\Windows\Installer\fallback.msi", "", ""),
         };
 
-        var mockQuery = new Mock<IInstallerQueryService>();
+        var mockQuery = Substitute.For<IInstallerQueryService>();
         mockQuery
-            .Setup(s => s.GetRegisteredPackagesAsync(It.IsAny<IProgress<string>?>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(registered.AsReadOnly());
+            .GetRegisteredPackagesAsync(Arg.Any<IProgress<string>?>(), Arg.Any<CancellationToken>())
+            .Returns(registered.AsReadOnly());
 
         var fakeFiles = Array.Empty<string>();
 
-        var svc = new FileSystemScanService(mockQuery.Object, fakeFiles);
+        var svc = new FileSystemScanService(mockQuery, fakeFiles);
         var result = await svc.ScanAsync();
 
         // Fallback entries (PatchState=0, IsRemovable=false) stay in registered, not removable

@@ -1,4 +1,4 @@
-using Moq;
+using NSubstitute;
 using InstallerClean.Models;
 using InstallerClean.Services;
 using InstallerClean.ViewModels;
@@ -7,10 +7,10 @@ namespace InstallerClean.Tests.ViewModels;
 
 public class OrphanedFilesViewModelTests
 {
-    private static Mock<IMsiFileInfoService> NullInfoService()
+    private static IMsiFileInfoService NullInfoService()
     {
-        var mock = new Mock<IMsiFileInfoService>();
-        mock.Setup(s => s.GetSummaryInfo(It.IsAny<string>())).Returns((MsiSummaryInfo?)null);
+        var mock = Substitute.For<IMsiFileInfoService>();
+        mock.GetSummaryInfo(Arg.Any<string>()).Returns((MsiSummaryInfo?)null);
         return mock;
     }
 
@@ -24,7 +24,7 @@ public class OrphanedFilesViewModelTests
             new(@"C:\Windows\Installer\medium.msi", 1_000, false),
         };
 
-        var vm = new OrphanedFilesViewModel(files, NullInfoService().Object);
+        var vm = new OrphanedFilesViewModel(files, NullInfoService());
 
         Assert.Equal("large.msi", vm.Files[0].FileName);
         Assert.Equal("medium.msi", vm.Files[1].FileName);
@@ -40,7 +40,7 @@ public class OrphanedFilesViewModelTests
             new(@"C:\Windows\Installer\b.msi", 524_288, false),
         };
 
-        var vm = new OrphanedFilesViewModel(files, NullInfoService().Object);
+        var vm = new OrphanedFilesViewModel(files, NullInfoService());
 
         Assert.Equal("2 files (1.0 MB)", vm.Summary);
     }
@@ -53,7 +53,7 @@ public class OrphanedFilesViewModelTests
             new(@"C:\Windows\Installer\a.msi", 1_048_576, false),
         };
 
-        var vm = new OrphanedFilesViewModel(files, NullInfoService().Object);
+        var vm = new OrphanedFilesViewModel(files, NullInfoService());
 
         Assert.Equal("1 file (1.0 MB)", vm.Summary);
     }
@@ -67,7 +67,7 @@ public class OrphanedFilesViewModelTests
             new(@"C:\Windows\Installer\large.msi", 10_000, false),
         };
 
-        var vm = new OrphanedFilesViewModel(files, NullInfoService().Object);
+        var vm = new OrphanedFilesViewModel(files, NullInfoService());
 
         Assert.NotNull(vm.SelectedFile);
         Assert.Equal("large.msi", vm.SelectedFile!.FileName); // largest first
@@ -77,7 +77,7 @@ public class OrphanedFilesViewModelTests
     public void Empty_list_has_no_selection()
     {
         var vm = new OrphanedFilesViewModel(
-            new List<OrphanedFile>(), NullInfoService().Object);
+            new List<OrphanedFile>(), NullInfoService());
 
         Assert.Null(vm.SelectedFile);
         Assert.False(vm.HasSelection);
@@ -91,7 +91,7 @@ public class OrphanedFilesViewModelTests
             new(@"C:\Windows\Installer\a.msi", 1024, false),
         };
 
-        var vm = new OrphanedFilesViewModel(files, NullInfoService().Object);
+        var vm = new OrphanedFilesViewModel(files, NullInfoService());
 
         Assert.True(vm.HasSelection);
     }

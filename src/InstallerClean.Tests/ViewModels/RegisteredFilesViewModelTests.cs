@@ -1,4 +1,4 @@
-using Moq;
+using NSubstitute;
 using InstallerClean.Models;
 using InstallerClean.Services;
 using InstallerClean.ViewModels;
@@ -10,10 +10,10 @@ public class RegisteredFilesViewModelTests
     private static RegisteredPackage Pkg(string path, string name, string code) =>
         new(path, name, code);
 
-    private static Mock<IMsiFileInfoService> NullInfoService()
+    private static IMsiFileInfoService NullInfoService()
     {
-        var mock = new Mock<IMsiFileInfoService>();
-        mock.Setup(s => s.GetSummaryInfo(It.IsAny<string>())).Returns((MsiSummaryInfo?)null);
+        var mock = Substitute.For<IMsiFileInfoService>();
+        mock.GetSummaryInfo(Arg.Any<string>()).Returns((MsiSummaryInfo?)null);
         return mock;
     }
 
@@ -26,7 +26,7 @@ public class RegisteredFilesViewModelTests
             Pkg(@"C:\Windows\Installer\bbb.msi", "Product B", "{BBB}"),
         };
 
-        var vm = new RegisteredFilesViewModel(packages, 0, NullInfoService().Object);
+        var vm = new RegisteredFilesViewModel(packages, 0, NullInfoService());
 
         Assert.Equal(2, vm.Products.Count);
         Assert.All(vm.Products, p => Assert.Equal(0, p.PatchCount));
@@ -42,7 +42,7 @@ public class RegisteredFilesViewModelTests
             Pkg(@"C:\Windows\Installer\patch2.msp", "Product A", "{AAA}"),
         };
 
-        var vm = new RegisteredFilesViewModel(packages, 0, NullInfoService().Object);
+        var vm = new RegisteredFilesViewModel(packages, 0, NullInfoService());
 
         var product = Assert.Single(vm.Products);
         Assert.Equal(2, product.PatchCount);
@@ -58,7 +58,7 @@ public class RegisteredFilesViewModelTests
             Pkg(@"C:\Windows\Installer\patch2.msp", "Product A", "{AAA}"),
         };
 
-        var vm = new RegisteredFilesViewModel(packages, 0, NullInfoService().Object);
+        var vm = new RegisteredFilesViewModel(packages, 0, NullInfoService());
 
         Assert.Single(vm.Products);
     }
@@ -71,7 +71,7 @@ public class RegisteredFilesViewModelTests
             Pkg(@"C:\Windows\Installer\aaa.msi", "", "{AAA}"),
         };
 
-        var vm = new RegisteredFilesViewModel(packages, 0, NullInfoService().Object);
+        var vm = new RegisteredFilesViewModel(packages, 0, NullInfoService());
 
         Assert.Equal("(unknown)", vm.Products[0].ProductName);
     }
@@ -85,7 +85,7 @@ public class RegisteredFilesViewModelTests
             Pkg(@"C:\Windows\Installer\bbb.msi", "Product B", "{BBB}"),
         };
 
-        var vm = new RegisteredFilesViewModel(packages, 1_048_576, NullInfoService().Object);
+        var vm = new RegisteredFilesViewModel(packages, 1_048_576, NullInfoService());
 
         Assert.Equal("2 registered files (1.0 MB)", vm.Summary);
     }
