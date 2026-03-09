@@ -224,11 +224,11 @@ public partial class App : Application
 
     private static void PrintUsage()
     {
-        Console.WriteLine("InstallerClean — clean up C:\\Windows\\Installer");
+        Console.WriteLine("InstallerClean - clean up C:\\Windows\\Installer");
         Console.WriteLine();
         Console.WriteLine("Usage:");
         Console.WriteLine("  InstallerClean.exe          Launch the GUI");
-        Console.WriteLine("  InstallerClean.exe /s       Scan only — list removable files");
+        Console.WriteLine("  InstallerClean.exe /s       Scan only - list removable files");
         Console.WriteLine("  InstallerClean.exe /d       Delete removable files (Recycle Bin)");
         Console.WriteLine("  InstallerClean.exe /m       Move to saved default location");
         Console.WriteLine("  InstallerClean.exe /m PATH  Move to specified path");

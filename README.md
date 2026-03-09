@@ -80,11 +80,11 @@ Yes. We query the same database Windows itself uses to track what's installed. I
 ## Getting started
 
 1. Download **InstallerClean-setup.exe** from the [releases page](../../releases/latest) and run the installer
-2. Windows SmartScreen may say "Unknown publisher" — click **More info** then **Run anyway**. This is normal for any unsigned open source app. The app requires administrator access
+2. Windows SmartScreen may say "Unknown publisher". Click **More info** then **Run anyway**. This is normal for any unsigned open source app. The app requires administrator access
 3. The app scans automatically on startup
 4. Review the results, then click **Delete** or **Move**
 
-> **Prefer not to install?** Download **InstallerClean-portable.exe** instead — it's a single file, no install needed. Just download, run and delete it when you're done.
+> **Prefer not to install?** Download **InstallerClean-portable.exe** instead. It's a single file, no install needed. Just download, run and delete it when you're done.
 
 > **Tip:** If Windows has pending updates, the app will warn you to restart and install them first. A pending update might reference files that appear removable but aren't yet fully registered.
 
@@ -112,11 +112,11 @@ PatchCleaner has served the community well, and it still works. But ten years on
 InstallerClean supports headless operation for scripting and sysadmin use:
 
 ```
-InstallerClean — clean up C:\Windows\Installer
+InstallerClean - clean up C:\Windows\Installer
 
 Usage:
   InstallerClean.exe          Launch the GUI
-  InstallerClean.exe /s       Scan only — list removable files
+  InstallerClean.exe /s       Scan only - list removable files
   InstallerClean.exe /d       Delete removable files (Recycle Bin)
   InstallerClean.exe /m       Move to saved default location
   InstallerClean.exe /m PATH  Move to specified path
@@ -126,7 +126,7 @@ Also accepts `--help`, `/?` and `-h`.
 
 `/s` is a dry run: it scans, lists what it would remove with filenames and sizes, then exits. Useful for auditing before cleanup. Exit code is always 0. All files are in `C:\Windows\Installer`.
 
-`/d` and `/m` scan and then act. `/d` sends removable files to the Recycle Bin. `/m` moves them to a folder — either one you specify on the command line, or the default saved from the GUI. Exit code is 0 on success, 1 if any files failed.
+`/d` and `/m` scan and then act. `/d` sends removable files to the Recycle Bin. `/m` moves them to a folder (either one you specify on the command line, or the default saved from the GUI). Exit code is 0 on success, 1 if any files failed.
 
 All three require an elevated (administrator) command prompt.
 
@@ -137,7 +137,7 @@ All three require an elevated (administrator) command prompt.
 - **Detail views.** Inspect individual files with product name, size, reason and digital signature.
 - **Pending reboot detection.** Warns if pending updates might affect scan results.
 - **Subfolder cleanup.** Prunes empty subfolders left behind by old installer operations.
-- **Command line mode.** `/s` to scan, `/d` to delete, `/m` to move — for scripting and automation.
+- **Command line mode.** `/s` to scan, `/d` to delete, `/m` to move - for scripting and automation.
 - **No installer needed.** Download, run, done.
 - **No data collection.** Doesn't phone home, collect data or require an account.
 
