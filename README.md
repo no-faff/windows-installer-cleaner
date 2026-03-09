@@ -82,7 +82,7 @@ Yes. We query the same database Windows itself uses to track what's installed. I
 1. Download **InstallerClean-setup.exe** from the [releases page](../../releases/latest) and run the installer
 2. Windows SmartScreen may say "Unknown publisher". Click **More info** then **Run anyway**. This is normal for any unsigned open source app. The app requires administrator access
 3. The app scans automatically on startup
-4. Review the results, then click **Delete** or **Move**
+4. Review the results, then click **Delete** or **Move**. Delete sends to the Recycle Bin, so you can restore if anything goes wrong. Move is safer still - it copies the files somewhere you choose first
 
 > **Prefer not to install?** Download **InstallerClean-portable.exe** instead. It's a single file, no install needed. Just download, run and delete it when you're done.
 
@@ -159,8 +159,14 @@ We never call `Win32_Product`. That WMI class triggers MSI consistency checks on
 
 - Windows 10 or 11
 - Administrator privileges (to access `C:\Windows\Installer`)
-- The setup installer and portable exe are around 72-76 MB because they bundle the .NET 8 runtime so nothing else needs to be installed
-- Already have [.NET 8 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/8.0)? Grab **InstallerClean-slim.exe** (7.7 MB) from the releases page instead
+- The setup installer and portable exe are around 72-76 MB because they bundle the .NET 8 runtime so nothing else needs to be installed. Choose portable unless you want an installer
+- Already have [.NET 8 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/8.0)? You probably do if you have Visual Studio installed. Grab **InstallerClean-slim.exe** (7.7 MB) from the releases page instead
+
+## Troubleshooting
+
+- **SmartScreen blocks it.** Click "More info" then "Run anyway". This is normal for unsigned open source software.
+- **Something broke after cleanup.** If you used Delete, check the Recycle Bin and restore the file. If you used Move, the files are in whatever folder you chose.
+- **Scan results look wrong.** If Windows has pending updates, restart first and run again. Pending updates can make files appear removable when they aren't yet.
 
 ## Building from source
 
