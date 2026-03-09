@@ -445,3 +445,4 @@ docs/notes/
 # Claude Code config
 .claude/
 CLAUDE.md
+docs/pre-launch-hardening.md
