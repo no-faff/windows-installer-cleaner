@@ -65,7 +65,7 @@
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,18"
                             Visibility="{Binding HasPendingReboot, Converter={StaticResource BoolToVis}}">
                     <Path Data="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM118,98a10,10,0,0,1,20,0v46a10,10,0,0,1,-20,0Zm10,96a14,14,0,1,1,14,-14A14,14,0,0,1,128,194Z"
-                          Fill="#f59e0b" Width="16" Height="16" Stretch="Uniform"
+                          Fill="{StaticResource Warning}" Width="16" Height="16" Stretch="Uniform"
                           VerticalAlignment="Center" Margin="0,0,6,0"/>
                     <TextBlock Text="Windows has pending updates. Restart before moving or deleting files."
                                Foreground="#cbd5e1" VerticalAlignment="Center"/>
@@ -149,7 +149,7 @@
                                  Text="{Binding MoveDestination, Mode=OneWay}"
                                  IsReadOnly="True"/>
                         <TextBlock Text="Move destination..."
-                                   Foreground="#64748b" FontSize="12" FontStyle="Italic"
+                                   Foreground="{StaticResource Dim}" FontSize="12" FontStyle="Italic"
                                    Padding="16,0" VerticalAlignment="Center"
                                    IsHitTestVisible="False">
                             <TextBlock.Style>
@@ -210,7 +210,7 @@
                     ToolTipService.InitialShowDelay="0"
                     Padding="6,0" Height="28" Margin="0,0,12,0">
                 <Path Data="m12.672.668 3.059 6.197 6.838.993a.75.75 0 0 1 .416 1.28l-4.948 4.823 1.168 6.812a.75.75 0 0 1-1.088.79L12 18.347l-6.116 3.216a.75.75 0 0 1-1.088-.791l1.168-6.811-4.948-4.823a.749.749 0 0 1 .416-1.279l6.838-.994L11.327.668a.75.75 0 0 1 1.345 0Z"
-                      Fill="#f59e0b" Width="18" Height="18" Stretch="Uniform"/>
+                      Fill="{StaticResource Warning}" Width="18" Height="18" Stretch="Uniform"/>
                 <Button.ToolTip>
                     <ToolTip Style="{StaticResource WarningTooltip}" Content="Leave a star on GitHub"
                              Placement="Left"/>
@@ -244,10 +244,10 @@
                                  Width="200" Height="8" Margin="0,0,0,8"
                                  AutomationProperties.Name="Operation progress"/>
                     <DockPanel Margin="0,0,0,2">
-                        <TextBlock DockPanel.Dock="Right" Foreground="#64748b" FontSize="11">
+                        <TextBlock DockPanel.Dock="Right" Foreground="{StaticResource Dim}" FontSize="11">
                             <Run Text="{Binding OperationProgressPercent, Mode=OneWay, StringFormat='{}{0:F0}%'}"/>
                         </TextBlock>
-                        <TextBlock Foreground="#64748b" FontSize="11">
+                        <TextBlock Foreground="{StaticResource Dim}" FontSize="11">
                             <Run Text="{Binding OperationCurrentFile, Mode=OneWay}"/>
                             <Run Text=" of "/>
                             <Run Text="{Binding OperationTotalFiles, Mode=OneWay}"/>
@@ -304,7 +304,7 @@
                         </Border.Style>
                         <TextBox Text="{Binding CompletionErrors, Mode=OneWay}"
                                  Style="{StaticResource SelectableText}"
-                                 Foreground="#f59e0b" FontSize="11"
+                                 Foreground="{StaticResource Warning}" FontSize="11"
                                  TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
                     </Border>
 

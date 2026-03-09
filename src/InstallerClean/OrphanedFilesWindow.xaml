@@ -65,7 +65,7 @@
                                            Foreground="#f8fafc" FontSize="14"
                                            TextTrimming="CharacterEllipsis" ToolTip="{Binding FullPath}"/>
                                 <TextBlock Grid.Column="1" Text="{Binding Reason}"
-                                           Foreground="#64748b" FontSize="11"
+                                           Foreground="{StaticResource Dim}" FontSize="11"
                                            VerticalAlignment="Center"/>
                                 <TextBlock Grid.Column="2" Text="{Binding SizeDisplay}"
                                            Foreground="#cbd5e1" FontSize="12" TextAlignment="Right"/>
@@ -78,7 +78,7 @@
             <Border Grid.Column="2" Style="{StaticResource Card}">
                 <Grid>
                     <TextBlock Text="Select a file to view details."
-                               Foreground="#64748b" FontSize="12" FontStyle="Italic"
+                               Foreground="{StaticResource Dim}" FontSize="12" FontStyle="Italic"
                                VerticalAlignment="Center" HorizontalAlignment="Center"
                                TextAlignment="Center" TextWrapping="Wrap">
                         <TextBlock.Style>
@@ -94,7 +94,7 @@
                     </TextBlock>
 
                     <TextBlock Text="No metadata available."
-                               Foreground="#64748b" FontSize="12" FontStyle="Italic"
+                               Foreground="{StaticResource Dim}" FontSize="12" FontStyle="Italic"
                                VerticalAlignment="Center" HorizontalAlignment="Center"
                                TextAlignment="Center"
                                Visibility="{Binding ShowNoMetadata, Converter={StaticResource BoolToVis}}"/>
@@ -116,19 +116,19 @@
                                 <RowDefinition Height="Auto"/><RowDefinition Height="8"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Reason" Foreground="#64748b" FontSize="11"/>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Reason" Foreground="{StaticResource Dim}" FontSize="11"/>
                             <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding SelectedFile.Reason, Mode=OneWay}" Style="{StaticResource SelectableText}" Foreground="#f8fafc" FontSize="12"/>
-                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Author" Foreground="#64748b" FontSize="11"/>
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Author" Foreground="{StaticResource Dim}" FontSize="11"/>
                             <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding SelectedDetails.Author, Mode=OneWay}" Style="{StaticResource SelectableText}" Foreground="#f8fafc" FontSize="12" TextWrapping="Wrap"/>
-                            <TextBlock Grid.Row="4" Grid.Column="0" Text="Title" Foreground="#64748b" FontSize="11"/>
+                            <TextBlock Grid.Row="4" Grid.Column="0" Text="Title" Foreground="{StaticResource Dim}" FontSize="11"/>
                             <TextBox Grid.Row="4" Grid.Column="2" Text="{Binding SelectedDetails.Title, Mode=OneWay}" Style="{StaticResource SelectableText}" Foreground="#f8fafc" FontSize="12" TextWrapping="Wrap"/>
-                            <TextBlock Grid.Row="6" Grid.Column="0" Text="Subject" Foreground="#64748b" FontSize="11"/>
+                            <TextBlock Grid.Row="6" Grid.Column="0" Text="Subject" Foreground="{StaticResource Dim}" FontSize="11"/>
                             <TextBox Grid.Row="6" Grid.Column="2" Text="{Binding SelectedDetails.Subject, Mode=OneWay}" Style="{StaticResource SelectableText}" Foreground="#f8fafc" FontSize="12" TextWrapping="Wrap"/>
-                            <TextBlock Grid.Row="8" Grid.Column="0" Text="Digital signature" Foreground="#64748b" FontSize="11"/>
+                            <TextBlock Grid.Row="8" Grid.Column="0" Text="Digital signature" Foreground="{StaticResource Dim}" FontSize="11"/>
                             <TextBox Grid.Row="8" Grid.Column="2" Text="{Binding SelectedDetails.DigitalSignature, Converter={StaticResource CommaToNewline}, Mode=OneWay}" Style="{StaticResource SelectableText}" Foreground="#f8fafc" FontSize="12" TextWrapping="Wrap"/>
-                            <TextBlock Grid.Row="10" Grid.Column="0" Text="File size" Foreground="#64748b" FontSize="11"/>
+                            <TextBlock Grid.Row="10" Grid.Column="0" Text="File size" Foreground="{StaticResource Dim}" FontSize="11"/>
                             <TextBox Grid.Row="10" Grid.Column="2" Text="{Binding SelectedFile.SizeDisplay, Mode=OneWay}" Style="{StaticResource SelectableText}" Foreground="#f8fafc" FontSize="12"/>
-                            <TextBlock Grid.Row="12" Grid.Column="0" Text="Comment" Foreground="#64748b" FontSize="11"/>
+                            <TextBlock Grid.Row="12" Grid.Column="0" Text="Comment" Foreground="{StaticResource Dim}" FontSize="11"/>
                             <TextBox Grid.Row="12" Grid.Column="2" Text="{Binding SelectedDetails.Comments, Mode=OneWay}" Style="{StaticResource SelectableText}" Foreground="#f8fafc" FontSize="12" TextWrapping="Wrap"/>
                         </Grid>
                     </ScrollViewer>

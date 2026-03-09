@@ -55,7 +55,7 @@
             <!-- Version (bottom right, overlaid) -->
             <TextBlock Grid.Row="8"
                        x:Name="VersionText"
-                       Foreground="#64748b"
+                       Foreground="{StaticResource Dim}"
                        FontSize="11"
                        HorizontalAlignment="Right"
                        VerticalAlignment="Bottom"

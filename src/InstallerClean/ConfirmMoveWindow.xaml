@@ -8,9 +8,9 @@
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize">
 
-    <Border Background="#0f172a" CornerRadius="16" Padding="32,28"
+    <Border Background="{StaticResource Base200}" CornerRadius="16" Padding="32,28"
             MaxWidth="440" MinWidth="320"
-            BorderBrush="#334155" BorderThickness="1">
+            BorderBrush="{StaticResource Primary}" BorderThickness="1">
         <StackPanel>
             <TextBlock x:Name="MessageText" Foreground="#f8fafc" FontSize="14"
                        TextWrapping="Wrap" Margin="0,0,0,8"/>

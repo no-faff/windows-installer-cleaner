@@ -47,6 +47,8 @@
             <SolidColorBrush x:Key="Fg" Color="#f8fafc"/>        <!-- foreground text -->
             <SolidColorBrush x:Key="Body" Color="#cbd5e1"/>      <!-- body text (80% base-content) -->
             <SolidColorBrush x:Key="Muted" Color="#94a3b8"/>     <!-- muted text (50% base-content) -->
+            <SolidColorBrush x:Key="Dim" Color="#8494a7"/>        <!-- dim text (metadata labels, placeholders) -->
+            <SolidColorBrush x:Key="Warning" Color="#f59e0b"/>    <!-- warning / caution -->
             <SolidColorBrush x:Key="Overlay" Color="#80020617"/> <!-- 50% base-300 overlay -->
 
             <!-- Card style: rounded like Upscayl, no shadows, just tone shift -->
