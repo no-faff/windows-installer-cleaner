@@ -1,5 +1,6 @@
 [![Licence: MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](LICENSE)
 [![.NET 8](https://img.shields.io/badge/.NET-8.0-purple.svg)](https://dotnet.microsoft.com/download/dotnet/8.0)
+[![CI](https://github.com/no-faff/InstallerClean/actions/workflows/ci.yml/badge.svg)](https://github.com/no-faff/InstallerClean/actions/workflows/ci.yml)
 [![Windows 10/11](https://img.shields.io/badge/Windows-10%20%7C%2011-0078D4.svg)](https://github.com/no-faff/InstallerClean/releases)
 [![VirusTotal](https://img.shields.io/badge/VirusTotal-0%2F70-brightgreen.svg)](https://www.virustotal.com/gui/file/60b78cc2ee1273e8a617212558c511b7d1b285650035e29c0cb483a413b2e658)
 [![GitHub Release](https://img.shields.io/github/v/release/no-faff/InstallerClean)](https://github.com/no-faff/InstallerClean/releases/latest)
@@ -158,8 +159,8 @@ We never call `Win32_Product`. That WMI class triggers MSI consistency checks on
 
 - Windows 10 or 11
 - Administrator privileges (to access `C:\Windows\Installer`)
-- Self-contained — everything is bundled in, no .NET runtime install needed. The download is around 76 MB because it includes the runtime
-- Already have .NET 8 Desktop Runtime? Grab **InstallerClean-slim.exe** (8 MB) from the releases page instead
+- The setup installer and portable exe are around 72-76 MB because they bundle the .NET 8 runtime so nothing else needs to be installed
+- Already have [.NET 8 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/8.0)? Grab **InstallerClean-slim.exe** (7.7 MB) from the releases page instead
 
 ## Building from source
 
