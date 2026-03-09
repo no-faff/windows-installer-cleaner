@@ -2,7 +2,7 @@
 [![.NET 8](https://img.shields.io/badge/.NET-8.0-purple.svg)](https://dotnet.microsoft.com/download/dotnet/8.0)
 [![CI](https://github.com/no-faff/InstallerClean/actions/workflows/ci.yml/badge.svg)](https://github.com/no-faff/InstallerClean/actions/workflows/ci.yml)
 [![Windows 10/11](https://img.shields.io/badge/Windows-10%20%7C%2011-0078D4.svg)](https://github.com/no-faff/InstallerClean/releases)
-[![VirusTotal](https://img.shields.io/badge/VirusTotal-0%2F70-brightgreen.svg)](https://www.virustotal.com/gui/file/3d1cb9368fcabc9cf674b437ae32eb67488b09647077281d36665f2985350827)
+[![VirusTotal](https://img.shields.io/badge/VirusTotal-0%2F70-brightgreen.svg)](https://www.virustotal.com/gui/file/911f15522541f4d89a0007e8ee774d11b54d6b50304ea9c0559486197712d172)
 [![GitHub Release](https://img.shields.io/github/v/release/no-faff/InstallerClean)](https://github.com/no-faff/InstallerClean/releases/latest)
 
 # InstallerClean
@@ -75,7 +75,7 @@ Yes. We query the same database Windows itself uses to track what's installed. I
 - **Move** copies files to a location you choose first, if you'd rather be cautious
 - Nothing is touched until you click Delete or Move and confirm
 - The app warns you if Windows has pending updates that could affect results
-- [VirusTotal scan](https://www.virustotal.com/gui/file/3d1cb9368fcabc9cf674b437ae32eb67488b09647077281d36665f2985350827): 0/70 detections. Source code is all on GitHub
+- [VirusTotal scan](https://www.virustotal.com/gui/file/911f15522541f4d89a0007e8ee774d11b54d6b50304ea9c0559486197712d172): 0/70 detections. Source code is all on GitHub
 
 ## Getting started
 
