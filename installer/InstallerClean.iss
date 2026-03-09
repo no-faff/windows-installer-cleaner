@@ -1,6 +1,6 @@
 [Setup]
 AppName=InstallerClean
-AppVersion=1.2.0
+AppVersion=1.4.0
 AppPublisher=No Faff
 AppPublisherURL=https://github.com/no-faff/InstallerClean
 AppSupportURL=https://github.com/no-faff/InstallerClean/discussions

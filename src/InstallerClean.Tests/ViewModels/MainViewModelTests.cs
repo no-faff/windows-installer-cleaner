@@ -1,6 +1,4 @@
-using System.Windows;
 using NSubstitute;
-using NSubstitute.ExceptionExtensions;
 using InstallerClean.Models;
 using InstallerClean.Services;
 using InstallerClean.ViewModels;
@@ -15,7 +13,6 @@ public class MainViewModelTests
     private readonly ISettingsService _settingsService = Substitute.For<ISettingsService>();
     private readonly IPendingRebootService _rebootService = Substitute.For<IPendingRebootService>();
     private readonly IMsiFileInfoService _msiInfoService = Substitute.For<IMsiFileInfoService>();
-    private readonly List<(string Message, string Title)> _messages = new();
 
     private MainViewModel CreateViewModel()
     {
@@ -23,8 +20,7 @@ public class MainViewModelTests
 
         return new MainViewModel(
             _scanService, _moveService, _deleteService,
-            _settingsService, _rebootService, _msiInfoService,
-            (msg, title, btn, icon) => _messages.Add((msg, title)));
+            _settingsService, _rebootService, _msiInfoService);
     }
 
     private static ScanResult EmptyScanResult() =>
@@ -100,27 +96,13 @@ public class MainViewModelTests
     }
 
     [Fact]
-    public async Task ScanAsync_shows_message_on_access_denied()
-    {
-        var vm = CreateViewModel();
-        _scanService.ScanAsync(Arg.Any<IProgress<string>?>(), Arg.Any<CancellationToken>())
-            .ThrowsAsync(new UnauthorizedAccessException("denied"));
-
-        await vm.ScanCommand.ExecuteAsync(null);
-
-        Assert.Single(_messages);
-        Assert.Contains("administrator", _messages[0].Message);
-    }
-
-    [Fact]
     public void MoveDestination_loads_from_settings()
     {
         _settingsService.Load().Returns(new AppSettings { MoveDestination = @"D:\Backup" });
 
         var vm = new MainViewModel(
             _scanService, _moveService, _deleteService,
-            _settingsService, _rebootService, _msiInfoService,
-            (msg, title, btn, icon) => _messages.Add((msg, title)));
+            _settingsService, _rebootService, _msiInfoService);
 
         Assert.Equal(@"D:\Backup", vm.MoveDestination);
     }
