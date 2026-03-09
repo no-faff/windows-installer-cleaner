@@ -1,4 +1,5 @@
 using NSubstitute;
+using NSubstitute.ExceptionExtensions;
 using InstallerClean.Models;
 using InstallerClean.Services;
 
@@ -137,5 +138,108 @@ public class FileSystemScanServiceTests
         // Fallback entries (PatchState=0, IsRemovable=false) stay in registered, not removable
         Assert.Empty(result.RemovableFiles);
         Assert.Single(result.RegisteredPackages);
+    }
+
+    [Fact]
+    public async Task ScanAsync_handles_10000_orphaned_files()
+    {
+        var mockQuery = Substitute.For<IInstallerQueryService>();
+        mockQuery
+            .GetRegisteredPackagesAsync(Arg.Any<IProgress<string>?>(), Arg.Any<CancellationToken>())
+            .Returns(new List<RegisteredPackage>().AsReadOnly());
+
+        var fakeFiles = Enumerable.Range(0, 10_000)
+            .Select(i => $@"C:\Windows\Installer\orphan{i:D5}.msi")
+            .ToArray();
+
+        var svc = new FileSystemScanService(mockQuery, fakeFiles);
+        var result = await svc.ScanAsync();
+
+        Assert.Equal(10_000, result.RemovableFiles.Count);
+        Assert.Empty(result.RegisteredPackages);
+    }
+
+    [Fact]
+    public async Task ScanAsync_handles_10000_files_with_mixed_registered_and_orphaned()
+    {
+        // 5000 registered, 5000 orphaned
+        var registered = Enumerable.Range(0, 5_000)
+            .Select(i => Registered($@"C:\Windows\Installer\reg{i:D5}.msi"))
+            .ToList();
+
+        var mockQuery = Substitute.For<IInstallerQueryService>();
+        mockQuery
+            .GetRegisteredPackagesAsync(Arg.Any<IProgress<string>?>(), Arg.Any<CancellationToken>())
+            .Returns(registered.AsReadOnly());
+
+        var fakeFiles = Enumerable.Range(0, 5_000)
+            .Select(i => $@"C:\Windows\Installer\reg{i:D5}.msi")
+            .Concat(Enumerable.Range(0, 5_000)
+                .Select(i => $@"C:\Windows\Installer\orphan{i:D5}.msi"))
+            .ToArray();
+
+        var svc = new FileSystemScanService(mockQuery, fakeFiles);
+        var result = await svc.ScanAsync();
+
+        Assert.Equal(5_000, result.RemovableFiles.Count);
+        Assert.Equal(5_000, result.RegisteredPackages.Count);
+    }
+
+    [Fact]
+    public async Task ScanAsync_handles_cancellation_during_large_scan()
+    {
+        var mockQuery = Substitute.For<IInstallerQueryService>();
+        mockQuery
+            .GetRegisteredPackagesAsync(Arg.Any<IProgress<string>?>(), Arg.Any<CancellationToken>())
+            .Returns(new List<RegisteredPackage>().AsReadOnly());
+
+        var fakeFiles = Enumerable.Range(0, 10_000)
+            .Select(i => $@"C:\Windows\Installer\orphan{i:D5}.msi")
+            .ToArray();
+
+        var cts = new CancellationTokenSource();
+        cts.Cancel(); // cancel immediately
+
+        var svc = new FileSystemScanService(mockQuery, fakeFiles);
+        await Assert.ThrowsAsync<OperationCanceledException>(
+            () => svc.ScanAsync(cancellationToken: cts.Token));
+    }
+
+    [Fact]
+    public async Task ScanAsync_ignores_non_msi_msp_files()
+    {
+        var mockQuery = Substitute.For<IInstallerQueryService>();
+        mockQuery
+            .GetRegisteredPackagesAsync(Arg.Any<IProgress<string>?>(), Arg.Any<CancellationToken>())
+            .Returns(new List<RegisteredPackage>().AsReadOnly());
+
+        var fakeFiles = new[]
+        {
+            @"C:\Windows\Installer\legit.msi",
+            @"C:\Windows\Installer\patch.msp",
+            @"C:\Windows\Installer\readme.txt",
+            @"C:\Windows\Installer\data.dat",
+            @"C:\Windows\Installer\script.exe",
+        };
+
+        var svc = new FileSystemScanService(mockQuery, fakeFiles);
+        var result = await svc.ScanAsync();
+
+        Assert.Equal(2, result.RemovableFiles.Count);
+        Assert.All(result.RemovableFiles, f =>
+            Assert.True(f.FullPath.EndsWith(".msi") || f.FullPath.EndsWith(".msp")));
+    }
+
+    [Fact]
+    public async Task ScanAsync_query_service_throws_propagates_exception()
+    {
+        var mockQuery = Substitute.For<IInstallerQueryService>();
+        mockQuery
+            .GetRegisteredPackagesAsync(Arg.Any<IProgress<string>?>(), Arg.Any<CancellationToken>())
+            .ThrowsAsync(new UnauthorizedAccessException("Access denied"));
+
+        var svc = new FileSystemScanService(mockQuery, Array.Empty<string>());
+
+        await Assert.ThrowsAsync<UnauthorizedAccessException>(() => svc.ScanAsync());
     }
 }

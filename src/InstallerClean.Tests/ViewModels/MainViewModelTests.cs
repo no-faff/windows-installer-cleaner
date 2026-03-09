@@ -1,4 +1,5 @@
 using NSubstitute;
+using NSubstitute.ExceptionExtensions;
 using InstallerClean.Models;
 using InstallerClean.Services;
 using InstallerClean.ViewModels;
@@ -127,5 +128,63 @@ public class MainViewModelTests
         await vm.ScanWithProgressAsync(null);
 
         Assert.Equal("1 file to clean up", vm.OrphanedSummaryText);
+    }
+
+    [Fact]
+    public async Task ScanAsync_handles_10000_orphans()
+    {
+        var vm = CreateViewModel();
+        _scanService.ScanAsync(Arg.Any<IProgress<string>?>(), Arg.Any<CancellationToken>())
+            .Returns(ScanResultWithOrphans(10_000));
+
+        await vm.ScanWithProgressAsync(null);
+
+        Assert.Equal(10_000, vm.OrphanedFileCount);
+        Assert.Equal("10000 files to clean up", vm.OrphanedSummaryText);
+        Assert.False(vm.IsComplete);
+    }
+
+    [Fact]
+    public async Task ScanAsync_handles_large_total_size()
+    {
+        var vm = CreateViewModel();
+        var orphans = new List<OrphanedFile>
+        {
+            new(@"C:\Windows\Installer\huge.msi", 107_374_182_400, false), // 100 GB
+        };
+        _scanService.ScanAsync(Arg.Any<IProgress<string>?>(), Arg.Any<CancellationToken>())
+            .Returns(new ScanResult(orphans, Array.Empty<RegisteredPackage>(), 0));
+
+        await vm.ScanWithProgressAsync(null);
+
+        Assert.Equal("100.00 GB", vm.OrphanedSizeDisplay);
+    }
+
+    [Fact]
+    public async Task ScanAsync_propagates_access_denied()
+    {
+        var vm = CreateViewModel();
+        _scanService.ScanAsync(Arg.Any<IProgress<string>?>(), Arg.Any<CancellationToken>())
+            .ThrowsAsync(new UnauthorizedAccessException("denied"));
+
+        await Assert.ThrowsAsync<UnauthorizedAccessException>(
+            () => vm.ScanWithProgressAsync(null));
+    }
+
+    [Fact]
+    public async Task ScanAsync_zero_byte_files_display_correctly()
+    {
+        var vm = CreateViewModel();
+        var orphans = new List<OrphanedFile>
+        {
+            new(@"C:\Windows\Installer\empty.msi", 0, false),
+        };
+        _scanService.ScanAsync(Arg.Any<IProgress<string>?>(), Arg.Any<CancellationToken>())
+            .Returns(new ScanResult(orphans, Array.Empty<RegisteredPackage>(), 0));
+
+        await vm.ScanWithProgressAsync(null);
+
+        Assert.Equal(1, vm.OrphanedFileCount);
+        Assert.Equal("0 B", vm.OrphanedSizeDisplay);
     }
 }
