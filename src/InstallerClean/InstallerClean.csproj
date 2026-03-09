@@ -12,10 +12,14 @@
     <AssemblyName>InstallerClean</AssemblyName>
     <Version>1.4.0</Version>
     <ApplicationIcon>Assets\app.ico</ApplicationIcon>
+    <Description>Safely clean up C:\Windows\Installer orphaned files</Description>
+    <Authors>No Faff</Authors>
+    <RepositoryUrl>https://github.com/no-faff/InstallerClean</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.*" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="WPF-UI" Version="4.2.0" />
   </ItemGroup>
 
