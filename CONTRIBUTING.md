@@ -36,9 +36,8 @@ ViewModels call `MessageBox.Show` directly rather than going through an
 pattern (extracting an `IDialogService` with a concrete `DialogService` class) was
 tested and triggered antivirus heuristic detection, confirmed by VirusTotal scan.
 
-Alternative patterns such as `Func<>` delegates or events may work and PRs
-exploring these are welcome, but any change **must pass a clean VirusTotal scan**
-before it can be merged.
+`Func<>` delegates were also tested and trigger the same heuristic. Any
+alternative pattern **must pass a clean VirusTotal scan** before it can be merged.
 
 **2. No full paths in console loop output**
 
