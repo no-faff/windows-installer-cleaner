@@ -40,13 +40,13 @@ Or they're told not to touch it at all. In one thread, someone with a 60 GB Inst
 
 The standard advice confuses deleting files at random (which genuinely is dangerous) with removing files that Windows itself says it no longer needs (which isn't). InstallerClean does the latter.
 
-[PatchCleaner](https://www.homedev.com.au/free/patchcleaner) was the answer for a long time, and it helped a lot of people. But it hasn't been updated since 2016, it's closed source, and it excludes Adobe files by default. On machines where Adobe is the biggest offender, that means PatchCleaner leaves the vast majority of removable files untouched:
+If you've searched for help with this before, you've probably already found [PatchCleaner](https://www.homedev.com.au/free/patchcleaner) by [John Crawford](https://www.homedev.com.au/). It's a fantastic app - I downloaded it and it did exactly what it said, freed up a ton of space. The one thing it doesn't handle is Adobe patches - it excludes them by default, and on machines where Adobe is the biggest offender, that means a lot of removable files get left behind:
 
 > *"I've downloaded Patchcleaner to delete the orphaned .msp files... 29 GB of the files are 'excluded by filters', so Patchcleaner doesn't seem to help."*
 >
 > HeatherBunny1111, [r/techsupport](https://www.reddit.com/r/techsupport/comments/1qc4tcf/how_to_delete_msp_files_safely/)
 
-InstallerClean handles Adobe patches properly by detecting which ones have been superseded by newer updates.
+InstallerClean detects which Adobe patches have been superseded by newer updates, so it can flag them as removable.
 
 ## What it does
 
@@ -65,7 +65,7 @@ InstallerClean identifies two kinds of unneeded files:
 
 **Superseded patches** are old `.msp` patches that have been replaced by newer ones. Windows marks them as superseded in its own database but never deletes them. This is especially common with Adobe Acrobat, which delivers roughly 1.1 GB patch files and accumulates superseded ones indefinitely. InstallerClean reads the patch state directly from the Windows Installer API and flags these as removable too.
 
-This is something PatchCleaner can't do. PatchCleaner excludes Adobe by default because Adobe patches appear registered even when they've been superseded. InstallerClean goes deeper: it checks whether a patch has actually been replaced, regardless of the manufacturer.
+PatchCleaner doesn't do this. It excludes Adobe by default because Adobe patches appear registered even when they've been superseded. InstallerClean checks whether a patch has actually been replaced, regardless of the manufacturer.
 
 ## Is it safe?
 
@@ -90,7 +90,7 @@ Yes. We query the same database Windows itself uses to track what's installed. I
 
 ## Compared to PatchCleaner
 
-PatchCleaner has served the community well, and it still works. But ten years on from its last release, InstallerClean picks up where it left off.
+[PatchCleaner](https://www.homedev.com.au/free/patchcleaner) was built by Australian legend [John Crawford](https://www.homedev.com.au/). All the credit for InstallerClean existing goes to him really. I found PatchCleaner because my C: drive went red in File Explorer, I found this strange `C:\Windows\Installer` folder taking up tens of GB, so I Googled the folder name, found PatchCleaner and bingo: a ton of space back in a couple of clicks. Then I noticed that PatchCleaner was closed source and it had been almost exactly ten years since its last release. I wanted to see if I could build a new open source version for 2026 and Windows 11. So now you have InstallerClean with, amongst other small improvements including a new UI, superseded patch detection, which is mainly useful for Adobe Acrobat - the biggest source of dead patches on most machines. PatchCleaner still works; thanks, JC. Take your pick.
 
 | | **InstallerClean** | **PatchCleaner** |
 |---|---|---|
@@ -100,7 +100,7 @@ PatchCleaner has served the community well, and it still works. But ten years on
 | API | Windows Installer COM (direct) | WMI (`Win32_Product`) |
 | Superseded patch detection | Yes | No |
 | Adobe handling | Detects superseded patches | Excludes by default |
-| UI | Modern dark theme (WPF) | Windows Forms |
+| UI | Dark theme (WPF) | Windows Forms |
 | Data collection | None | None |
 
 > **A note on WMI:** PatchCleaner uses `Win32_Product`, which is known to [trigger MSI repair operations](https://gregramsey.net/2012/02/20/win32_product-is-evil/) during enumeration. InstallerClean calls the Windows Installer COM interface directly with no side effects.
