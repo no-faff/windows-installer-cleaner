@@ -463,7 +463,7 @@ public partial class MainViewModel : ObservableObject
     {
         Process.Start(new ProcessStartInfo
         {
-            FileName = "https://ko-fi.com/nofaff",
+            FileName = "https://nofaff.netlify.app",
             UseShellExecute = true
         });
     }

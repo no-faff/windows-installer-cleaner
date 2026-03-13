@@ -192,7 +192,7 @@ InstallerClean is part of [No Faff](https://github.com/no-faff), a collection of
 
 ## Support the project
 
-If InstallerClean helped, consider [buying me a cuppa](https://ko-fi.com/nofaff) or leaving a star on GitHub.
+If InstallerClean helped, consider [supporting No Faff](https://nofaff.netlify.app) or leaving a star on GitHub.
 
 ## Licence
 

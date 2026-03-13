@@ -29,7 +29,6 @@
     <Resource Include="Fonts\Poppins-SemiBold.ttf" />
     <Resource Include="Fonts\Poppins-Bold.ttf" />
     <Resource Include="Assets\splash-icon.png" />
-    <Resource Include="Assets\kofi-cup.png" />
   </ItemGroup>
 
 </Project>
