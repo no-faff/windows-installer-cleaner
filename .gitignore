@@ -446,3 +446,5 @@ docs/notes/
 .claude/
 CLAUDE.md
 docs/pre-launch-hardening.md
+HANDOFF.md
+/non-repo-files
